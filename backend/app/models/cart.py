@@ -3,7 +3,7 @@ from app.db.base import Base
 
 
 class CartItem(Base):
-    __tablename__ = "cart_items"
+    __tablename__ = "cart_item"
 
     id = Column(Integer, primary_key=True, index=True)
     product_id = Column(Integer, nullable=False)

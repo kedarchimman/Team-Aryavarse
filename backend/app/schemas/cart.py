@@ -3,10 +3,10 @@ from typing import Optional
 
 
 class AddToCartRequest(BaseModel):
-    product_id: int
+    variant_id: int
     quantity: int
     user_id: Optional[int] = None
-    guest_id: Optional[str] = None   
+    guest_id: Optional[str] = None
 
 
 class UpdateCartRequest(BaseModel):
@@ -15,5 +15,5 @@ class UpdateCartRequest(BaseModel):
 
 
 class MergeGuestCartRequest(BaseModel):
-    guest_id: str   
+    guest_id: str
     user_id: int

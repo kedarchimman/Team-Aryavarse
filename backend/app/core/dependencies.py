@@ -1,6 +1,4 @@
-from sqlalchemy.orm import Session
 from fastapi import Depends, Header, HTTPException, status
-
 from app.db.session import SessionLocal
 
 
@@ -19,7 +17,7 @@ def get_current_user_optional(x_user_id: str = Header(default=None)):
 
 
 def get_current_user_required(current_user=Depends(get_current_user_optional)):
-    if not current_user:
+    if current_user is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Login required"
