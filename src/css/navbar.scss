@@ -1,0 +1,88 @@
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 35px;
+  background: linear-gradient(90deg, #14325b, #16786f);
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.links {
+  display: flex;
+  gap: 20px;
+  font-weight: 500;
+  flex-wrap: wrap;
+}
+
+.links span {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.links span:hover {
+  color: #d8f3f1;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon-box {
+  position: relative;
+  cursor: pointer;
+}
+
+.icon {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.icon:hover {
+  transform: scale(1.1);
+  color: #d8f3f1;
+}
+
+.heart-icon {
+  color: white;
+}
+
+.count-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: #ff4d4f;
+  color: white;
+  font-size: 11px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 15px 20px;
+  }
+
+  .links {
+    gap: 14px;
+  }
+}

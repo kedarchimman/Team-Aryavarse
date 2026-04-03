@@ -1,0 +1,274 @@
+.product-page {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 45px;
+  padding: 45px 55px;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fff;
+}
+
+.left {
+  display: flex;
+  gap: 18px;
+}
+
+.thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.thumbs img {
+  width: 82px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 14px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.3s;
+  background: #f5f5f5;
+}
+
+.thumbs img:hover {
+  transform: scale(1.05);
+}
+
+.thumbs img.active {
+  border-color: #0f7b6c;
+}
+
+.main-image-box {
+  flex: 1;
+  max-width: 580px;
+  height: 720px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-in;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.main-image-box:hover .main-image {
+  transform: scale(1.08);
+}
+
+.right {
+  background: #fafafa;
+  padding: 34px;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+}
+
+.tag {
+  font-size: 12px;
+  color: #0f7b6c;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.right h1 {
+  font-size: 32px;
+  margin-bottom: 14px;
+  color: #1c1c1c;
+  line-height: 1.3;
+}
+
+.rating-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.stars {
+  color: #f7b500;
+  font-size: 18px;
+}
+
+.rating {
+  font-size: 14px;
+  color: #666;
+}
+
+.right h2 {
+  font-size: 28px;
+  color: #14325b;
+  margin-bottom: 18px;
+}
+
+.desc {
+  font-size: 15px;
+  line-height: 1.9;
+  color: #555;
+  margin-bottom: 22px;
+}
+
+.info-box {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 24px;
+}
+
+.info-box p {
+  font-size: 14px;
+  margin: 10px 0;
+  color: #333;
+}
+
+.btns {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btns button {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  min-width: 165px;
+  transition: 0.3s;
+}
+
+.cart-btn {
+  background: #0f7b6c;
+  color: white;
+}
+
+.wish-btn {
+  background: #14325b;
+  color: white;
+}
+
+.cart-btn:hover,
+.wish-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* size section */
+.size-section {
+  margin: 22px 0 18px;
+}
+
+.size-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.size-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.size-btn {
+  min-width: 50px;
+  height: 42px;
+  border: 1px solid #d7dbe0;
+  background: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #344054;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.size-btn:hover {
+  border-color: #20bfb8;
+  color: #20bfb8;
+  transform: translateY(-1px);
+}
+
+.size-btn.active {
+  background: #20bfb8;
+  color: #fff;
+  border-color: #20bfb8;
+  box-shadow: 0 8px 18px rgba(32, 191, 184, 0.22);
+}
+
+.popup {
+  position: relative;
+  background: white;
+  padding: 16px;
+  border-radius: 20px;
+  max-width: 95vw;
+  max-height: 95vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-image {
+  max-width: 88vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 16px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: #14325b;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+@media (max-width: 900px) {
+  .product-page {
+    grid-template-columns: 1fr;
+    padding: 25px;
+    gap: 28px;
+  }
+
+  .left {
+    flex-direction: column-reverse;
+  }
+
+  .thumbs {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .main-image-box {
+    height: 460px;
+    max-width: 100%;
+  }
+
+  .right h1 {
+    font-size: 26px;
+  }
+
+  .right h2 {
+    font-size: 24px;
+  }
+
+  .btns button {
+    width: 100%;
+  }
+}
