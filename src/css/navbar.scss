@@ -86,3 +86,17 @@
     gap: 14px;
   }
 }
+
+/* Prevent underline / weird browser back styling */
+.links span {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+.links span:hover {
+  text-decoration: none !important;
+}
+
+a {
+  text-decoration: none;
+}

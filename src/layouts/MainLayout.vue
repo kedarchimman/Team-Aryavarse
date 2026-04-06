@@ -39,8 +39,10 @@
       </div>
     </div>
 
-    <q-page-container>
-      <router-view />
+    <!-- Main page area -->
+    <q-page-container class="main-page-container">
+      <!-- key forces clean re-render when route changes -->
+      <router-view :key="$route.fullPath" />
     </q-page-container>
   </q-layout>
 
@@ -71,13 +73,6 @@
         </a>
 
     </div>
-
-      <!---<div class="social-icons">
-        <q-icon name="fab fa-instagram" size="20px" class="social-icon" />
-        <q-icon name="fab fa-facebook-f" size="20px" class="social-icon" />
-        <q-icon name="fab fa-whatsapp" size="20px" class="social-icon" />
-        <q-icon name="fab fa-linkedin-in" size="20px" class="social-icon" />
-      </div>--->
     </div>
 
     <!-- Quick Links -->

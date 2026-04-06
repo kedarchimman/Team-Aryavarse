@@ -7,12 +7,16 @@ export default [
       { path: '', component: () => import('pages/HomePage.vue') },
 
       // Other pages
+      { path: 'home', component: () => import('pages/HomePage.vue') },
       { path: 'men', component: () => import('pages/MenPage.vue') },
       { path: 'women', component: () => import('pages/WomenPage.vue') },
-      { path: 'bulk', component: () => import('pages/HomePage.vue') },
+      { path: 'bulk', component: () => import('pages/BulkOrder.vue') },
 
       // Product details
       { path: 'product/:id', component: () => import('pages/ProductDetailsPage.vue') },
+      { path: 'men-product/:id', component: () => import('pages/MenProductDetailsPage.vue') },
+      { path: 'women-product/:id', component: () => import('pages/WomenProductDetails.vue') }, 
+
 
       // Cart / Wishlist
       { path: 'cart', component: () => import('pages/CartPage.vue') },

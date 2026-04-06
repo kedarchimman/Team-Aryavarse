@@ -1,25 +1,24 @@
 <template>
-  <div class="card">
+  <div class="signup-page">
+    <div class="signup-card">
+      <h3 class="signup-title">Sign Up</h3>
+      <p class="signup-sub">Create your account to start shopping</p>
 
-    <h3>Sign Up</h3>
-    <p class="sub">Create your account to start shopping</p>
+      <input class="signup-input" placeholder="Full Name" />
+      <input class="signup-input" type="tel" placeholder="Phone Number" />
+      <input class="signup-input" type="email" placeholder="Email Address" />
+      <input class="signup-input" type="password" placeholder="Password" />
 
-    <input placeholder="Full Name" />
-    <input type="Phone" placeholder="Phone Number" />
-    <input type="email" placeholder="Email Address" />
-    <input type="password" placeholder="Password" />
-    
+      <button class="signup-btn">CREATE ACCOUNT</button>
 
-    <button class="btn">CREATE ACCOUNT</button>
-
-    <p class="switch">
-      Already have an account?
-      <span @click="$router.push('/login')">Login</span>
-    </p>
-
+      <p class="signup-switch">
+        Already have an account?
+        <span @click="$router.push('/login')">Login</span>
+      </p>
+    </div>
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import 'src/css/sign.scss';
 </style>

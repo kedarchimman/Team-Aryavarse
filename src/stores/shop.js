@@ -22,10 +22,10 @@ export const addToCart = (product) => {
 
   if (existing) {
     existing.qty += 1
-    alert(`${product.title} quantity increased in cart`)
+    
   } else {
     cart.value.push({ ...product, qty: 1 })
-    alert(`${product.title} added to cart`)
+    
   }
 }
 
