@@ -25,7 +25,7 @@
         <span class="rating">{{ product.rating }} Rating</span>
       </div>
 
-      <h2>₹ {{ product.price }}</h2>
+      <h2>{{ product.price }}</h2>
 
       <p class="desc">{{ product.description }}</p>
 

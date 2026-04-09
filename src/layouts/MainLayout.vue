@@ -2,10 +2,24 @@
   <q-layout>
     <div class="navbar">
 
-      <!-- logo -->
-      <div class="logo" @click="$router.push('/')">
-        Parallel
+      <!-- HAMBURGER BUTTON -->
+      <div class="hamburger" @click="menuOpen = true">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
+
+      <!-- logo -->
+       <div class="logo" @click="$router.push('/')">
+          <img src="/src/assets/logo/logo5.png" alt="Parallel Logo" class="logo-img" />
+
+          <div class="brand-text">
+            <div class="brand-title">PARALLEL</div>
+              <div class="brand-subtitle">
+                A Division of Pushpa Textile
+              </div>
+          </div>
+        </div>
 
       <!-- links -->
       <div class="links">
@@ -14,12 +28,11 @@
         <span @click="$router.push('/women')">Women</span>
         <span @click="$router.push('/bulk')">Bulk Orders</span>
         <span @click="$router.push('/about')">About</span>
-        <span @click="$router.push('/contact')">Contact</span>
       </div>
 
       <!-- icons -->
       <div class="icons">
-        <q-icon name="search" size="22px" class="icon" />
+        <q-icon name="search" size="22px" class="icon" @click="searchOpen = true" />
 
         <div class="icon-box" @click="$router.push('/wishlist')">
           <q-icon name="favorite" size="22px" class="icon heart-icon" />
@@ -36,6 +49,54 @@
           class="icon"
           @click="$router.push('/login')"
         />
+      </div>
+    </div>
+
+    <!-- SEARCH OVERLAY -->
+<div v-if="searchOpen" class="search-overlay" @click="searchOpen = false"></div>
+
+<!-- SEARCH POPUP -->
+<div v-if="searchOpen" class="search-popup">
+  <div class="search-header">
+    <input
+      v-model="searchQuery"
+      type="text"
+      placeholder="Search products..."
+      class="search-input"
+    />
+    <span class="search-close" @click="searchOpen = false">✕</span>
+  </div>
+
+  <div class="search-results">
+    <div
+      class="search-card"
+      v-for="product in filteredProducts"
+      :key="product.id"
+      @click="goToProduct(product)"
+    >
+      <img :src="product.image" :alt="product.name" class="search-product-img" />
+      <h4>{{ product.name }}</h4>
+      <p>{{ product.category }}</p>
+    </div>
+  </div>
+</div>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div v-if="menuOpen" class="mobile-menu-overlay" @click="menuOpen = false"></div>
+
+    <!-- MOBILE SIDEBAR MENU -->
+    <div class="mobile-sidebar" :class="{ open: menuOpen }">
+      <div class="mobile-menu-header">
+        <span class="menu-title">Menu</span>
+        <span class="close-btn" @click="menuOpen = false">✕</span>
+      </div>
+
+      <div class="mobile-links">
+        <span @click="goToPage('/')">Home</span>
+        <span @click="goToPage('/men')">Men</span>
+        <span @click="goToPage('/women')">Women</span>
+        <span @click="goToPage('/bulk')">Bulk Orders</span>
+        <span @click="goToPage('/about')">About</span>
       </div>
     </div>
 
@@ -115,11 +176,79 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue' // ref mobile menu sathi
+import { useRouter } from 'vue-router' // route navigate sathi
 import { cart } from 'src/stores/shop'
 
 // only selected product count
 const totalCartCount = computed(() => cart.value.length)
+
+// mobile menu open/close state
+const menuOpen = ref(false)
+
+// router use karaycha
+const router = useRouter()
+
+// nav item click zalyavar page open + menu close
+const goToPage = (path) => {
+  router.push(path)
+  menuOpen.value = false
+}
+
+// search popup open/close
+const searchOpen = ref(false)
+
+// search input value
+const searchQuery = ref('')
+
+// sample searchable products
+const searchProducts = ref([
+  {
+    id: 1,
+    name: 'Men Scrub',
+    category: 'Classic Collection',
+    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/brown and light brown scrub suit men.png",
+    route: '/men'
+  },
+  {
+    id: 2,
+    name: 'Classic Scrub',
+    category: 'Premium Scrub',
+    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/Grey full sleeves zip scrub suit men.png",
+    route: '/men'
+  },
+  {
+    id: 3,
+    name: 'Women Scrub',
+    category: 'Elegant Fit',
+    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/V neck Dark green scrub suit women.png",
+    route: '/women'
+  },
+  {
+    id: 4,
+    name: 'Womens Longsleeves Scrub',
+    category: 'Classic Scrub',
+    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/Light yellow full sleeves scrub suit women.png",
+    route: '/women'
+  }
+])
+
+// search filter logic
+const filteredProducts = computed(() => {
+  if (!searchQuery.value.trim()) return searchProducts.value
+
+  return searchProducts.value.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    product.category.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
+})
+
+// click product => page open + popup close
+const goToProduct = (product) => {
+  router.push(product.route)
+  searchOpen.value = false
+}
+
 </script>
 
 <style lang="scss">

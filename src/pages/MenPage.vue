@@ -55,7 +55,7 @@
                 @click="goToMenProduct(product.id)"
               />
 
-              <span class="badge">Bestseller</span>
+              <span v-if="product.isBestSeller" class="badge">Bestseller</span>
 
               <!-- Wishlist -->
               <div class="card-icons" @click.stop="handleWishlist(product)">
@@ -98,7 +98,7 @@
               </div>
 
               <div class="price-row">
-                <p class="price">₹ {{ product.price }}</p>
+                <p class="price">{{ product.price }}</p>
               </div>
 
               
@@ -125,9 +125,9 @@ const selectedCategories = ref([])
 const selectedFabrics = ref([])
 const selectedColors = ref([])
 
-const filterCategories = ["Scrubs", "Lab Coats", "Surgical Wear"]
-const fabrics = ["Classic", "Ecoflex"]
-const colors = ["Navy", "Black", "Wine", "Olive", "Grey"]
+const filterCategories = ["Scrubs", "Aprons"]
+const fabrics = ["Classic", "Ecoflex Lite","Ecoflex"]
+const colors = ["Brown", "Green", "Grey", "Mint Green", "Maroon"]
 
 const goToMenProduct = (id) => {
   router.push(`/men-product/${id}`)

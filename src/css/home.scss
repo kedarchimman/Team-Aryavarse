@@ -27,6 +27,8 @@
     max-width: 550px;
   }
 
+  
+
   .features {
     display: flex;
     gap: 14px;
@@ -49,6 +51,10 @@
     border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
+  }
+  //show now btn work
+  .products {
+  scroll-margin-top: 100px;
   }
 
   .hero-image-wrapper {

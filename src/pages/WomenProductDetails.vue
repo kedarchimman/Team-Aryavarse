@@ -1,6 +1,9 @@
 <template>
   <div v-if="product" class="women-product-page">
     <div class="product-page">
+
+    <!-- LEFT: thumbs + main image -->
+    <div class="left-wrap">
       <div class="left">
         <div class="thumbs">
           <img
@@ -12,11 +15,14 @@
           />
         </div>
 
-        <div class="main-image-box" @click="dialog = true">
-          <img :src="selectedImage" class="main-image" />
-        </div>
-      </div>
+              <div class="main-image-box" @click="openImageDialog">
+                  <img :src="selectedImage" class="main-image" />
 
+              </div>
+        </div>
+    </div>
+
+      <!------------right--------------->
       <div class="right">
         <p class="tag">Premium Women Collection</p>
         <h1>{{ product.title }}</h1>
@@ -30,74 +36,379 @@
 
         <p class="desc">{{ product.description }}</p>
 
-        <div class="info-box">
+        <!----<div class="info-box">
           <p><strong>Fabric:</strong> {{ product.fabric }}</p>
           <p><strong>Color:</strong> {{ product.color }}</p>
           <p><strong>Category:</strong> {{ product.category }}</p>
-        </div>
+        </div>-->
 
-        <!-- Size -->
-        <div class="size-section">
-          <p class="size-label">Select Size</p>
-          <div class="size-options">
-            <button
-              v-for="size in sizes"
-              :key="size"
-              class="size-btn"
-              :class="{ active: selectedSize === size }"
-              @click="selectedSize = size"
-            >
-              {{ size }}
-            </button>
-          </div>
-        </div>
+           <!-- COLOUR -->
+            <div class="variant-section">
+                <p class="variant-label">Colour: <strong>{{ selectedColor }}</strong></p>
+                  <div class="color-swatches">
+                  <button
+                    v-for="c in colorOptions" :key="c.name"
+                    class="color-dot"
+                    :class="{ active: selectedColor === c.name }"
+                    :style="{ background: c.hex }"
+                    :title="c.name"
+                    @click="changeColor(c.name)"
+                  > </button>
+                  </div>
+              </div>
+        
+                  <!-- Size -->
+                  <div class="variant-section">
+                    <div class="section-head">
+                        <p class="variant-label">
+                          Size: <strong>{{ selectedSize }}</strong>
+                        </p>
+                        <button class="size-chart-link" @click="sizeChartDialog = true">
+                          Size Chart
+                        </button>
+                      </div>
 
-        <div class="btns">
-          <button class="cart-btn" @click="handleAddToCart">Add to Cart</button>
-          <button
-            class="wish-btn"
-            :class="{ active: isInWishlist(product.id) }"
-            @click="toggleWishlist(product)"
-          >
-            {{ isInWishlist(product.id) ? 'Wishlisted ♥' : 'Wishlist' }}
-          </button>
-        </div>
+                    <div class="size-options">
+                      <button
+                        v-for="s in sizes" :key="s"
+                        class="size-btn"
+                        :class="{ active: selectedSize === s }"
+                        @click="selectedSize = s"
+                      >
+                      {{ s }}
+                      </button>
+                    </div>
+                  </div>
+
+                    <!-- BUTTONS -->
+                     <div class="btns">
+                          <button class="cart-btn" @click="handleAddToCart">Add to Cart</button>
+                          <button class="buy-btn" @click="handleBuyNow">Buy Now</button>
+                          
+                      </div>
+
+
+                    <!-- Delivery features (Knya style) -->
+                      <div class="delivery-cols">
+
+                        <div class="delivery-col">
+                            <i class="bi bi-truck-flatbed"></i>
+                            <p class="delivery-title">1–3 Day<br />Express Shipping</p>
+                         </div>
+
+                          <div class="delivery-col">
+                            <i class="bi bi-box-seam"></i>
+                              <p class="delivery-title">Easy Exchange<br />& Returns</p>
+                          </div>
+
+                            <div class="delivery-col">
+                              <i class="bi bi-truck"></i>
+                                <p class="delivery-title">Cash on Delivery<br />Available</p>
+                            </div>
+                      </div>
+
+                  <!--pin code section---->
+                    <div class="section delivery-details">
+                        <h3>Delivery Details</h3>
+
+                      <div class="pincode-checker">
+                        <div class="input-btn-group">
+                            <q-input
+                              v-model="pincode"
+                              type="number"
+                              dense
+                              class="pincode-input"
+                              placeholder="Enter pincode"
+                              :hide-bottom-space="true"
+                            />
+                            <q-btn
+                              class="check-btn"
+                              :loading="isChecking"
+                              :disable="isChecking"
+                              label="Check"
+                              @click="checkPincode"
+                            />
+                          </div>
+
+                      <div v-if="pincodeError" class="error-msg">
+                        {{ pincodeError }}
+                      </div>
+
+                        <div v-if="deliveryStatus" class="delivery-messages">
+                           <div class="delivery-date">
+                             <i class="bi bi-truck"></i>
+                              {{ deliveryStatus.deliveryDate }}
+                            </div>
+
+                            <div class="delivery-cod" v-if="deliveryStatus.cod">
+                              <i class="bi bi-cash-stack"></i>
+                                {{ deliveryStatus.cod }}
+                            </div>
+                         </div>
+                    </div>
+                </div>
+
+<!----details---->
+<div class="product-info-right">
+
+  <!-- Details & Fit -->
+  <div class="section accordion">
+    <div class="accordion-header" @click="activeAccordion = activeAccordion === 0 ? null : 0">
+      <span>Details & Fit</span>
+      <q-icon :name="activeAccordion === 0 ? 'remove' : 'add'" />
+    </div>
+    <div v-show="activeAccordion === 0" class="accordion-content">
+      <p>
+        These Classic New Gen scrubs for women are built for performance and crafted for style.<br>
+      </p>
+      <ul>
+        <li>Modern V-Neck gives you room to move freely.</li>
+        <li>Roomy pockets for all essentials.</li>
+        <li>Side slits on the top for easy movement.</li>
+        <li>Loop ring to hold your ID badge.</li>
+        <li>Backdarts for a more structured fit.</li>
+        <li>Classic, practical, and always professional - scrub suits that fits the way you work.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Fabric & Care -->
+  <div class="section accordion">
+    <div class="accordion-header" @click="activeAccordion = activeAccordion === 1 ? null : 1">
+      <span>Fabric & Care</span>
+      <q-icon :name="activeAccordion === 1 ? 'remove' : 'add'" />
+    </div>
+    <div v-show="activeAccordion === 1" class="accordion-content">
+      <p>Engineered with our proprietary fabric, these women scrubs are designed to keep every shift comfortable and effortless.</p>
+      <ul>
+        <li>75% Poly</li>
+        <li>25% Viscose</li>
+        <li>Wash inside out with like colors in 40°C water.</li>
+        <li>Do not bleach and only tumble dry.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Return & Exchange -->
+<div class="section accordion">
+  <div class="accordion-header" @click="activeAccordion = activeAccordion === 2 ? null : 2">
+    <span>Return & Exchange</span>
+    <q-icon :name="activeAccordion === 2 ? 'remove' : 'add'" />
+  </div>
+  <div v-show="activeAccordion === 2" class="accordion-content">
+    <p>We want you to love your scrubs. If something isn’t right, you can request a return or exchange within 7 days of delivery for all non-customised orders.</p>
+    <p><strong>Please note:</strong></p>
+    <ul>
+      <li>Embroidery products are not eligible for return or exchange.</li>
+      <li>Items that have been used, washed, or had their tags removed cannot be returned.</li>
+      <li>Orders placed during sale events are final and not eligible for return and can be exchanged.</li>
+    </ul>
+  </div>
+</div>
+</div>
+
       </div>
     </div>
 
-    <q-dialog v-model="dialog" persistent>
-      <div class="popup">
-        <button class="close-btn" @click="dialog = false">✕</button>
-        <img :src="selectedImage" class="popup-image" />
+    <!-- IMAGE DIALOG -->
+<div v-if="imageDialog" class="image-popup-overlay" @click.self="imageDialog = false">
+  <div class="image-popup-box">
+  <!-- CLOSE BUTTON -->
+   <button class="image-popup-close" @click="imageDialog = false">✕</button>
+
+  <!-- IMAGE -->
+  <img :src="selectedImage" class="image-popup-img" />
+  </div>
+
+</div>
+<!-- SIZE CHART POPUP -->
+    <q-dialog v-model="sizeChartDialog">
+      <div class="size-chart-popup">
+        <!-- HEADER -->
+        <div class="size-chart-header">
+          <h3>Size Chart</h3>
+          <button class="size-chart-close" @click="sizeChartDialog = false">✕</button>
+        </div>
+
+        <!-- TABS -->
+        <div class="size-chart-tabs">
+          <button
+            class="tab"
+            :class="{ active: activeTab === 'size' }"
+            @click="activeTab = 'size'"
+          >
+            Size 
+          </button>
+
+          <button
+            class="tab"
+            :class="{ active: activeTab === 'measure' }"
+            @click="activeTab = 'measure'"
+          >
+            How to Measure
+          </button>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="size-chart-content">
+          <img
+            v-if="activeTab === 'size'"
+            :src="sizeChartImg"
+            class="size-chart-img"
+          />
+
+          <img
+            v-else
+            :src="measureImg"
+            class="size-chart-img"
+          />
+        </div>
       </div>
     </q-dialog>
+
+
   </div>
 </template>
 
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { womenProducts } from 'src/data/womenProducts'
 import { addToCart, toggleWishlist, isInWishlist } from 'src/stores/shop'
+import sizeChartImg from 'src/assets/size_chart/size-chart.png'
+import measureImg from 'src/assets/size_chart/measure.png'
 
-const route = useRoute()
+// description
+const activeAccordion = ref(null)
 
-const sizes = ['S', 'M', 'L', 'XL']
-const selectedSize = ref('M')
+const route  = useRoute()
+const router = useRouter()
 
+// PRODUCT
 const product = computed(() =>
   womenProducts.find(p => p.id === Number(route.params.id))
 )
 
+// IMAGES
 const selectedImage = ref('')
-const dialog = ref(false)
+const imageDialog   = ref(false)
 
 watch(product, (val) => {
-  if (val) selectedImage.value = val.images[0]
+  if (val && val.images?.length) {
+    selectedImage.value = val.images[0]
+  }
 }, { immediate: true })
 
+const openImageDialog = () => {
+  imageDialog.value = true
+}
+
+const prevImage = () => {
+  const imgs = product.value?.images || []
+  if (!imgs.length) return
+  selectedImage.value =
+    imgs[(imgs.indexOf(selectedImage.value) - 1 + imgs.length) % imgs.length]
+}
+
+const nextImage = () => {
+  const imgs = product.value?.images || []
+  if (!imgs.length) return
+  selectedImage.value =
+    imgs[(imgs.indexOf(selectedImage.value) + 1) % imgs.length]
+}
+
+// COLORS (SAFE)
+const colorOptions = computed(() => product.value?.colors || [])
+
+const selectedColor = ref('')
+
+watch(product, (val) => {
+  if (val?.colors?.length) {
+    selectedColor.value = val.colors[0].name
+  }
+}, { immediate: true })
+
+const changeColor = (colorName) => {
+  selectedColor.value = colorName
+
+  const colorObj = product.value?.colors?.find(c => c.name === colorName)
+
+  if (colorObj?.images?.length) {
+    product.value.images = colorObj.images
+    selectedImage.value = colorObj.images[0]
+  }
+}
+
+// PRICE
+const oldPrice = computed(() =>
+  product.value ? Number(product.value.price) + 300 : 0
+)
+
+// SIZE
+const sizes = ['XS','S','M','L','XL','2XL','3XL','4XL']
+const selectedSize = ref('M')
+
+// SIZE CHART
+const sizeChartDialog = ref(false)
+const activeTab = ref('size')
+
+// PINCODE
+const pincode = ref('')
+const deliveryStatus = ref(null)
+const pincodeError = ref('')
+const isChecking = ref(false)
+
+const solapurPincodes = [
+  '413001','413002','413003','413004','413005',
+  '413006','413007','413101','413109','413112',
+  '413203','413212','413214','413215','413216',
+  '413219','413221','413222','413228','413253',
+  '413301','413303','413304','413305','413306',
+  '413307','413309','413310','413311','413314',
+  '413401','413402','413403','413406','413409',
+  '413410','413411'
+]
+
+const checkPincode = () => {
+  const pin = pincode.value.trim()
+  deliveryStatus.value = null
+  pincodeError.value = ''
+
+  if (!pin) {
+    pincodeError.value = 'Please enter a valid pincode'
+    return
+  }
+
+  isChecking.value = true
+
+  setTimeout(() => {
+    if (solapurPincodes.includes(pin)) {
+      deliveryStatus.value = {
+        deliveryDate: 'Delivery between 11th and 12th Apr',
+        cod: 'Cash on delivery available'
+      }
+    } else {
+      deliveryStatus.value = null
+      pincodeError.value = 'Sorry, delivery not available for this pincode'
+    }
+    isChecking.value = false
+  }, 1200)
+}
+
+// CART
 const handleAddToCart = () => {
-  addToCart({ ...product.value, size: selectedSize.value })
+  if (!product.value) return
+
+  addToCart({
+    ...product.value,
+    size: selectedSize.value,
+    color: selectedColor.value
+  })
+}
+
+const handleBuyNow = () => {
+  handleAddToCart()
+  router.push('/cart')
 }
 </script>
 
