@@ -17,25 +17,32 @@
       </div>
     </div>
 
-    <!-- PROMO STRIP -->
-    <div class="promo-strip">
-      <div class="promo-track">
-        <div class="promo-group">
-          <div class="promo-item" v-for="(item, index) in promoItems" :key="'first-' + index">
-            <img :src="item.logo" :alt="item.text" class="promo-logo" />
-            <span class="promo-text">{{ item.text }}</span>
-            <span class="promo-separator"></span>
-          </div>
+     <!-- PROMO STRIP -->
+    <div class="trusted-clients-section">
+  <div class="section-header">
+    <h3 class="clients-title">Our Trusted Clients</h3>
+   
+    <div class="title-underline"></div>
+  </div>
+
+
+  <div class="promo-strip">
+    <div class="promo-track">
+      <div class="promo-group">
+        <div class="promo-item" v-for="(item, index) in promoItems" :key="'first-' + index">
+          <img :src="item.logo" :alt="item.text" class="promo-logo" />
+          <span class="promo-separator"></span>
         </div>
-        <div class="promo-group">
-          <div class="promo-item" v-for="(item, index) in promoItems" :key="'second-' + index">
-            <img :src="item.logo" :alt="item.text" class="promo-logo" />
-            <span class="promo-text">{{ item.text }}</span>
-            <span class="promo-separator"></span>
-          </div>
+      </div>
+      <div class="promo-group">
+        <div class="promo-item" v-for="(item, index) in promoItems" :key="'second-' + index">
+          <img :src="item.logo" :alt="item.text" class="promo-logo" />
+          <span class="promo-separator"></span>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
     <!-- CATEGORY BAR -->
     <div class="category-bar">
@@ -75,8 +82,19 @@
       <section class="products" ref="productsSection">
         <div class="top-bar">
           <span>{{ filteredProducts.length }} items</span>
-          <span>SORT BY : MOST POPULAR</span>
+          <SortDropdown v-model="sortOption" />
         </div>
+          
+            <!-- DROPDOWN -->
+            <div v-if="showSort" class="sort-dropdown">
+              <div @click="setSort('popular')">MOST POPULAR</div>
+              <div @click="setSort('bestseller')">BEST SELLING</div>
+              <div @click="setSort('low')">LOW PRICE</div>
+              <div @click="setSort('high')">HIGH PRICE</div>
+              <div @click="setSort('bestseller')">BEST SELLING</div>
+            </div>
+        
+        
 
         <div class="grid">
           <div
@@ -142,14 +160,14 @@
               </div>
 
               <div class="price-row">
-                <p class="price">₹{{ product.price }}</p>
+                <p class="price">₹ {{ Number(product.price).toFixed(2) }}</p>
               </div>
             </div>
 
           </div>
         </div>
       </section>
-
+                                
     </div>
   </div>
 </template>
@@ -159,13 +177,17 @@ import { useRouter } from 'vue-router'
 import { ref, computed, nextTick } from 'vue'
 import { menProducts } from 'src/data/menProducts'
 import { womenProducts } from 'src/data/womenProducts'
+import { apronsProducts } from 'src/data/apronsProducts'
 import { addToCart, toggleWishlist, isInWishlist } from 'src/stores/shop'
+import SortDropdown from 'src/components/SortDropdown.vue'
+
+const sortOption = ref('popular')
 
 const router = useRouter()
 
 const hoveredProduct = ref(null)
 const flyingHeartId = ref(null)
-const productsSection = ref(null) // ✅ IMPORTANT
+const productsSection = ref(null) 
 
 // FILTERS
 const selectedCategories = ref([])
@@ -176,8 +198,10 @@ const filterCategories = ["Scrubs", "Aprons"]
 const fabrics = ["Classic", "Ecoflex", "Ecoflex Lite"]
 const colors = ["Maroon", "Black", "Green", "Dark Green", "Grey"]
 
+
 // PROMO ITEMS
 const promoItems = [
+  { logo: 'https://upload.wikimedia.org/wikipedia/commons/b/bc/Myntra_Logo.png', text: 'Myntra' },
   { text: "Akasa Air",        logo: "src/assets/slider_logo/akasa_air.png" },
   { text: "Maruti Suguki",    logo: "src/assets/slider_logo/maruti_suguki.png" },
   { text: "IndiGo",           logo: "src/assets/slider_logo/indigo.png" },
@@ -188,12 +212,17 @@ const promoItems = [
   { text: "Yashoda Hospital", logo: "src/assets/slider_logo/yashoda.png" }
 ]
 
+
 // HOME PRODUCTS IDS
 const homeProductIds = [
+  { id: 204,   type: 'aprons' },
   { id: 101, type: 'men' },
+  { id: 205,   type: 'aprons' },
   { id: 1,   type: 'women' },
+  { id: 206,   type: 'aprons' },
   { id: 102, type: 'men' },
   { id: 2,   type: 'women' },
+  { id: 201,   type: 'aprons' },
   { id: 103, type: 'men' },
   { id: 3,   type: 'women' },
   { id: 105, type: 'men' },
@@ -204,11 +233,17 @@ const homeProductIds = [
 const homeProducts = computed(() => {
   return homeProductIds.map(item => {
     let product = null
+
     if (item.type === 'men') {
       product = menProducts.find(p => p.id === item.id)
-    } else {
+    } 
+    else if (item.type === 'women') {
       product = womenProducts.find(p => p.id === item.id)
+    } 
+    else if (item.type === 'aprons') {
+      product = apronsProducts.find(p => p.id === item.id)
     }
+
     if (product) return { ...product, type: item.type }
     return null
   }).filter(Boolean)
@@ -233,7 +268,7 @@ const filteredProducts = computed(() => {
   })
 })
 
-// ✅ WORKING SHOP NOW SCROLL
+// WORKING SHOP NOW SCROLL
 const scrollToProducts = async () => {
   await nextTick()
 
@@ -252,8 +287,12 @@ const scrollToProducts = async () => {
 const goToProduct = (product) => {
   if (product.type === 'men') {
     router.push(`/men-product/${product.id}`)
-  } else {
+  } 
+  else if (product.type === 'women') {
     router.push(`/women-product/${product.id}`)
+  } 
+  else if (product.type === 'aprons') {
+    router.push(`/aprons-product/${product.id}`) 
   }
 }
 
@@ -276,6 +315,7 @@ const getFabricDescription = (fabric) => {
   if (fabric === 'Ecoflex Lite') return 'Ecoflex Lite • Ultra light • Max comfort'
   return 'Premium scrub fabric'
 }
+
 </script>
 
 <style scoped lang="scss">

@@ -32,9 +32,17 @@
           <span class="rating">{{ product.rating }} Rating</span>
         </div>
 
-        <h2>₹ {{ product.price }}</h2>
+<div class="price-row">
+  <h2>
+    ₹ {{ Number(product.price).toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}
+  </h2>
 
-        <p class="desc">{{ product.description }}</p>
+  <span class="old-price">
+    ₹ {{ Number(oldPrice).toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}
+  </span>
+
+  <span class="discount">20% OFF</span>
+</div>
 
         <!----<div class="info-box">
           <p><strong>Fabric:</strong> {{ product.fabric }}</p>
@@ -345,7 +353,7 @@ const oldPrice = computed(() =>
 )
 
 // SIZE
-const sizes = ['XS','S','M','L','XL','2XL','3XL','4XL']
+const sizes = ['XS','S','M','L','XL','2XL','3XL']
 const selectedSize = ref('M')
 
 // SIZE CHART

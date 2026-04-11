@@ -43,7 +43,7 @@ export const menProducts = [
   {
     id: 102,
     title: "ecoflex™ Men's Longsleeves Scrub",
-    price: '1599.00',
+    price: 1599.00,
     rating: 4.7,
     fabric: "Ecoflex",
     color: "Green",

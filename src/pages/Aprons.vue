@@ -1,39 +1,68 @@
 <template>
-  <div class="men-page">
+  <div class="aprons-page">
     <div class="main-container">
       <!-- Filters -->
       <aside class="filters">
         <h2>Filters</h2>
 
-        <div class="filter-group">
+        <!---<div class="filter-group">
           <p>Category</p>
           <label v-for="c in filterCategories" :key="c" class="filter-label">
             <input type="checkbox" v-model="selectedCategories" :value="c" />
             {{ c }}
           </label>
+        </div>---->
+
+      <!-- GENDER -->
+      <div class="filter-group">
+        <p>Gender</p>
+        <label v-for="g in genders" :key="g" class="filter-label">
+        <input type="checkbox" v-model="selectedGenders" :value="g" />
+        {{ g }}
+        </label>
+      </div>
+
+
+          <!-- SLEEVE -->
+        <div class="filter-group">
+          <p>Style</p>
+          <label v-for="s in sleeves" :key="s" class="filter-label">
+          <input type="checkbox" v-model="selectedSleeves" :value="s" />
+          {{ s }}
+          </label>
         </div>
 
-        <div class="filter-group">
+        <!----<div class="filter-group">
           <p>Fabric</p>
           <label v-for="f in fabrics" :key="f" class="filter-label">
             <input type="checkbox" v-model="selectedFabrics" :value="f" />
             {{ f }}
           </label>
+        </div>--->
+
+        <!-- COLOR -->
+        <div class="filter-group">
+          <p>Color</p>
+          <label v-for="c in colors" :key="c" class="filter-label">
+          <input type="checkbox" v-model="selectedColors" :value="c" />
+          {{ c }}
+          </label>
         </div>
 
-        <div class="filter-group">
+        <!---<div class="filter-group">
           <p>Color</p>
           <label v-for="color in colors" :key="color" class="filter-label">
             <input type="checkbox" v-model="selectedColors" :value="color" />
             {{ color }}
           </label>
-        </div>
+        </div>--->
       </aside>
 
       <!-- Products -->
       <section class="products">
         <div class="top-bar">
           <span>{{ filteredProducts.length }} items</span>
+          
           <SortDropdown v-model="sortOption" />
         </div>
 
@@ -52,7 +81,7 @@
               <img
                 :src="hoveredProduct === product.id ? product.images?.[1] || product.image : product.image"
                 class="product-img"
-                @click="goToMenProduct(product.id)"
+                @click="goToApronsProduct(product.id)"
               />
 
               <span v-if="product.isBestSeller" class="badge">Bestseller</span>
@@ -74,7 +103,7 @@
 
               <!-- Hover button -->
               <div class="hover-actions" v-if="hoveredProduct === product.id">
-                <button class="quick-btn" @click="goToMenProduct(product.id)">
+                <button class="quick-btn" @click="goToApronsProduct(product.id)">
                   Quick View
                 </button>
               </div>
@@ -82,7 +111,7 @@
 
             <!-- Content -->
             <div class="card-content">
-              <!-- Knya style fabric text -->
+              <!-- fabric text -->
               <div class="fabric-wrap">
                 <span class="fabric-link">{{ product.fabric }}</span>
                 <div class="fabric-tooltip">
@@ -100,8 +129,6 @@
               <div class="price-row">
                 <p class="price">₹ {{ Number(product.price).toFixed(2) }}</p>
               </div>
-
-              
             </div>
           </div>
         </div>
@@ -113,9 +140,8 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ref, computed } from 'vue'
-import { menProducts } from 'src/data/menProducts'
+import { apronsProducts } from 'src/data/apronsProducts'
 import { addToCart, toggleWishlist, isInWishlist } from 'src/stores/shop'
-
 import SortDropdown from 'src/components/SortDropdown.vue'
 
 const sortOption = ref('popular')
@@ -127,14 +153,22 @@ const flyingHeartId = ref(null)
 
 const selectedCategories = ref([])
 const selectedFabrics = ref([])
+//const selectedColors = ref([])
+
+const selectedGenders = ref([])
+const selectedSleeves = ref([])
 const selectedColors = ref([])
 
-const filterCategories = ["Scrubs", "Aprons"]
-const fabrics = ["Classic", "Ecoflex Lite","Ecoflex"]
-const colors = ["Brown", "Green", "Grey", "Mint Green", "Maroon"]
+const genders = ["Men", "Women"]
+const sleeves = ["Full Sleeve", "3-4 Sleeve", "Half Sleeve"]
+const colors = ["White"]
 
-const goToMenProduct = (id) => {
-  router.push(`/men-product/${id}`)
+//const filterCategories = ["Lab Coats"]
+//const fabrics = ["Classic", "Ecoflex Lite", "Ecoflex"]
+
+
+const goToApronsProduct = (id) => {
+  router.push(`/aprons-product/${id}`)
 }
 
 const handleWishlist = (product) => {
@@ -160,11 +194,11 @@ const getFabricDescription = (fabric) => {
   if (fabric === 'Ecoflex') {
     return 'Ecoflex stretch • Breathable • Premium movement'
   }
-  return 'Premium scrub fabric'
+  return 'Premium apron fabric'
 }
 
 const filteredProducts = computed(() => {
-  return menProducts.filter(product => {
+  return apronsProducts.filter(product => {
     const matchCategory =
       selectedCategories.value.length === 0 ||
       selectedCategories.value.includes(product.category)
@@ -173,15 +207,25 @@ const filteredProducts = computed(() => {
       selectedFabrics.value.length === 0 ||
       selectedFabrics.value.includes(product.fabric)
 
+
+    const matchGender =
+      selectedGenders.value.length === 0 ||
+      selectedGenders.value.includes(product.gender)
+
+    const matchSleeve =
+      selectedSleeves.value.length === 0 ||
+      selectedSleeves.value.includes(product.sleeve)
+
     const matchColor =
       selectedColors.value.length === 0 ||
       selectedColors.value.includes(product.color)
 
-    return matchCategory && matchFabric && matchColor
-  })
+    return matchCategory && matchFabric && matchGender && matchSleeve && matchColor
+
+})
 })
 </script>
 
 <style scoped lang="scss">
-@import 'src/css/men.scss';
+@import 'src/css/aprons.scss';
 </style>

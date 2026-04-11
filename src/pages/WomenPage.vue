@@ -35,7 +35,7 @@
       <section class="products">
         <div class="top-bar">
           <span>{{ filteredProducts.length }} items</span>
-          <span>SORT BY : MOST POPULAR</span>
+          <SortDropdown v-model="sortOption" />
         </div>
 
         <div class="grid">
@@ -98,7 +98,7 @@
               </div>
 
               <div class="price-row">
-                <p class="price">₹{{ product.price }}</p>
+                <p class="price">₹ {{ Number(product.price).toFixed(2) }}</p>
               </div>
 
               
@@ -117,6 +117,9 @@ import { ref, computed } from 'vue'
 import { womenProducts } from 'src/data/womenProducts'
 
 import { addToCart, toggleWishlist, isInWishlist } from 'src/stores/shop'
+import SortDropdown from 'src/components/SortDropdown.vue'
+
+const sortOption = ref('popular')
 
 const router = useRouter()
 

@@ -6,7 +6,7 @@
       <div class="cart-layout">
         <!-- LEFT SIDE -->
         <div class="cart-left">
-          <div v-if="cart.length > 0">
+          <div v-if="cart && cart.length > 0">
             <div
               v-for="item in cart"
               :key="item.id"
@@ -17,7 +17,9 @@
 
               <!-- details -->
               <div class="cart-info">
-                <h3 class="product-title">{{ item.title }}</h3>
+                <h3 class="product-title">
+                ₹ {{ Number(item.price).toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}
+                </h3>
                 <p class="product-meta">
                   Size: {{ item.size || 'M' }}
                   <span class="dot">•</span>
@@ -34,7 +36,7 @@
 
               <!-- price -->
               <div class="price-box">
-                ₹{{ (item.price * item.qty).toLocaleString() }}
+              ₹ {{ (Number(item.price) * item.qty).toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}
               </div>
 
               <!-- delete -->
@@ -61,17 +63,22 @@
 
             <div class="summary-row">
               <span>Subtotal</span>
-              <span>₹{{ subtotal.toLocaleString() }}</span>
+              <span>₹ {{ subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}</span>
             </div>
 
             <div class="summary-row">
               <span>Shipping</span>
-              <span>{{ shipping === 0 ? 'FREE' : `₹${shipping}` }}</span>
+              <span>
+              {{ shipping === 0 
+                ? 'FREE' 
+                : '₹ ' + Number(shipping).toLocaleString('en-IN', { minimumFractionDigits: 2 }) 
+              }}
+              </span>
             </div>
 
             <div class="summary-row">
               <span>Tax (GST 18%)</span>
-              <span>₹{{ tax.toLocaleString() }}</span>
+              <span>₹ {{ tax.toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}</span>
             </div>
 
             <p class="shipping-msg">🎉 You've qualified for free shipping!</p>
@@ -80,7 +87,7 @@
 
             <div class="summary-row total-row">
               <span>Total</span>
-              <span>₹{{ total.toLocaleString() }}</span>
+              <span>₹ {{ total.toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}</span>
             </div>
 
             <button class="checkout-btn">Proceed to Checkout</button>
@@ -95,13 +102,16 @@
   </q-page>
 </template>
 
+
 <script setup>
 import { computed } from 'vue'
 import { cart, removeFromCart, updateQty } from 'src/stores/shop'
 
-// subtotal
+// subtotal (safe number conversion)
 const subtotal = computed(() => {
-  return cart.value.reduce((sum, item) => sum + item.price * item.qty, 0)
+  return cart.value.reduce((sum, item) => {
+    return sum + Number(item.price) * item.qty
+  }, 0)
 })
 
 // shipping
@@ -109,12 +119,12 @@ const shipping = computed(() => {
   return subtotal.value > 0 ? 0 : 0
 })
 
-// tax
+// tax (no round)
 const tax = computed(() => {
-  return Math.round(subtotal.value * 0.18)
+  return subtotal.value * 0.18
 })
 
-// total
+// total (safe)
 const total = computed(() => {
   return subtotal.value + shipping.value + tax.value
 })

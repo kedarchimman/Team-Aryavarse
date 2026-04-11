@@ -39,9 +39,15 @@
         </div>
 
         <div class="price-row">
-          <h2>₹{{ product.price }}</h2>
-          <span class="old-price">₹{{ oldPrice }}</span>
-          <span class="discount">20% OFF</span>
+        <h2>
+        ₹ {{ Number(product.price).toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}
+        </h2>
+
+        <span class="old-price">
+        ₹ {{ Number(oldPrice).toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}
+        </span>
+
+        <span class="discount">20% OFF</span>
         </div>
 
         <!-- COLOUR -->
@@ -325,7 +331,7 @@ const changeColor = (colorName) => {
 const oldPrice = computed(() => product.value ? Number(product.value.price) + 300 : 0)
 
 // SIZE
-const sizes = ['XS','S','M','L','XL','2XL','3XL','4XL']
+const sizes = ['XS','S','M','L','XL','2XL','3XL']
 const selectedSize = ref('M')
 
 // popup

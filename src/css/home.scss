@@ -70,28 +70,52 @@
     height: auto;
     object-fit: contain;
   }
-
-  /* ================= PROMO STRIP ================= */
+/* ================= PROMO STRIP ================= */
   .promo-strip {
     position: relative;
     overflow: hidden;
     width: 100%;
-    margin: 40px 0 8px;
-    padding: 40px 0;
+    margin: 20px 0 8px;
+    padding: 20px 0;
   }
 
-  .promo-track {
-    display: flex;
-    width: max-content;
-    align-items: center;
-    animation: promoSlideLTR 22s linear infinite;
-  }
+.promo-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  animation: promoSlideLTR 25s linear infinite; // thoda slow = premium feel
+}
 
   .promo-group {
     display: flex;
     align-items: center;
     flex-shrink: 0;
   }
+
+  .clients-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #0f7b6c; // premium teal color
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  margin: 20px;
+}
+
+.title-underline {
+  width: 60px;
+  height: 4px;
+  background: #0f7b6c;
+  margin: 5px auto 0;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+.trusted-clients-section {
+  padding: 40px 20px 20px; 
+  background: #ffffff;
+  text-align: center;
+}
 
   .promo-item {
     display: flex;
@@ -102,21 +126,21 @@
     flex-shrink: 0;
   }
 
-  .promo-logo {
-    width: 60px;
-    height: 40px;
-    object-fit: contain;
-    display: block;
-    flex-shrink: 0;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
-  }
+.promo-logo {
+  width: 130px;
+  height: 110px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
+  transition: transform 0.3s ease;
+}
 
-  .promo-text {
-    font-size: 16px;
-    font-weight: 700;
-    color: #14325b;
-    letter-spacing: 0.2px;
-  }
+.promo-item:hover .promo-logo {
+  transform: scale(1.1);
+}
+
+
 
   .promo-separator {
     width: 6px;
@@ -148,10 +172,16 @@
     background: linear-gradient(to left, #ffffff, transparent);
   }
 
-  @keyframes promoSlideLTR {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
+  
+@keyframes promoSlideLTR {
+  0% {
+    transform: translateX(0);
   }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 
   /* ================= CATEGORY BAR ================= */
   .category-bar {

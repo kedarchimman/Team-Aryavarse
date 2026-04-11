@@ -26,8 +26,10 @@
         <span @click="$router.push('/')">Home</span>
         <span @click="$router.push('/men')">Men</span>
         <span @click="$router.push('/women')">Women</span>
+        <span @click="goToPage('/aprons')">Aprons</span>
         <span @click="$router.push('/bulk')">Bulk Orders</span>
         <span @click="$router.push('/about')">About</span>
+        
       </div>
 
       <!-- icons -->
@@ -95,6 +97,7 @@
         <span @click="goToPage('/')">Home</span>
         <span @click="goToPage('/men')">Men</span>
         <span @click="goToPage('/women')">Women</span>
+        <span @click="goToPage('/Aprons')">Aprons</span>
         <span @click="goToPage('/bulk')">Bulk Orders</span>
         <span @click="goToPage('/about')">About</span>
       </div>
@@ -142,7 +145,6 @@
       <ul>
         <li @click="$router.push('/')">Home</li>
         <li @click="$router.push('/about')">About</li>
-        <li @click="$router.push('/contact')">Contact</li>
         <li @click="$router.push('/wishlist')">Wishlist</li>
         <li @click="$router.push('/cart')">Cart</li>
         <li @click="$router.push('/bulk')">Bulk Orders</li>
@@ -155,7 +157,7 @@
       <ul>
         <li @click="$router.push('/men')">Men Scrubs</li>
         <li @click="$router.push('/women')">Women Scrubs</li>
-        <li @click="$router.push('/bulk')">Bulk Orders</li>
+        <li @click="$router.push('/aprons')">Aprons</li>
       </ul>
     </div>
 
