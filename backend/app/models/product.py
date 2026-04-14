@@ -1,12 +1,13 @@
-from sqlalchemy import Column, Integer, String, Numeric, Boolean
-from app.db.session import Base
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
+from app.db.base import Base
 
 
 class Product(Base):
-    __tablename__ = "products"
+    __tablename__ = "product"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    price = Column(Numeric(10, 2), nullable=False)
-    stock = Column(Integer, default=0)
-    is_active = Column(Boolean, default=True)
+    name = Column(String)
+    description = Column(String)
+    sku = Column(String, nullable=True)
+    category_id = Column(Integer, ForeignKey("category.id"))
+    is_deleted = Column(Boolean, default=False)

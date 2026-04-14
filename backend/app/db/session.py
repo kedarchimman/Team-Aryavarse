@@ -1,15 +1,27 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.db.base import Base
 
-from app.models.cart import CartItem
-from app.models.user import User
-from app.models.guest import GuestSession
+DATABASE_URL = "postgresql://postgres:Shreeya%40210926@localhost:5432/healthcare5_db"
 
-DATABASE_URL = "postgresql://postgres:akash45@localhost:5432/ecommerce"
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+    echo=False,   # set True temporarily if you need to see raw SQL
+)
 
-engine = create_engine(DATABASE_URL, echo=True)
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-Base.metadata.create_all(bind=engine)
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.close()
