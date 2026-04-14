@@ -1,23 +1,19 @@
+from typing import Optional
 from pydantic import BaseModel, Field, field_validator
 
 
 class CheckoutRequest(BaseModel):
     user_id: int = Field(..., gt=0)
     address_id: int = Field(..., gt=0)
-    coupon_code: str | None = Field(default=None, max_length=50)
-    shipping_amount: float = Field(default=0, ge=0)
-    
-
-    @field_validator("user_id", "address_id")
-    @classmethod
-    def validate_positive_ids(cls, value: int) -> int:
-        if value <= 0:
-            raise ValueError("must be greater than 0")
-        return value
+    coupon_code: Optional[str] = None
+    shipping_charge: float = Field(default=0, ge=0)
+    tax_amount: float = Field(default=0, ge=0)
+    platform_fee: float = Field(default=0, ge=0)
+    discount_amount: float = Field(default=0, ge=0)
 
     @field_validator("coupon_code")
     @classmethod
-    def normalize_coupon_code(cls, value: str | None) -> str | None:
+    def normalize_coupon(cls, value: Optional[str]) -> Optional[str]:
         if value is None:
             return None
         value = value.strip().upper()
