@@ -1,3 +1,12 @@
+// ============================================================
+//  menProducts.js  –  Sarv images getImage() ne — no hardcoded paths!
+// ============================================================
+
+import { parallelImg, modelImg, collarBoyImg } from './imageHelper'
+
+//  ↑ Ha file tuzha menProducts.js jyat ahe tya folder madhe thev
+//    (src/data/menProducts.js asel tar import path adjust kar)
+
 export const menProducts = [
   {
     id: 101,
@@ -9,32 +18,53 @@ export const menProducts = [
     type: "men",
     category: "Scrubs",
     isBestSeller: true,
-    description: "Premium navy scrub set for men. Comfortable, breathable and perfect for long shifts.",
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/brown and light brown scrub suit men.png",
+    description: "Premium classic collar scrub designed for healthcare professionals who prefer a structured and polished look.",
+    details: [
+      "Smart collar neck design for formal professional appearance",
+      "Relaxed fit for easy movement during long shifts",
+      "Multiple roomy pockets for essentials and accessories",
+      "Tailored stitching for structured fitting",
+      "Perfect blend of comfort and style for everyday hospital wear"
+    ],
+    fabricDescription: "Crafted with premium Classic fabric that provides durability, softness, and breathable comfort throughout your workday.",
+    fabricCare: [
+      "75% Poly", "25% Viscose",
+      "Soft breathable classic weave fabric",
+      "Machine wash cold with like colors",
+      "Do not bleach or tumble dry"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
+    // image + images dono same first color chya images
+    image: parallelImg('brown_and_light_brown.png'),
     images: [
-      "src/assets/scrub_suits_models/Parallel Scrub suits models/brown and light brown scrub suit men.png",
-      "src/assets/models/brothers suit.png",
+      parallelImg('brown_and_light_brown.png'),
+      modelImg('brothers_suit.png'),
     ],
     colors: [
-      { 
+      {
         name: "brown", hex: "#964B00",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/brown and light brown scrub suit men.png",
-          "src/assets/models/brothers suit.png"
+        images: [
+          parallelImg('brown_and_light_brown.png'),
+          modelImg('brothers_suit.png'),
         ]
       },
-      { 
+      {
         name: "green", hex: "#006400",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Dark green full sleeves zip scrub suit men.png",
-          "src/assets/models/Dark Green full sleeves zip suit.png"
+        images: [
+          parallelImg('Dark_green.png'),
+          modelImg('Dark_Green_full_sleeves.png'),
         ]
       },
-      { 
+      {
         name: "grey", hex: "#808080",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Grey full sleeves zip scrub suit men.png",
-          "src/assets/models/Grey+blue scrub.png"
+        images: [
+          parallelImg('Grey full sleeves zip scrub suit men.png'),
+          
         ]
       }
     ]
@@ -50,32 +80,51 @@ export const menProducts = [
     type: "men",
     category: "Scrubs",
     isBestSeller: true,
-    description: "Professional black scrub set designed for modern healthcare professionals.",
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/Dark green full sleeves zip scrub suit men.png",
+    description: "Advanced Ecoflex long sleeve scrub designed for superior flexibility, comfort, and modern professional styling.",
+    details: [
+      "Full sleeve coverage for enhanced protection",
+      "Modern zip-front closure for stylish appearance",
+      "Flexible stretchable design for active movement",
+      "Deep utility pockets for convenience",
+      "Perfect for long working hours and busy schedules"
+    ],
+    fabricDescription: "Made from lightweight Ecoflex stretch fabric engineered for flexibility, moisture control, and all-day performance.",
+    fabricCare: [
+      "80% Poly", "20% Spandex Blend",
+      "4-way stretch Ecoflex material",
+      "Machine wash gentle cycle",
+      "Do not iron on high heat"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
+    image: parallelImg('Dark_green.png'),
     images: [
-      "src/assets/scrub_suits_models/Parallel Scrub suits models/Dark green full sleeves zip scrub suit men.png",
-      "src/assets/models/Dark Green full sleeves zip suit.png",
+      parallelImg('Dark_green.png'),
+      modelImg('Dark_Green_full_sleeves.png'),
     ],
     colors: [
-      { 
+      {
         name: "Green", hex: "#006400",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Dark green full sleeves zip scrub suit men.png",
-          "src/assets/models/Dark Green full sleeves zip suit.png",
+        images: [
+          parallelImg('Dark_green.png'),
+          modelImg('Dark Green full sleeves zip suit.png'),
         ]
       },
-       { 
+      {
         name: "Grey", hex: "#808080",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Grey full sleeves zip scrub suit men.png",
-          
+        images: [
+          parallelImg('Grey full sleeves zip scrub suit men.png'),
         ]
       },
-      { 
-        name: "Navy Blue ", hex: "#000080",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Navy blue full sleeves zip scrub suit men.png",
-          "src/assets/models/Navy blue full sleeves zip suit.png",
+      {
+        name: "Navy Blue", hex: "#000080",
+        images: [
+          parallelImg('Navy blue full sleeves zip scrub suit men.png'),
+          modelImg('Navy_blue_full_sleeves.png'),
         ]
       }
     ]
@@ -90,53 +139,69 @@ export const menProducts = [
     color: "Grey",
     type: "men",
     category: "Scrubs",
-    description: "Soft and stylish wine scrub set with premium finishing.",
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/Grey full sleeves zip scrub suit men.png",
+    description: "Classic long sleeve scrub set designed with full coverage and structured comfort for professional medical use.",
+    details: [
+      "Elegant long sleeve design for added protection",
+      "Structured stitching for polished appearance",
+      "Breathable fit for all-day comfort",
+      "Functional side and chest pockets",
+      "Ideal for clinics, labs, and hospitals"
+    ],
+    fabricDescription: "Premium Classic fabric offers breathable comfort and durable wear suitable for daily professional use.",
+    fabricCare: [
+      "75% Poly", "25% Cotton Blend",
+      "Wrinkle-resistant material",
+      "Machine washable",
+      "Do not bleach"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
+    image: parallelImg('Grey.png'),
     images: [
-      "src/assets/scrub_suits_models/Parallel Scrub suits models/Grey full sleeves zip scrub suit men.png",
-      
+      parallelImg('Grey.png'),
     ],
     colors: [
-     { 
+      {
         name: "Grey", hex: "#808080",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Grey full sleeves zip scrub suit men.png",
-          
-        ]
+        images: [ parallelImg('Grey.png') ]
       },
-        { 
+      {
         name: "Green", hex: "#006400",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Dark green full sleeves zip scrub suit men.png",
-          "src/assets/models/Dark Green full sleeves zip suit.png",
+        images: [
+          parallelImg('Dark_green.png'),
+          modelImg('Dark_Green_full_sleeves.png'),
         ]
       },
-      { 
-        name: "Navy Blue ", hex: "#000080",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Navy blue full sleeves zip scrub suit men.png",
-          "src/assets/models/Navy blue full sleeves zip suit.png",
+      {
+        name: "Navy Blue", hex: "#000080",
+        images: [
+          parallelImg('Navy blue full sleeves zip scrub suit men.png'),
+          modelImg('Navy_blue_full_sleeves.png'),
         ]
       },
-      { 
+      {
         name: "Mustard Yellow", hex: "#FFCB05",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/mustard yellow scrub suit men.png",
-          "src/assets/models/Mustard yellow scrub suit.png"
+        images: [
+          parallelImg('mustard yellow scrub suit men.png'),
+          modelImg('Mustard_yellow_scrub_suit.png'),
         ]
       },
-      { 
-        name: "Mite Green", hex: "#98FB98",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Mint green full sleevs scrub suit.png",
-          "src/assets/models/Mint green full sleeves scrub suit.png"
+      {
+        name: "Mint Green", hex: "#98FB98",
+        images: [
+          parallelImg('Mint green full sleevs scrub suit.png'),
+          modelImg('Mint_green_full_sleeves_scrub.png'),
         ]
       },
-      { 
+      {
         name: "Maroon", hex: "#800000",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/maroon color scrub suit men.png",
-          "src/assets/models/Maroon scrub suit.png"
+        images: [
+          parallelImg('maroon color scrub suit men.png'),
+          modelImg('Maroon_scrub_suit.png'),
         ]
       }
     ]
@@ -150,33 +215,53 @@ export const menProducts = [
     fabric: "Ecoflex",
     color: "Soft Blue+Grey",
     type: "men",
-    category: "Lab Coats",
-    description: "Smart and breathable lab coat set for daily professional use.",
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/Round neck blue+grey scrub suit men.png",
+    category: "Scrubs",
+    description: "Premium Ecoflex round-neck scrub designed for modern professionals seeking flexibility, comfort, and sleek everyday styling.",
+    details: [
+      "Modern round-neck design for clean minimal look",
+      "Stretch-fit tailoring for unrestricted movement",
+      "Breathable lightweight structure for long shifts",
+      "Multiple utility pockets for convenience",
+      "Ideal for hospital, clinic, and lab environments"
+    ],
+    fabricDescription: "Made using premium Ecoflex stretch fabric that offers softness, flexibility, and moisture-wicking comfort all day long.",
+    fabricCare: [
+      "80% Poly", "20% Spandex Blend",
+      "4-way stretch breathable Ecoflex material",
+      "Machine wash cold",
+      "Do not bleach or iron directly"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
+    image: parallelImg('Round neck blue+grey scrub suit men.png'),
     images: [
-      "src/assets/scrub_suits_models/Parallel Scrub suits models/Round neck blue+grey scrub suit men.png",
-      "src/assets/models/Grey+blue scrub.png",
+      parallelImg('Round neck blue+grey scrub suit men.png'),
+      modelImg('Grey+blue_scrub.png'),
     ],
     colors: [
-      { 
+      {
         name: "Soft Blue+Grey", hex: "#6699CC",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Round neck blue+grey scrub suit men.png",
-          "src/assets/models/Grey+blue scrub.png"
+        images: [
+          parallelImg('Round neck blue+grey scrub suit men.png'),
+          modelImg('Grey+blue_scrub.png'),
         ]
       },
-      { 
-        name: "Mite Green", hex: "#98FB98",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Mint green full sleevs scrub suit.png",
-          "src/assets/models/Mint green full sleeves scrub suit.png"
+      {
+        name: "Mint Green", hex: "#98FB98",
+        images: [
+          parallelImg('Mint green full sleevs scrub suit.png'),
+          modelImg('Mint_green_full_sleeves_scrub.png'),
         ]
       },
-      { 
+      {
         name: "brown", hex: "#964B00",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/brown and light brown scrub suit men.png",
-          "src/assets/models/brothers suit.png"
+        images: [
+          parallelImg('brown_and_light_brown.png'),
+          modelImg('brothers_suit.png'),
         ]
       }
     ]
@@ -190,31 +275,49 @@ export const menProducts = [
     fabric: "Classic",
     color: "Maroon",
     type: "men",
-    category: "Surgical Wear",
+    category: "Scrubs",
     isBestSeller: true,
-    description: "Lightweight surgical wear made for comfort and performance.",
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/maroon color scrub suit men.png",
+    description: "Professional surgical scrub with classic collar styling designed for superior comfort and polished clinical appearance.",
+    details: [
+      "Structured collar neckline for elegant professional styling",
+      "Relaxed fit allows smooth movement during procedures",
+      "Spacious pockets for medical essentials",
+      "Durable stitching for long-lasting wear",
+      "Perfect for surgical and hospital professionals"
+    ],
+    fabricDescription: "Constructed with durable Classic fabric for breathable softness, wrinkle resistance, and long-term daily wear.",
+    fabricCare: [
+      "75% Poly", "25% Viscose",
+      "Soft-touch wrinkle resistant fabric",
+      "Wash separately in cold water",
+      "Do not tumble dry"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
+    image: parallelImg('maroon color scrub suit men.png'),
     images: [
-      "src/assets/scrub_suits_models/Parallel Scrub suits models/maroon color scrub suit men.png",
-      "src/assets/models/Maroon scrub suit.png",
+      parallelImg('maroon color scrub suit men.png'),
+      modelImg('Maroon_scrub_suit.png'),
     ],
     colors: [
-      { 
+      {
         name: "Maroon", hex: "#6b1a2a",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/maroon color scrub suit men.png",
-          "src/assets/models/Maroon scrub suit.png",
-          
+        images: [
+          parallelImg('maroon color scrub suit men.png'),
+          modelImg('Maroon_scrub_suit.png'),
         ]
       },
-      { 
+      {
         name: "Mustard Yellow", hex: "#FFCB05",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/mustard yellow scrub suit men.png",
-          "src/assets/models/Mustard yellow scrub suit.png"
+        images: [
+          parallelImg('mustard yellow scrub suit men.png'),
+          modelImg('Mustard_yellow_scrub_suit.png'),
         ]
       },
-      
     ]
   },
 
@@ -226,33 +329,53 @@ export const menProducts = [
     fabric: "Ecoflex",
     color: "Mint Green",
     type: "men",
-    category: "Lab Coats",
-    description: "Premium black lab coat set with rich professional styling.",
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/Mint green full sleevs scrub suit.png",
+    category: "Scrubs",
+    description: "Lightweight Ecoflex round-neck scrub crafted for breathable comfort and effortless movement during demanding shifts.",
+    details: [
+      "Classic round-neck design for modern appearance",
+      "Stretch-fit comfort for active professionals",
+      "Breathable material reduces heat build-up",
+      "Functional utility pockets for convenience",
+      "Ideal for long hospital and clinic shifts"
+    ],
+    fabricDescription: "Crafted from advanced Ecoflex performance fabric that combines stretch, breathability, and lightweight comfort.",
+    fabricCare: [
+      "80% Poly", "20% Spandex Blend",
+      "Lightweight breathable stretch fabric",
+      "Gentle machine wash recommended",
+      "Avoid high-temperature drying"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
+    image: parallelImg('Mint green full sleevs scrub suit.png'),
     images: [
-      "src/assets/scrub_suits_models/Parallel Scrub suits models/Mint green full sleevs scrub suit.png",
-      "src/assets/models/Mint green full sleeves scrub suit.png",
+      parallelImg('Mint green full sleevs scrub suit.png'),
+      modelImg('Mint green full sleeves scrub suit.png'),
     ],
     colors: [
-      { 
+      {
         name: "Mint Green", hex: "#98FB98",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Mint green full sleevs scrub suit.png",
-          "src/assets/models/Mint green full sleeves scrub suit.png"
+        images: [
+          parallelImg('Mint green full sleevs scrub suit.png'),
+          modelImg('Mint_green_full_sleeves_scrub.png'),
         ]
       },
-      { 
+      {
         name: "Tan", hex: "#D2B48C",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Tan color full sleevs scrub suit men.png",
-          "src/assets/models/Tan color full sleeves scrub suit.png"
+        images: [
+          parallelImg('Tan color full sleevs scrub suit men.png'),
+          modelImg('Tan_color_full_sleeves_scrub.png'),
         ]
       },
-      { 
+      {
         name: "Yellow", hex: "#FFFF00",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/yellow full sleeves scrub suit men.png",
-          "src/assets/models/Tan color full sleeves scrub suit.png"
+        images: [
+          parallelImg('yellow full sleeves scrub suit men.png'),
+          modelImg('Tan_color_full_sleeves_scrub.png'),
         ]
       }
     ]
@@ -262,61 +385,144 @@ export const menProducts = [
     id: 107,
     title: "ecoflex™ Men's V-Neck Scrub",
     price: 899.00,
+    rating: 4.8,
     fabric: "Classic",
     color: "Navy Green",
     type: "men",
     category: "Scrubs",
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/V neck dark green scrub suit men.png",
+    description: "Stylish V-neck scrub tailored for modern healthcare professionals who value flexibility and professional comfort.",
+    details: [
+      "Modern V-neck design for sharp professional styling",
+      "Relaxed ergonomic fit for all-day wear",
+      "Easy movement construction for active shifts",
+      "Functional pockets for storage needs",
+      "Ideal for clinics, hospitals, and healthcare staff"
+    ],
+    fabricDescription: "Premium Classic comfort fabric ensures breathable softness, durability, and wrinkle-resistant everyday wear.",
+    fabricCare: [
+      "75% Poly", "25% Viscose",
+      "Breathable lightweight classic weave",
+      "Machine wash cold",
+      "Do not bleach"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
+    image: parallelImg('V neck dark green scrub suit men.png'),
     images: [
-      "src/assets/scrub_suits_models/Parallel Scrub suits models/V neck dark green scrub suit men.png",
-      "src/assets/models/V neck Dark green scrub suit.png",
+      parallelImg('V neck dark green scrub suit men.png'),
+      modelImg('V_neck_Dark_green_scrub.png'),
     ],
     colors: [
-      { 
+      {
         name: "Navy Green", hex: "#006400",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/V neck dark green scrub suit men.png",
-          "src/assets/models/V neck Dark green scrub suit.png"
+        images: [
+          parallelImg('V neck dark green scrub suit men.png'),
+          modelImg('V_neck_Dark_green_scrub.png'),
         ]
       },
-      { 
-        name: "Brown", hex: "#C4A484",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/V neck scrub suit men.png",
-          "src/assets/models/V neck Tan color scrub suit.png"
+      {
+        name: "Tan color", hex: "#C4A484",
+        images: [
+          parallelImg('V neck scrub suit men.png'),
+          modelImg('V_neck_Tan_color_scrub.png'),
         ]
       }
     ]
   },
+
   {
     id: 108,
-    title: "Classic Men's Collar Scrub",
+    title: "ecoflex™ Lite Men's Collar Scrub",
     price: 899.00,
-    fabric: "Classic",
-    color: "Brown",
+    fabric: "Ecoflex Lite",
+    color: "Black",
+    rating: 4.7,
     type: "men",
     category: "Scrubs",
     isBestSeller: true,
-    image: "src/assets/models/brothers suit.png",
+    description: "Ultra-light Ecoflex Lite collar scrub built for breathable comfort, lightweight feel, and effortless professional styling.",
+    details: [
+      "Classic collar design for polished appearance",
+      "Ultra-lightweight build for extra comfort",
+      "Flexible fit for unrestricted movement",
+      "Utility pockets for practical storage",
+      "Perfect for everyday healthcare wear"
+    ],
+    fabricDescription: "Made from Ecoflex Lite performance fabric offering feather-light comfort, flexibility, and breathable softness.",
+    fabricCare: [
+      "82% Poly", "18% Spandex Blend",
+      "Ultra-light Ecoflex Lite stretch material",
+      "Machine wash gentle",
+      "Do not use strong bleach"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
+    image: collarBoyImg('Black1.png'),
     images: [
-      "src/assets/models/brothers suit.png",
-      "src/assets/scrub_suits_models/Parallel Scrub suits models/brown and light brown scrub suit men.png",
+      collarBoyImg('Black1.png'),
+      collarBoyImg('Black2.png'),
+      collarBoyImg('Black3.png'),
     ],
     colors: [
-      { 
-        name: "Navy", hex: "#1e3a5f",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/brothers suit.png",
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/brown and light brown scrub suit men.png"
-        ]
+      {
+        name: "Black", hex: "#000000",
+        images: [
+          collarBoyImg('Black1.png'),
+          collarBoyImg('Black2.png'),
+          collarBoyImg('Black3.png'),
+      ],
       },
-      { 
-        name: "Brown", hex: "#5c4033",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/brown1.png",
-          "src/assets/models/brown2.png"
-        ]
-      }
+
+      {
+        name: "Blue", hex: "#ADD8E6",
+        images: [
+          collarBoyImg('Blue1.png'),
+          collarBoyImg('Blue2.png'),
+          collarBoyImg('Light_Blue3.png'),
+      ],
+      },
+
+      {
+        name: "Brown", hex: "#964B00",
+        images: [
+          collarBoyImg('Brown1.png'),
+          collarBoyImg('Brown2.png'),
+          collarBoyImg('Brown3.png'),
+      ],
+      },
+      {
+        name: "Dark Grey", hex: "#A9A9A9",
+        images: [
+          collarBoyImg('Dark_Grey1.png'),
+          collarBoyImg('Dark_Grey2.png'),
+          collarBoyImg('Dark_Grey3.png'),
+      ],
+      },
+
+      {
+        name: "Green", hex: "#008000",
+        images: [
+          collarBoyImg('Green1.png'),
+          collarBoyImg('Green2.png'),
+          collarBoyImg('Green3.png'),
+      ],
+      },
+      {
+        name: "Navy blue", hex: "#000080",
+        images: [
+          collarBoyImg('Navy_blue1.png'),
+          collarBoyImg('Navy_blue2.png'),
+          collarBoyImg('Navy_blue3.png'),
+      ],
+      },
     ]
   },
 ]

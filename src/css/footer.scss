@@ -109,6 +109,19 @@
   color: #dbe4ef;
 }
 
+.footer-email {
+  color: #e5edf6 ;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 400;
+  transition: all 0.3s ease;
+}
+
+.footer-email:hover {
+  color: #c89b3c;
+  text-decoration: underline;
+}
+
 /* responsive */
 @media (max-width: 992px) {
   .footer-container {

@@ -28,9 +28,9 @@
 
                 <!-- qty -->
                 <div class="qty-box">
-                  <button class="qty-btn" @click="updateQty(item.id, 'dec')">−</button>
+                  <button class="qty-btn" @click="updateQty(item, 'dec')">−</button>
                   <span class="qty-value">{{ item.qty }}</span>
-                  <button class="qty-btn" @click="updateQty(item.id, 'inc')">+</button>
+                  <button class="qty-btn" @click="updateQty(item, 'inc')">+</button>
                 </div>
               </div>
 
@@ -40,7 +40,7 @@
               </div>
 
               <!-- delete -->
-              <button class="delete-btn" @click="removeFromCart(item.id)">
+              <button class="delete-btn" @click="removeFromCart(item)">
                 <q-icon name="delete_outline" size="22px" />
               </button>
             </div>

@@ -160,7 +160,7 @@ const selectedSleeves = ref([])
 const selectedColors = ref([])
 
 const genders = ["Men", "Women"]
-const sleeves = ["Full Sleeve", "3-4 Sleeve", "Half Sleeve"]
+const sleeves = ["Full Sleeve Aprons", "3-4 Sleeve Aprons", "Half Sleeve Aprons"]
 const colors = ["White"]
 
 //const filterCategories = ["Lab Coats"]
@@ -183,7 +183,7 @@ const handleWishlist = (product) => {
 const handleAddToCart = (product) => {
   addToCart({
     ...product,
-    size: 'M'
+    size: ' '
   })
 }
 

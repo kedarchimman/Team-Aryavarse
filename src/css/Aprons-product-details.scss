@@ -296,8 +296,15 @@ $text-muted:#6b7280;
     font-size: 13px; font-weight: 600;
     padding: 0 14px; cursor: pointer;
     transition: all 0.2s ease; font-family: inherit;
-    &:hover  { border-color: #007b7f; color: #007b7f; }
-    &.active { background: #20bfb8; color: $white; border-color: $text-dark; }
+    &:hover  { 
+      border-color: #007b7f; 
+      color: #007b7f; 
+    }
+    &.active { 
+      background: #20bfb8; 
+      color: $white; 
+      border-color: $text-dark; 
+    }
   }
 
   .size-btn:hover {
@@ -305,23 +312,126 @@ $text-muted:#6b7280;
     transform: translateY(-1px);
   }
 
-  .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 26px; }
+  // ✅ BUTTONS ROW - fixed layout
+  .btns {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 26px;
+    flex-wrap: nowrap;
 
-  .btns button {
-    flex: 1; min-width: 130px; padding: 14px 20px;
-    border: none; border-radius: 10px; font-size: 14px; font-weight: 800;
-    cursor: pointer; transition: all 0.2s ease; font-family: inherit;
-    &:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+    }
   }
 
-  .cart-btn { background: linear-gradient(135deg, #14325b 0%, #0f7b6c 100%); color: $white; }
-  .buy-btn  { background: #14325b; color: $white; }
+  // ✅ QTY BOX - clean, fixed size
+  .detail-qty-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 150px;
+    min-width: 120px;
+    height: 48px;
+    border: 1.5px solid #d7dbe0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    flex-shrink: 0;
 
-  .wish-btn {
-    background: $white; color: $text-dark;
-    border: 1.5px solid #e5e7eb !important;
-    flex: 0; min-width: 120px;
-    &.active { background: #ffe4e6; color: #e11d48; border-color: #fecdd3 !important; }
+    @media (max-width: 768px) {
+      width: 100%;
+      min-width: unset;
+    }
+  }
+
+  .detail-qty-btn {
+    width: 38px;
+    height: 100%;
+    border: none;
+    background: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    flex-shrink: 0;
+    color: $text-dark;
+
+    &:hover {
+      background: #f2f7f8;
+      color: $primary;
+    }
+  }
+
+  .detail-qty-value {
+    flex: 1;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: $text-dark;
+    border-left: 1px solid #e8eaed;
+    border-right: 1px solid #e8eaed;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // ✅ CART & BUY BUTTONS - equal flex
+  .cart-btn,
+  .buy-btn {
+    flex: 1;
+    height: 48px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
+      flex: unset;
+    }
+  }
+
+  .cart-btn {
+    background: linear-gradient(135deg, #14325b 0%, #0f7b6c 100%);
+    color: $white;
+  }
+
+  .buy-btn {
+    background: #14325b;
+    color: $white;
+  }
+
+  // ✅ FLYING CART ANIMATION
+  .flying-img {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 99999;
+    pointer-events: none;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    border: 2px solid $white;
+
+    &.flying {
+      transform: scale(0.3);
+      opacity: 0;
+    }
   }
 
   // Icons on bootstrap
@@ -356,38 +466,64 @@ $text-muted:#6b7280;
   }
 
   /* pincode section */
-  .delivery-details h3 {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: #1c1c1c;
+ // ✅ PINCODE SECTION - clean underline style, smaller
+  .delivery-details {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e8f0f0;
+
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: $text-dark;
+    }
   }
 
+  .pincode-checker {
+    width: 100%;
+    max-width: 320px; // ✅ width decrease
+  }
+
+  // ✅ Underline-only style 
   .input-btn-group {
     display: flex;
     align-items: center;
     width: 100%;
-    border-bottom: 1px solid #dcdcdc;
-    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid #999;
     border-radius: 0;
+    background: transparent;
+    padding-bottom: 2px;
   }
 
   .pincode-input {
     flex: 1;
     background: transparent;
-  }
 
-  .pincode-input .q-field__control {
-    border: none;
-    box-shadow: none;
-    height: 42px;
-    background: transparent;
-  }
+    .q-field__control {
+      border: none !important;
+      box-shadow: none !important;
+      height: 36px;
+      background: transparent;
+      padding: 0;
 
-  .pincode-input .q-field__native {
-    padding-left: 0;
-    font-size: 14px;
-    color: #1c1c1c;
+      &::before, &::after {
+        display: none !important;
+      }
+    }
+
+    .q-field__native {
+      padding-left: 0;
+      padding-right: 4px;
+      font-size: 14px;
+      color: $text-dark;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .q-field__bottom {
+      display: none;
+    }
   }
 
   .check-btn {
@@ -518,17 +654,32 @@ $text-muted:#6b7280;
   }
 
   .full-thumbs {
-    width: 110px; background: rgba(255,255,255,0.05);
-    display: flex; flex-direction: column; gap: 10px;
-    padding: 20px 14px; overflow-y: auto; align-items: center;
-    flex-shrink: 0; scrollbar-width: thin;
+    width: 110px; 
+    background: rgba(255,255,255,0.05);
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px;
+    padding: 20px 14px; 
+    overflow-y: auto; 
+    align-items: center;
+    flex-shrink: 0; 
+    scrollbar-width: thin;
 
     img {
-      width: 78px; height: 96px; object-fit: cover;
-      border-radius: 10px; cursor: pointer;
-      border: 2px solid rgba(255,255,255,0.15); transition: all 0.2s;
-      &:hover  { border-color: rgba(255,255,255,0.5); }
-      &.active { border-color: $white; box-shadow: 0 4px 14px rgba(255,255,255,0.15); }
+      width: 78px; 
+      height: 96px; 
+      object-fit: cover;
+      border-radius: 10px; 
+      cursor: pointer;
+      border: 2px solid rgba(255,255,255,0.15); 
+      transition: all 0.2s;
+      &:hover  { 
+        border-color: rgba(255,255,255,0.5); 
+      }
+      &.active { 
+        border-color: $white; 
+        box-shadow: 0 4px 14px rgba(255,255,255,0.15); 
+      }
     }
   }
 }
@@ -626,4 +777,12 @@ $text-muted:#6b7280;
   border: 1.5px solid #cbd5e1; padding: 0 12px;
   font-size: 14px; font-family: inherit; outline: none;
   &:focus { border-color: #007b7f; }
+}
+
+//size error 
+.size-error{
+  color:red;
+  font-size:15px;
+  margin-top:8px;
+  font-weight:500;
 }

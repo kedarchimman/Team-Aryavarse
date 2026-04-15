@@ -26,7 +26,7 @@
         <span @click="$router.push('/')">Home</span>
         <span @click="$router.push('/men')">Men</span>
         <span @click="$router.push('/women')">Women</span>
-        <span @click="goToPage('/aprons')">Aprons</span>
+        <!--<span @click="goToPage('/aprons')">Aprons</span>--->
         <span @click="$router.push('/bulk')">Bulk Orders</span>
         <span @click="$router.push('/about')">About</span>
         
@@ -40,7 +40,7 @@
           <q-icon name="favorite" size="22px" class="icon heart-icon" />
         </div>
 
-        <div class="icon-box" @click="$router.push('/cart')">
+        <div class="icon-box cart-icon" id="cartIcon" @click="$router.push('/cart')">
           <q-icon name="shopping_cart" size="22px" class="icon" />
           <span v-if="totalCartCount > 0" class="count-badge">{{ totalCartCount }}</span>
         </div>
@@ -132,8 +132,9 @@
         <img src="/icons/facebook.png" alt="Instagram" class="social-img" />
         </a>
 
-        <a href="https://wa.me/919876543210" target="_blank" class="social-icon">
-        <img src="/icons/whatsapp.png" alt="Instagram" class="social-img" />
+        <a  href="https://www.linkedin.com/company/two-elephants-technologies-llp/" 
+        target="_blank" class="social-icon">
+        <img src="/icons/linkdin.png" alt="Instagram" class="social-img" />
         </a>
 
     </div>
@@ -144,10 +145,10 @@
       <h4>Quick Links</h4>
       <ul>
         <li @click="$router.push('/')">Home</li>
+        <li @click="$router.push('/bulk')">Bulk Orders</li>
         <li @click="$router.push('/about')">About</li>
         <li @click="$router.push('/wishlist')">Wishlist</li>
         <li @click="$router.push('/cart')">Cart</li>
-        <li @click="$router.push('/bulk')">Bulk Orders</li>
       </ul>
     </div>
 
@@ -166,7 +167,15 @@
       <h4>Contact Us</h4>
       <p><q-icon name="location_on" size="18px" /> Solapur, Maharashtra</p>
       <p><q-icon name="call" size="18px" /> +91 98765 43210</p>
-      <p><q-icon name="mail" size="18px" /> parallelwear@gmail.com</p>
+      <p><q-icon name="mail" size="18px" />
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info@twoelephants.org" 
+      target="_blank"
+      rel="noopener noreferrer"
+      class="footer-email"
+      >
+      info@twoelephants.org
+      </a>
+      </p>
     </div>
   </div>
 

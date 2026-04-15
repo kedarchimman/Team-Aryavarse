@@ -69,6 +69,16 @@
             {{ f }}
           </label>
         </div>
+
+        <!-- SLEEVE -->
+        <div class="filter-group">
+          <p>Style</p>
+          <label v-for="s in sleeves" :key="s" class="filter-label">
+          <input type="checkbox" v-model="selectedSleeves" :value="s" />
+          {{ s }}
+          </label>
+        </div>
+
         <div class="filter-group">
           <p>Color</p>
           <label v-for="color in colors" :key="color" class="filter-label">
@@ -81,8 +91,8 @@
       <!-- PRODUCTS — EXACT MEN/WOMEN CARD STRUCTURE -->
       <section class="products" ref="productsSection">
         <div class="top-bar">
-          <span>{{ filteredProducts.length }} items</span>
-          <SortDropdown v-model="sortOption" />
+            <span>{{ filteredProducts.length }} items</span>
+            <SortDropdown v-model="selectedSort" />
         </div>
           
             <!-- DROPDOWN -->
@@ -181,7 +191,8 @@ import { apronsProducts } from 'src/data/apronsProducts'
 import { addToCart, toggleWishlist, isInWishlist } from 'src/stores/shop'
 import SortDropdown from 'src/components/SortDropdown.vue'
 
-const sortOption = ref('popular')
+//sort by code
+const selectedSort = ref('')
 
 const router = useRouter()
 
@@ -193,9 +204,15 @@ const productsSection = ref(null)
 const selectedCategories = ref([])
 const selectedFabrics = ref([])
 const selectedColors = ref([])
+const selectedSleeves = ref([])
 
 const filterCategories = ["Scrubs", "Aprons"]
 const fabrics = ["Classic", "Ecoflex", "Ecoflex Lite"]
+const sleeves = [
+ "Full Sleeve Aprons",
+ "3-4 Sleeve Aprons",
+ "Half Sleeve Aprons"
+]
 const colors = ["Maroon", "Black", "Green", "Dark Green", "Grey"]
 
 
@@ -217,6 +234,7 @@ const promoItems = [
 const homeProductIds = [
   { id: 204,   type: 'aprons' },
   { id: 101, type: 'men' },
+  { id: 108, type: 'men' },
   { id: 205,   type: 'aprons' },
   { id: 1,   type: 'women' },
   { id: 206,   type: 'aprons' },
@@ -225,8 +243,10 @@ const homeProductIds = [
   { id: 201,   type: 'aprons' },
   { id: 103, type: 'men' },
   { id: 3,   type: 'women' },
+  { id: 202,   type: 'aprons' },
   { id: 105, type: 'men' },
   { id: 4,   type: 'women' },
+  { id: 203,   type: 'aprons' },
 ]
 
 // PRODUCTS FETCH
@@ -251,7 +271,7 @@ const homeProducts = computed(() => {
 
 // FILTER APPLY
 const filteredProducts = computed(() => {
-  return homeProducts.value.filter(product => {
+  let products = homeProducts.value.filter(product => {
     const matchCategory =
       selectedCategories.value.length === 0 ||
       selectedCategories.value.includes(product.category)
@@ -260,12 +280,32 @@ const filteredProducts = computed(() => {
       selectedFabrics.value.length === 0 ||
       selectedFabrics.value.includes(product.fabric)
 
+    const matchSleeve =
+      selectedSleeves.value.length === 0 ||
+      selectedSleeves.value.includes(product.sleeve)
+
     const matchColor =
       selectedColors.value.length === 0 ||
       selectedColors.value.includes(product.color)
 
-    return matchCategory && matchFabric && matchColor
+    return matchCategory && matchFabric && matchSleeve && matchColor
   })
+
+
+  // SORTING LOGIC
+  if (selectedSort.value === 'low') {
+    products.sort((a, b) => a.price - b.price)
+  }
+
+  else if (selectedSort.value === 'high') {
+    products.sort((a, b) => b.price - a.price)
+  }
+
+  else if (selectedSort.value === 'bestseller') {
+    products = products.filter(product => product.isBestSeller)
+  }
+
+  return products
 })
 
 // WORKING SHOP NOW SCROLL

@@ -17,33 +17,65 @@ watch(wishlist, (val) => {
 }, { deep: true })
 
 // add to cart
+// check same id + same size + same color product already there (aahe ka )
 export const addToCart = (product) => {
-  const existing = cart.value.find(item => item.id === product.id)
+  const existing = cart.value.find(item =>
+    item.id === product.id &&
+    item.size === product.size &&
+    item.color === product.color
+  )
 
   if (existing) {
-    existing.qty += 1
-    
+
+    existing.qty += product.qty
+
   } else {
-    cart.value.push({ ...product, qty: 1 })
-    
+
+    cart.value.push({
+      ...product,
+      qty: product.qty
+    })
   }
 }
 
-// remove cart item
-export const removeFromCart = (id) => {
-  cart.value = cart.value.filter(item => item.id !== id)
+// Remove specific product from cart
+export const removeFromCart = (product) => {
+  cart.value = cart.value.filter(item =>
+    !(
+      item.id === product.id &&
+      item.size === product.size &&
+      item.color === product.color
+    )
+  )
 }
 
 // quantity update
-export const updateQty = (id, type) => {
-  const item = cart.value.find(i => i.id === id)
+export const updateQty = (product, type) => {
+  // Find exact cart item
+  const item = cart.value.find(i =>
+    i.id === product.id &&
+    i.size === product.size &&
+    i.color === product.color
+  )
+
   if (!item) return
 
+   // Increase quantity
   if (type === 'inc') item.qty++
-  if (type === 'dec' && item.qty > 1) item.qty--
+
+  // Decrease quantity
+  if (type === 'dec') {
+    if (item.qty > 1) {
+      item.qty--
+    } else {
+
+      // Remove if qty becomes 0
+      removeFromCart(product)
+    }
+  }
 }
 
-// wishlist toggle
+// Add/Remove wishlist
 export const toggleWishlist = (product) => {
   const exists = wishlist.value.find(item => item.id === product.id)
 

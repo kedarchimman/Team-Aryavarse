@@ -1,142 +1,131 @@
 <template>
-  <q-page class="q-pa-xl bg-grey-2 page">
+  <q-page class="bg-grey-1 q-pa-sm">
 
-    <!-- HERO -->
-    <div class="hero-box q-pa-lg q-mb-xl">
-      <div class="hero-title">
-        Bulk Orders for Healthcare Facilities
-      </div>
-      <div class="hero-sub">
-        Outfit your entire medical staff with premium quality uniforms. Get exclusive pricing,
-        dedicated support, and customization options for bulk orders.
+    <!-- 🔥 PREMIUM HERO BANNER -->
+    <div class="banner">
+      <img :src="bulkImg" class="banner-img" />
+
+      <div class="banner-overlay">
+        <div class="banner-content">
+          <h2>Bulk Orders Made Simple</h2>
+          <p>High-quality uniforms with custom branding & fast delivery</p>
+        </div>
       </div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="row q-col-gutter-xl">
+    <div class="container">
 
-      <!-- LEFT -->
-      <div class="col-12 col-md-6">
-        <div class="section-title">
-          Why Choose Parallel for Bulk Orders?
-        </div>
+      <div class="row q-col-gutter-md">
 
-        <div
-          v-for="item in features"
-          :key="item.title"
-          class="row items-start feature-item"
-        >
-          <q-icon :name="item.icon" class="feature-icon q-mr-md" />
+        <!-- LEFT PANEL -->
+        <div class="col-12 col-md-4">
+          <q-card class="left-panel">
 
-          <div>
-            <div class="feature-title">{{ item.title }}</div>
-            <div class="feature-desc">{{ item.desc }}</div>
-          </div>
-        </div>
-      </div>
+            <h5 class="text-bold q-mb-md">Why Choose Us?</h5>
 
-      <!-- RIGHT FORM -->
-      <div class="col-12 col-md-6">
-        <q-card flat bordered class="q-pa-lg form-card">
-
-          <div class="form-title">
-            Request a Bulk Quote
-          </div>
-
-          <!-- ✅ FORM ADDED -->
-          <q-form ref="formRef" @submit.prevent="onSubmit">
-
-            <!-- Organization -->
-            <q-input
-              v-model="form.organization"
-              outlined dense
-              label="Organization Name *"
-              placeholder="Hospital/Clinic Name"
-              :rules="[v => !!v || 'Please fill this']"
-              class="q-mb-md"
-            />
-
-            <!-- Contact -->
-            <q-input
-              v-model="form.contact"
-              outlined dense
-              label="Contact Person *"
-              placeholder="Your Name"
-              :rules="[v => !!v || 'Please fill this']"
-              class="q-mb-md"
-            />
-
-            <!-- Email + Phone -->
-            <div class="row q-col-gutter-sm">
-              <div class="col">
-                <q-input
-                  v-model="form.email"
-                  outlined dense
-                  label="Email *"
-                  placeholder="email@hospital.com"
-                  :rules="[
-                    v => !!v || 'Please fill this',
-                    v => /.+@.+\..+/.test(v) || 'Invalid email'
-                  ]"
-                />
-              </div>
-
-              <div class="col">
-                <q-input
-                  v-model="form.phone"
-                  outlined dense
-                  label="Phone *"
-                  placeholder="+91 98765 43210"
-                  :rules="[v => !!v || 'Please fill this']"
-                />
+            <div v-for="(item,i) in features" :key="i" class="feature">
+              <q-icon :name="item.icon" color="teal" size="28px"/>
+              <div>
+                <div class="text-weight-medium">{{ item.title }}</div>
+                <div class="text-caption text-grey-7">{{ item.desc }}</div>
               </div>
             </div>
 
-            <!-- Category -->
-            <q-select
-              v-model="form.category"
-              outlined dense
-              label="Product Category *"
-              :options="['Scrubs', 'Lab Coats', 'Nurse Uniforms']"
-              :rules="[v => !!v || 'Please fill this']"
-              class="q-mt-md"
-            />
+            <q-separator class="q-my-md"/>
 
-            <!-- Quantity -->
-            <q-input
-              v-model="form.quantity"
-              outlined dense
-              label="Estimated Quantity *"
-              placeholder="Number of units"
-              :rules="[v => !!v || 'Please fill this']"
-              class="q-mt-md"
-            />
+            <div class="text-center">
+              <q-icon name="verified" color="teal" size="30px" />
+              <div class="text-weight-medium q-mt-sm">
+                Trusted by Hospitals Across India
+              </div>
 
-            <!-- Requirements -->
-            <q-input
-              v-model="form.requirements"
-              outlined dense
-              type="textarea"
-              label="Additional Requirements"
-              placeholder="Tell us about your specific requirements..."
-              class="q-mt-md"
-            />
+              <div class="text-caption text-grey-7">
+                500+ Bulk Orders Delivered Successfully
+              </div>
+            </div>
 
-            <!-- Submit -->
-            <q-btn
-              label="Submit Request"
-              type="submit"
-              class="full-width q-mt-lg submit-btn"
-              unelevated
-            />
+          </q-card>
+        </div>
 
-          </q-form>
+        <!-- RIGHT PANEL -->
+        <div class="col-12 col-md-8">
+          <q-card class="form-card">
 
-          <div class="form-footer">
-            Our team will contact you within 24 hours with a customized quote
-          </div>
+            <div class="text-h6 q-mb-md">Bulk Order Request</div>
 
-        </q-card>
+            <q-form @submit.prevent="submitForm" class="q-gutter-md">
+
+              <div class="section-title">Contact Information</div>
+
+              <q-input outlined dense v-model="form.orgName" label="Organization Name *"/>
+              <q-input outlined dense v-model="form.contactName" label="Contact Person Name *"/>
+
+              <div class="row q-col-gutter-sm">
+                <div class="col-12 col-md-6">
+                  <q-input outlined dense v-model="form.email" label="Email *"/>
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input outlined dense v-model="form.phone" label="Phone *"/>
+                </div>
+              </div>
+
+              <q-input outlined dense v-model="form.location" label="City / State *"/>
+              <q-input outlined dense v-model="form.gst" label="GST Number"/>
+
+              <div class="section-title">Order Details</div>
+
+              <q-select outlined dense v-model="form.category" :options="categories" label="Product Category *"/>
+
+              <div class="row q-col-gutter-sm">
+                <div class="col-12 col-md-6">
+                  <q-select outlined dense v-model="form.fabric" :options="fabrics" label="Fabric"/>
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-select outlined dense v-model="form.gender" :options="genderOptions" label="Gender Split *"/>
+                </div>
+              </div>
+
+              <q-input outlined dense type="number" v-model="form.quantity" label="Estimated Quantity *"/>
+              <q-input outlined dense v-model="form.sizes" label="Size Requirements"/>
+              <q-input outlined dense v-model="form.colors" label="Preferred Colors"/>
+              <q-input outlined dense type="date" v-model="form.deliveryDate" label="Expected Delivery Date *"/>
+              <q-input outlined dense type="textarea" v-model="form.notes" label="Additional Requirements"/>
+
+              <q-toggle v-model="form.customization" label="Add Custom Branding?" />
+
+              <div v-if="form.customization" class="custom-box">
+
+                <q-option-group
+                  v-model="form.customType"
+                  :options="customOptions"
+                  type="checkbox"
+                />
+
+                <q-file outlined dense v-model="form.logo" label="Upload Logo"/>
+
+                <q-select outlined dense v-model="form.placement"
+                  :options="placementOptions"
+                  label="Placement"
+                  multiple
+                />
+
+                <q-input outlined dense v-model="form.text" label="Text to Print"/>
+                <q-input outlined dense v-model="form.brandColor" label="Brand Color"/>
+                <q-input outlined dense type="textarea" v-model="form.customNotes" label="Customization Notes"/>
+
+              </div>
+
+              <q-banner class="bg-red-1 text-red text-caption">
+                Customized orders are non-cancellable once production begins.
+              </q-banner>
+
+              <q-btn type="submit" label="Submit Request" color="teal" class="full-width"/>
+
+            </q-form>
+
+          </q-card>
+        </div>
+
       </div>
 
     </div>
@@ -144,131 +133,177 @@
   </q-page>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script>
+import bulkImg from 'src/assets/bulk.png'
 
-const formRef = ref(null)
+export default {
+  data() {
+    return {
+      bulkImg,
 
-// ✅ FIX: form reactive (input typing works now)
-const form = ref({
-  organization: '',
-  contact: '',
-  email: '',
-  phone: '',
-  category: '',
-  quantity: '',
-  requirements: ''
-})
+      form: {
+        orgName: "",
+        contactName: "",
+        email: "",
+        phone: "",
+        location: "",
+        gst: "",
+        category: "",
+        fabric: "",
+        gender: "",
+        quantity: "",
+        sizes: "",
+        colors: "",
+        deliveryDate: "",
+        notes: "",
+        customization: false,
+        customType: [],
+        logo: null,
+        placement: [],
+        text: "",
+        brandColor: "",
+        customNotes: ""
+      },
 
-// submit
-const onSubmit = () => {
-  formRef.value.validate().then(valid => {
-    if (valid) {
-      alert("Form Submitted ✅")
+      categories: ["Doctor Scrubs", "Nurse Uniforms", "Hospital Uniforms", "Mixed"],
+      fabrics: ["Apollo", "Aqua", "Cottex", "Avenue"],
+      genderOptions: ["Men", "Women", "Mixed"],
+      placementOptions: ["Left Chest", "Right Chest", "Back", "Sleeve"],
+
+      customOptions: [
+        { label: "Logo Print", value: "print" },
+        { label: "Embroidery", value: "embroidery" },
+        { label: "Department Name", value: "dept" },
+        { label: "Name Tags", value: "tags" }
+      ],
+
+      features: [
+        { icon: "local_hospital", title: "Hospital Quality", desc: "Premium fabrics" },
+        { icon: "payments", title: "Bulk Pricing", desc: "Best discounts" },
+        { icon: "support_agent", title: "Dedicated Manager", desc: "End-to-end support" },
+        { icon: "palette", title: "Custom Branding", desc: "Logo & embroidery" },
+        { icon: "local_shipping", title: "Flexible Payment", desc: "50% advance" }
+      ]
     }
-  })
-}
+  },
 
-// features unchanged
-const features = [
-  {
-    icon: "verified",
-    title: "Hospital-Grade Quality",
-    desc: "Premium fabrics and construction designed to withstand the demands of daily use in medical environments."
-  },
-  {
-    icon: "sell",
-    title: "Bulk Pricing",
-    desc: "Special discounted rates for large orders. The more you order, the more you save."
-  },
-  {
-    icon: "support_agent",
-    title: "Dedicated Support",
-    desc: "Your dedicated account manager will handle all aspects of your order from quotation to delivery."
-  },
-  {
-    icon: "mail",
-    title: "Custom Branding",
-    desc: "Add your hospital logo, department names, or custom embroidery to create a professional unified look."
+  methods: {
+    submitForm() {
+      this.$q.notify({
+        type: "positive",
+        message: "Request Submitted!"
+      })
+    }
   }
-]
+}
 </script>
 
 <style scoped>
 
-/* FONT + PAGE */
-.page {
-  font-family: 'Poppins', sans-serif;
+/* CONTAINER */
+.container {
+  max-width: 1200px;
+  margin: auto;
 }
 
-/* HERO */
-.hero-box {
-  background: #1f7a6b;
-  border-radius: 10px;
+/* 🔥 HERO BANNER */
+.banner {
+  width: 100%;
+  height: 55vh;
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  margin-bottom: 30px;
+}
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  /* 👇 FACE FIX */
+  object-position: center 10%;
 }
 
-.hero-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: white;
+/* OVERLAY */
+.overlay {
+  background: none;   /* ❌ no glass */
+  backdrop-filter: none;
+  padding: 0;
 }
 
-.hero-sub {
-  font-size: 14px;
-  color: white;
-  margin-top: 6px;
-  max-width: 600px;
-}
-
-/* LEFT */
-.section-title {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-
-.feature-item {
-  margin-bottom: 14px;
-}
-
-.feature-icon {
-  background: #e6f4f1;
-  color: #1f7a6b;
-  padding: 8px;
-  border-radius: 6px;
-}
-
-.feature-title {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.feature-desc {
-  font-size: 12px;
-  color: #777;
-}
-
-/* FORM */
-.form-card {
-  border-radius: 10px;
-}
-
-.form-title {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.submit-btn {
-  background: #2fb5a3;
-  color: white;
-}
-
-.form-footer {
-  font-size: 11px;
+/* TEXT BOX */
+.banner-content {
   text-align: center;
-  color: #888;
-  margin-top: 8px;
+  color: white;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.08);
+  padding: 25px 35px;
+  border-radius: 16px;
+}
+
+.banner-content h2 {
+  font-size: 38px;
+  font-weight: 700;
+}
+
+.banner-content p {
+  font-size: 16px;
+  margin-top: 150px;
+}
+
+/* LEFT PANEL */
+.left-panel {
+  border-radius: 16px;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* FEATURES */
+.feature {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  align-items: center;
+}
+
+/* FORM CARD */
+.form-card {
+  border-radius: 16px;
+  padding: 25px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* SECTION */
+.section-title {
+  font-weight: 600;
+  margin-top: 15px;
+}
+
+/* CUSTOM BOX */
+.custom-box {
+  padding: 15px;
+  border-radius: 12px;
+  background: #f6f6f6;
+}
+
+/* BUTTON */
+.q-btn {
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .banner {
+    height: 40vh;
+  }
+
+  .banner-content h2 {
+    font-size: 24px;
+  }
 }
 
 </style>

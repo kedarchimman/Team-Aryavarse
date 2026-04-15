@@ -7,7 +7,8 @@
       <div class="left">
         <div class="thumbs">
           <img
-            v-for="img in product.images"
+            
+            v-for="img in displayImages"
             :key="img"
             :src="img"
             :class="{ active: selectedImage === img }"
@@ -81,22 +82,52 @@
                         v-for="s in sizes" :key="s"
                         class="size-btn"
                         :class="{ active: selectedSize === s }"
-                        @click="selectedSize = s"
+                        @click="selectedSize = s;
+                        sizeError = false;"
                       >
                       {{ s }}
                       </button>
                     </div>
+                      
+                      <p v-if="sizeError" class="size-error">
+                         Please select size
+                      </p>
+                      
+                    
                   </div>
 
-                    <!-- BUTTONS -->
-                     <div class="btns">
-                          <button class="cart-btn" @click="handleAddToCart">Add to Cart</button>
-                          <button class="buy-btn" @click="handleBuyNow">Buy Now</button>
-                          
-                      </div>
+        <!-- BUTTONS -->
+        <div class="btns">
 
+          <!-- QTY BOX -->
+          <div class="detail-qty-box">
+            <button class="detail-qty-btn" @click="decreaseQty">−</button>
+            <span class="detail-qty-value">{{ quantity }}</span>
+            <button class="detail-qty-btn" @click="increaseQty">+</button>
+          </div>
 
-                    <!-- Delivery features (Knya style) -->
+          <!-- ✅ ref added for flying animation origin -->
+          <button class="cart-btn" ref="cartBtnRef" @click="handleAddToCart">
+            Add to Cart
+          </button>
+
+          <button class="buy-btn" @click="handleBuyNow">
+            Buy Now
+          </button>
+
+        </div>
+
+        <!-- ✅ FLYING IMAGE ELEMENT -->
+        <img
+          v-if="flyingVisible"
+          :src="selectedImage"
+          class="flying-img"
+          :class="{ flying: flyingActive }"
+          :style="flyingStyle"
+          ref="flyingImgRef"
+        />
+
+                <!-- Delivery features (Knya style) -->
                       <div class="delivery-cols">
 
                         <div class="delivery-col">
@@ -115,28 +146,37 @@
                             </div>
                       </div>
 
-                  <!--pin code section---->
-                    <div class="section delivery-details">
-                        <h3>Delivery Details</h3>
+            <!--pin code section---->
+              <div class="section delivery-details">
+                <h3>Delivery Details</h3>
 
-                      <div class="pincode-checker">
-                        <div class="input-btn-group">
-                            <q-input
-                              v-model="pincode"
-                              type="number"
-                              dense
-                              class="pincode-input"
-                              placeholder="Enter pincode"
-                              :hide-bottom-space="true"
-                            />
-                            <q-btn
-                              class="check-btn"
-                              :loading="isChecking"
-                              :disable="isChecking"
-                              label="Check"
-                              @click="checkPincode"
-                            />
-                          </div>
+            <div class="pincode-checker">
+            <div class="input-btn-group">
+              <!-- ✅ maxlength 6, @keyup.enter support -->
+              <q-input
+                v-model="pincode"
+                type="text"
+                maxlength="6"
+                dense
+                class="pincode-input"
+                placeholder="Enter 6-digit pincode"
+                :hide-bottom-space="true"
+                @keyup.enter="checkPincode"
+                @input="onPincodeInput"
+              />
+              <q-btn
+                class="check-btn"
+                :loading="isChecking"
+                :disable="isChecking || pincode.length !== 6"
+                label="Check"
+                @click="checkPincode"
+              />
+            </div>
+
+            <!-- ✅ 6-digit validation message -->
+            <div v-if="pincode.length > 0 && pincode.length < 6" class="error-msg">
+              Pincode must be 6 digits
+            </div>
 
                       <div v-if="pincodeError" class="error-msg">
                         {{ pincodeError }}
@@ -155,7 +195,6 @@
                          </div>
                     </div>
                 </div>
-
 <!----details---->
 <div class="product-info-right">
 
@@ -165,20 +204,18 @@
       <span>Details & Fit</span>
       <q-icon :name="activeAccordion === 0 ? 'remove' : 'add'" />
     </div>
+
     <div v-show="activeAccordion === 0" class="accordion-content">
-      <p>
-        These Classic New Gen scrubs for women are built for performance and crafted for style.<br>
-      </p>
+      <p>{{ product.description }}</p>
+
       <ul>
-        <li>Modern V-Neck gives you room to move freely.</li>
-        <li>Roomy pockets for all essentials.</li>
-        <li>Side slits on the top for easy movement.</li>
-        <li>Loop ring to hold your ID badge.</li>
-        <li>Backdarts for a more structured fit.</li>
-        <li>Classic, practical, and always professional - scrub suits that fits the way you work.</li>
+        <li v-for="(detail,index) in product.details" :key="index">
+          {{ detail }}
+        </li>
       </ul>
     </div>
   </div>
+
 
   <!-- Fabric & Care -->
   <div class="section accordion">
@@ -186,49 +223,50 @@
       <span>Fabric & Care</span>
       <q-icon :name="activeAccordion === 1 ? 'remove' : 'add'" />
     </div>
+
     <div v-show="activeAccordion === 1" class="accordion-content">
-      <p>Engineered with our proprietary fabric, these women scrubs are designed to keep every shift comfortable and effortless.</p>
+      <p>{{ product.fabricDescription }}</p>
+
       <ul>
-        <li>75% Poly</li>
-        <li>25% Viscose</li>
-        <li>Wash inside out with like colors in 40°C water.</li>
-        <li>Do not bleach and only tumble dry.</li>
+        <li v-for="(care,index) in product.fabricCare" :key="index">
+          {{ care }}
+        </li>
       </ul>
     </div>
   </div>
 
+
   <!-- Return & Exchange -->
-<div class="section accordion">
-  <div class="accordion-header" @click="activeAccordion = activeAccordion === 2 ? null : 2">
-    <span>Return & Exchange</span>
-    <q-icon :name="activeAccordion === 2 ? 'remove' : 'add'" />
+  <div class="section accordion">
+    <div class="accordion-header" @click="activeAccordion = activeAccordion === 2 ? null : 2">
+      <span>Return & Exchange</span>
+      <q-icon :name="activeAccordion === 2 ? 'remove' : 'add'" />
+    </div>
+
+    <div v-show="activeAccordion === 2" class="accordion-content">
+      <p>{{ product.returnDescription }}</p>
+
+      <ul>
+        <li v-for="(point,index) in product.returnPoints" :key="index">
+          {{ point }}
+        </li>
+      </ul>
+    </div>
   </div>
-  <div v-show="activeAccordion === 2" class="accordion-content">
-    <p>We want you to love your scrubs. If something isn’t right, you can request a return or exchange within 7 days of delivery for all non-customised orders.</p>
-    <p><strong>Please note:</strong></p>
-    <ul>
-      <li>Embroidery products are not eligible for return or exchange.</li>
-      <li>Items that have been used, washed, or had their tags removed cannot be returned.</li>
-      <li>Orders placed during sale events are final and not eligible for return and can be exchanged.</li>
-    </ul>
-  </div>
-</div>
+
 </div>
 
       </div>
     </div>
 
-    <!-- IMAGE DIALOG -->
-<div v-if="imageDialog" class="image-popup-overlay" @click.self="imageDialog = false">
-  <div class="image-popup-box">
-  <!-- CLOSE BUTTON -->
-   <button class="image-popup-close" @click="imageDialog = false">✕</button>
-
-  <!-- IMAGE -->
-  <img :src="selectedImage" class="image-popup-img" />
-  </div>
-
-</div>
+      <!-- IMAGE DIALOG -->
+      <div v-if="imageDialog" class="image-popup" @click.self="imageDialog = false">
+        <!-- CLOSE BUTTON -->
+        <button class="full-close-btn" @click="imageDialog = false">✕</button>
+        <!-- IMAGE -->
+        <img :src="selectedImage" class="popup-image" />
+      </div>
+      
 <!-- SIZE CHART POPUP -->
     <q-dialog v-model="sizeChartDialog">
       <div class="size-chart-popup">
@@ -279,10 +317,10 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { womenProducts } from 'src/data/womenProducts'
-import { addToCart, toggleWishlist, isInWishlist } from 'src/stores/shop'
+import { addToCart } from 'src/stores/shop'
 import sizeChartImg from 'src/assets/size_chart/size-chart.png'
 import measureImg from 'src/assets/size_chart/measure.png'
 
@@ -297,12 +335,15 @@ const product = computed(() =>
   womenProducts.find(p => p.id === Number(route.params.id))
 )
 
+
 // IMAGES
 const selectedImage = ref('')
+const displayImages = ref([]) // current visible images
 const imageDialog   = ref(false)
 
 watch(product, (val) => {
   if (val && val.images?.length) {
+    displayImages.value = [...val.images]
     selectedImage.value = val.images[0]
   }
 }, { immediate: true })
@@ -312,22 +353,24 @@ const openImageDialog = () => {
 }
 
 const prevImage = () => {
-  const imgs = product.value?.images || []
+  const imgs = displayImages.value || []
   if (!imgs.length) return
+
   selectedImage.value =
     imgs[(imgs.indexOf(selectedImage.value) - 1 + imgs.length) % imgs.length]
 }
 
 const nextImage = () => {
-  const imgs = product.value?.images || []
+  const imgs = displayImages.value || []
   if (!imgs.length) return
+
   selectedImage.value =
     imgs[(imgs.indexOf(selectedImage.value) + 1) % imgs.length]
 }
 
-// COLORS (SAFE)
-const colorOptions = computed(() => product.value?.colors || [])
 
+// COLORS
+const colorOptions = computed(() => product.value?.colors || [])
 const selectedColor = ref('')
 
 watch(product, (val) => {
@@ -342,29 +385,60 @@ const changeColor = (colorName) => {
   const colorObj = product.value?.colors?.find(c => c.name === colorName)
 
   if (colorObj?.images?.length) {
-    product.value.images = colorObj.images
+    displayImages.value = [...colorObj.images] // no computed mutate bug
     selectedImage.value = colorObj.images[0]
   }
 }
+
 
 // PRICE
 const oldPrice = computed(() =>
   product.value ? Number(product.value.price) + 300 : 0
 )
 
+
 // SIZE
 const sizes = ['XS','S','M','L','XL','2XL','3XL']
-const selectedSize = ref('M')
+const selectedSize = ref('')
 
-// SIZE CHART
+//size chya khali error 
+const sizeError = ref(false)
+
+
+// Qty
+const quantity = ref(1)
+
+const increaseQty = () => {
+  quantity.value++
+}
+
+const decreaseQty = () => {
+  if (quantity.value > 1) quantity.value--
+}
+
+
+// SIZE CHART POPUP
 const sizeChartDialog = ref(false)
 const activeTab = ref('size')
 
-// PINCODE
+
+// ✅ PINCODE - 6 digit limit, enter key, auto clear
 const pincode = ref('')
 const deliveryStatus = ref(null)
 const pincodeError = ref('')
 const isChecking = ref(false)
+
+
+// ✅ Clear previous result when user types new pincode
+const onPincodeInput = () => {
+  if (pincode.value.length > 6) {
+    pincode.value = pincode.value.slice(0, 6)
+  }
+
+  deliveryStatus.value = null
+  pincodeError.value = ''
+}
+
 
 const solapurPincodes = [
   '413001','413002','413003','413004','413005',
@@ -377,48 +451,128 @@ const solapurPincodes = [
   '413410','413411'
 ]
 
-const checkPincode = () => {
-  const pin = pincode.value.trim()
-  deliveryStatus.value = null
-  pincodeError.value = ''
 
-  if (!pin) {
-    pincodeError.value = 'Please enter a valid pincode'
+const checkPincode = () => {
+  const pin = String(pincode.value).trim()
+
+  if (pin.length !== 6) {
+    pincodeError.value = 'Please enter a valid 6-digit pincode'
     return
   }
 
+  deliveryStatus.value = null
+  pincodeError.value = ''
   isChecking.value = true
+
+
+  // Dynamic Delivery Date
+  const today = new Date()
+  const startDate = today.getDate() + 2
+  const endDate = today.getDate() + 3
 
   setTimeout(() => {
     if (solapurPincodes.includes(pin)) {
       deliveryStatus.value = {
-        deliveryDate: 'Delivery between 11th and 12th Apr',
+        deliveryDate: `Delivery between ${startDate}th and ${endDate}th`,
         cod: 'Cash on delivery available'
       }
     } else {
-      deliveryStatus.value = null
       pincodeError.value = 'Sorry, delivery not available for this pincode'
     }
+
     isChecking.value = false
   }, 1200)
 }
 
-// CART
+
+// ✅ FLYING CART ANIMATION
+const cartBtnRef = ref(null)
+
+const flyingImgRef = ref(null)
+const flyingVisible = ref(false)
+const flyingActive = ref(false)
+const flyingStyle = ref({})
+
+
+const triggerFlyAnimation = async () => {
+  if (!cartBtnRef.value) return
+
+  const btnRect = cartBtnRef.value.getBoundingClientRect()
+
+  const cartIcon = document.querySelector('#cartIcon')
+
+  const targetRect = cartIcon
+    ? cartIcon.getBoundingClientRect()
+    : { left: window.innerWidth - 40, top: 20, width: 0, height: 0 }
+
+
+  const startX = btnRect.left + btnRect.width / 2 - 25
+  const startY = btnRect.top + btnRect.height / 2 - 25
+
+  const targetX = targetRect.left + targetRect.width / 2 - 25
+  const targetY = targetRect.top + targetRect.height / 2 - 25
+
+
+  flyingStyle.value = {
+    left: startX + 'px',
+    top: startY + 'px',
+    transform: 'scale(1)',
+    opacity: '1',
+    transition: 'none'
+  }
+
+  flyingVisible.value = true
+  flyingActive.value = false
+
+  await nextTick()
+
+  setTimeout(() => {
+    flyingStyle.value = {
+      left: targetX + 'px',
+      top: targetY + 'px',
+      transform: 'scale(0.4)',
+      opacity: '0',
+      transition: 'all 1.2s cubic-bezier(0.22, 1, 0.36, 1)'
+    }
+
+    setTimeout(() => {
+      flyingVisible.value = false
+    }, 1200)
+
+  }, 50)
+}
+
+
+// Cart
 const handleAddToCart = () => {
-  if (!product.value) return
+  if (!selectedSize.value) {
+    sizeError.value = true
+    return
+  }
+
+  triggerFlyAnimation()
 
   addToCart({
     ...product.value,
     size: selectedSize.value,
-    color: selectedColor.value
+    color: selectedColor.value,
+    image: selectedImage.value,
+    qty: quantity.value
   })
 }
 
+
 const handleBuyNow = () => {
+  if (!selectedSize.value) {
+    sizeError.value = true
+    return
+  }
+
   handleAddToCart()
   router.push('/cart')
 }
 </script>
+
 
 <style scoped lang="scss">
 @import 'src/css/women-product-details.scss';

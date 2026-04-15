@@ -1,396 +1,556 @@
+import {
+  collarGirlImg,
+  vNeckModelImg,
+  vNeckSideImg,
+  vNeckHangerImg,
+  parallelImg,
+  modelImg,
+} from './imageHelper'
+
 export const womenProducts = [
   {
     id: 1,
     title: "Classic Women's V-Neck Scrub",
-    category: "Tops",
+    category: "Scrubs",
     fabric: "Classic",
     color: "Black",
     price: 899.00,
     rating: 4.5,
     type: "women",
     isBestSeller: true,
-    image: "src/assets/Collar scrub suits/girl/Black1.png",
-    images:[
-          "src/assets/Collar scrub suits/girl/Black1.png",
-          "src/assets/Collar scrub suits/girl/Black(s)2.png",
-          "src/assets/Collar scrub suits/girl/black3.png",
+    image: collarGirlImg('Black1.png'),
+    images: [
+      collarGirlImg('Black1.png'),
+      collarGirlImg('Black(s)2.png'),
+      collarGirlImg('black3.png'),
     ],
     colors: [
-      { 
+      {
         name: "Black", hex: "#000000",
-        images:[
-          "src/assets/Collar scrub suits/girl/Blue1.png",
-          "src/assets/Collar scrub suits/girl/blue2.png",
-          "src/assets/Collar scrub suits/girl/blue3.png",
+        images: [
+      collarGirlImg('Black1.png'),
+      collarGirlImg('Black(s)2.png'),
+      collarGirlImg('black3.png'),
+    ],
+      },
+      {
+        name: "Blue", hex: "#0000FF",
+        images: [
+          collarGirlImg('Blue1.png'),
+          collarGirlImg('blue2.png'),
+          collarGirlImg('blue3.png'),
         ]
       },
-      { 
-       name: "Blue", hex: "#0000FF",
-        images:[
-          "src/assets/Collar scrub suits/girl/Blue1.png",
-          "src/assets/Collar scrub suits/girl/blue2.png",
-          "src/assets/Collar scrub suits/girl/blue3.png",
-        ]
-      },
-      { 
+      {
         name: "Green", hex: "#006400",
-        images:[
-          "src/assets/Collar scrub suits/girl/Green1.png",
-          "src/assets/Collar scrub suits/girl/Green2.png",
-          "src/assets/Collar scrub suits/girl/Green3.png",
+        images: [
+          collarGirlImg('Green1.png'),
+          collarGirlImg('Green2.png'),
+          collarGirlImg('Green3.png'),
         ]
       },
-      { 
+      {
         name: "Brown", hex: "#964B00",
-        images:[
-          "src/assets/Collar scrub suits/girl/Brown1.png",
-          "src/assets/Collar scrub suits/girl/Brown2.png",
-          "src/assets/Collar scrub suits/girl/Brown3.png",
+        images: [
+          collarGirlImg('Brown1.png'),
+          collarGirlImg('Brown2.png'),
+          collarGirlImg('Brown3.png'),
         ]
       },
-      { 
+      {
         name: "Dark Grey", hex: "#A9A9A9",
-        images:[
-          "src/assets/Collar scrub suits/girl/Dark Grey 1.png",
-          "src/assets/Collar scrub suits/girl/Dark Grey 2.png",
-          "src/assets/Collar scrub suits/girl/Dark Grey 3.png",
+        images: [
+          collarGirlImg('Dark Grey 1.png'),
+          collarGirlImg('Dark Grey 2.png'),
+          collarGirlImg('Dark grey 3.png'),
         ]
       },
-      { 
-        name: "Nave blue", hex: "#000080",
-        images:[
-          "src/assets/Collar scrub suits/girl/Navy blue 1.png",
-          "src/assets/Collar scrub suits/girl/Navy blue 2.png",
-          "src/assets/Collar scrub suits/girl/Navy blue 3.png",
+      {
+        name: "Navy Blue", hex: "#000080",
+        images: [
+          collarGirlImg('Navy blue 1.png'),
+          collarGirlImg('Navy blue 2.png'),
+          collarGirlImg('Navy blue 3.png'),
         ]
       },
     ],
-    description: "Lightweight chiffon top for casual wear."
+    description: "Premium Classic V-Neck scrub designed for healthcare professionals who prefer comfort, elegance, and professional styling.",
+    details: [
+      "Modern V-Neck gives you room to move freely",
+      "Roomy pockets for all essentials",
+      "Side slits on the top for easy movement",
+      "Loop ring to hold your ID badge",
+      "Back darts for a more structured fit",
+      "Classic, practical, and always professional"
+    ],
+    fabricDescription: "Crafted with premium Classic fabric that provides durability, softness, and breathable comfort throughout your workday.",
+    fabricCare: [
+      "75% Poly", "25% Viscose",
+      "Wash inside out with like colors in 40°C water",
+      "Do not bleach",
+      "Only tumble dry"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
   },
 
   {
     id: 2,
     title: "Classic Women's V-Neck Scrub",
-    category: "Tops",
+    category: "Scrubs",
     fabric: "Classic",
     color: "Dark Green",
     price: 899.00,
     rating: 4.5,
     type: "women",
     isBestSeller: true,
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/V neck Dark green scrub suit women.png",
-    images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck dark green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/V neck dark green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/V neck Dark green scrub suit.png",
+    image: vNeckModelImg('dark_green1.png'),
+    images: [
+      vNeckModelImg('dark_green1.png'),
+      vNeckSideImg('dark_green2.png'),
+      vNeckHangerImg('dark_green3.png'),
     ],
     colors: [
-      { 
+      {
         name: "Dark Green", hex: "#013220",
-        images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck dark green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/V neck dark green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/V neck Dark green scrub suit.png",
-        ]
+        images: [
+            vNeckModelImg('dark_green1.png'),
+            vNeckSideImg('dark_green2.png'),
+            vNeckHangerImg('dark_green3.png'),
+        ],
       },
-      { 
+      {
         name: "Blue", hex: "#00008B",
-        images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck dark blue scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/V neck dark blue scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/Dark blue scrub.png",
+        images: [
+          vNeckModelImg('V neck dark blue scrub suit women.png'),
+          vNeckSideImg('V neck dark blue scrub suit women.png'),
+          vNeckHangerImg('Dark blue scrub.png'),
         ]
       },
-      { 
+      {
         name: "Green", hex: "#006400",
-        images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/V neck green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/Green medical scrub suit set.png",
+        images: [
+          vNeckModelImg('V neck green scrub suit women.png'),
+          vNeckSideImg('V neck green scrub suit women.png'),
+          vNeckHangerImg('Green medical scrub suit set.png'),
         ]
       },
-      { 
+      {
         name: "Dust Pink", hex: "#D58A94",
-        images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck pink color scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/dust pink scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/Pink scrub set on white backdrop.png",
+        images: [
+          vNeckModelImg('V neck pink color scrub suit women.png'),
+          vNeckSideImg('dust pink scrub suit women.png'),
+          vNeckHangerImg('Pink scrub set on white backdrop.png'),
         ]
       },
-      { 
+      {
         name: "Mint Green", hex: "#98FB98",
-        images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck scrub suit mint green women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/V neck mint green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/Mint green medical scrub set.png",
+        images: [
+          vNeckModelImg('V neck scrub suit mint green women.png'),
+          vNeckSideImg('V neck mint green scrub suit women.png'),
+          vNeckHangerImg('Mint green medical scrub set.png'),
         ]
       },
-      { 
+      {
         name: "Tan Color", hex: "#D2B48C",
-        images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck tan color scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/Tan scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/V neck Tan color scrub suit.png",
+        images: [
+          vNeckModelImg('V neck tan color scrub suit women.png'),
+          vNeckSideImg('Tan scrub suit women.png'),
+          vNeckHangerImg('V neck Tan color scrub suit.png'),
         ]
       },
     ],
-    description: "Lightweight chiffon top for casual wear."
+    description: "Elegant V-neck scrub designed for healthcare professionals who want style, flexibility, and comfort during long work hours.",
+    details: [
+      "Stylish V-neck design for modern professional appearance",
+      "Relaxed fit for easy movement and flexibility",
+      "Multiple spacious pockets for daily essentials",
+      "Tailored stitching for flattering feminine fit",
+      "Perfect for hospitals, clinics, and labs"
+    ],
+    fabricDescription: "Crafted with premium Classic fabric that offers breathable softness, durability, and everyday comfort.",
+    fabricCare: [
+      "75% Poly", "25% Viscose",
+      "Breathable lightweight fabric",
+      "Machine wash cold",
+      "Do not bleach"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
   },
 
   {
     id: 3,
-    title: "Ecoflex Women's Longsleeves Scrub",
-    category: "Tops",
-    fabric: "Ecoflex",
+    title: "ecoflex™ Lite Women's Longsleeves Scrub",
+    category: "Scrubs",
+    fabric: "Ecoflex Lite",
     color: "Green",
     price: 899.00,
     rating: 4.5,
     type: "women",
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/Dark green full sleeves zip scrub suit women.png",
+    image: parallelImg('Dark green full sleeves zip scrub suit women.png'),
     images: [
-      "src/assets/scrub_suits_models/Parallel Scrub suits models/Dark green full sleeves zip scrub suit women.png",
-       "src/assets/models/Dark Green full sleeves zip suit.png",
+      parallelImg('Dark green full sleeves zip scrub suit women.png'),
+      modelImg('Dark Green full sleeves zip suit.png'),
     ],
     colors: [
-      { 
+      {
         name: "Green", hex: "#006400",
         images: [
-        "src/assets/scrub_suits_models/Parallel Scrub suits models/Dark green full sleeves zip scrub suit women.png",
-       "src/assets/models/Dark Green full sleeves zip suit.png",
-      ]
+          parallelImg('Dark green full sleeves zip scrub suit women.png'),
+          modelImg('Dark Green full sleeves zip suit.png'),
+        ]
       },
     ],
-    description: "Lightweight chiffon top for casual wear."
+    description: "Advanced Ecoflex Lite scrub designed for lightweight comfort, flexibility, and modern professional styling.",
+    details: [
+      "Flexible stretchable design for active movement",
+      "Breathable fabric for long shifts",
+      "Stylish modern fit",
+      "Functional utility pockets",
+      "Comfortable lightweight feel"
+    ],
+    fabricDescription: "Made from lightweight Ecoflex Lite stretch fabric engineered for flexibility and all-day comfort.",
+    fabricCare: [
+      "80% Poly", "20% Spandex Blend",
+      "Machine wash gentle cycle",
+      "Do not iron on high heat"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
   },
 
   {
     id: 4,
     title: "Classic Women's Round-Neck Scrub",
-    category: "Tops",
+    category: "Scrubs",
     fabric: "Classic",
     color: "Soft Blue+Grey",
     price: 899.00,
     rating: 4.5,
     type: "women",
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/Round neck blue+grey scrub suit women.png",
+    image: parallelImg('Round neck blue+grey scrub suit women.png'),
     images: [
-      "src/assets/scrub_suits_models/Parallel Scrub suits models/Round neck blue+grey scrub suit women.png",
-       "src/assets/models/Grey+blue scrub.png",
+      parallelImg('Round neck blue+grey scrub suit women.png'),
+      modelImg('Grey+blue scrub.png'),
     ],
-     colors: [
-      { 
+    colors: [
+      {
         name: "Soft Blue+Grey", hex: "#6699CC",
         images: [
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/Round neck blue+grey scrub suit women.png",
-          "src/assets/models/Grey+blue scrub.png",
+          parallelImg('Round neck blue+grey scrub suit women.png'),
+          modelImg('Grey+blue scrub.png'),
         ]
       },
     ],
-    description: "Lightweight chiffon top for casual wear."
+    description: "Elegant round-neck scrub designed for healthcare professionals who want style, flexibility, and comfort during long work hours.",
+    details: [
+      "Stylish round-neck design for modern professional appearance",
+      "Relaxed fit for easy movement and flexibility",
+      "Multiple spacious pockets for daily essentials",
+      "Tailored stitching for flattering feminine fit",
+      "Perfect for hospitals, clinics, and labs"
+    ],
+    fabricDescription: "Crafted with premium Classic fabric that offers breathable softness, durability, and everyday comfort.",
+    fabricCare: [
+      "75% Poly", "25% Viscose",
+      "Breathable lightweight fabric",
+      "Machine wash cold",
+      "Do not bleach"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
   },
 
   {
     id: 5,
     title: "Classic Women's Longsleeves Scrub",
-    category: "Tops",
+    category: "Scrubs",
     fabric: "Classic",
     color: "Yellow",
     price: 899.00,
     rating: 4.5,
     type: "women",
     isBestSeller: true,
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/Light yellow full sleeves scrub suit women.png",
+    image: parallelImg('Light yellow full sleeves scrub suit women.png'),
     images: [
-      "src/assets/scrub_suits_models/Parallel Scrub suits models/Light yellow full sleeves scrub suit women.png",
-       "src/assets/models/light yellow full sleeves scrub suit.png",
+      parallelImg('Light yellow full sleeves scrub suit women.png'),
+      modelImg('light yellow full sleeves scrub suit.png'),
     ],
     colors: [
-      { 
+      {
         name: "Yellow", hex: "#FFFF00",
         images: [
-        "src/assets/scrub_suits_models/Parallel Scrub suits models/Light yellow full sleeves scrub suit women.png",
-        "src/assets/models/light yellow full sleeves scrub suit.png",
-        ],
+          parallelImg('Light yellow full sleeves scrub suit women.png'),
+          modelImg('light yellow full sleeves scrub suit.png'),
+        ]
       },
-      { 
+      {
         name: "Tan", hex: "#D2B48C",
         images: [
-      "src/assets/scrub_suits_models/Parallel Scrub suits models/Tan color full sleeves scrub suit women.png",
-       "src/assets/models/Tan color full sleeves scrub suit.png"
-        ],
+          parallelImg('Tan color full sleeves scrub suit women.png'),
+          modelImg('Tan color full sleeves scrub suit.png'),
+        ]
       },
     ],
-    description: "Lightweight chiffon top for casual wear."
+    description: "Classic full sleeve scrub designed for added protection and polished professional appearance.",
+    details: [
+      "Long sleeve design for added coverage",
+      "Elegant structured stitching",
+      "Comfortable breathable fit",
+      "Functional storage pockets",
+      "Professional hospital-ready style"
+    ],
+    fabricDescription: "Made from premium Classic fabric for breathable comfort and durability during long shifts.",
+    fabricCare: [
+      "75% Poly", "25% Viscose",
+      "Machine washable",
+      "Do not bleach",
+      "Low heat dry"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
   },
 
-  
   {
     id: 6,
-    title: "Classic Women's V-Neck Scrub",
-    category: "Tops",
-    fabric: "Classic",
+    title: "ecoflex™ Lite Women's V-Neck Scrub",
+    category: "Scrubs",
+    fabric: "Ecoflex Lite",
     color: "Dark Grey",
     price: 899.00,
     rating: 4.5,
     type: "women",
-    image: "src/assets/Collar scrub suits/girl/Black1.png",
-      images:[
-          "src/assets/Collar scrub suits/girl/Dark Grey 1.png",
-          "src/assets/Collar scrub suits/girl/Dark Grey 2.png",
-          "src/assets/Collar scrub suits/girl/Dark Grey 3.png",
-        ],
+    image: collarGirlImg('Dark Grey 1.png'),
+    images: [
+      collarGirlImg('Dark Grey 1.png'),
+      collarGirlImg('Dark Grey 2.png'),
+      collarGirlImg('Dark grey 3.png'),
+    ],
     colors: [
-      { 
+      {
         name: "Dark Grey", hex: "#A9A9A9",
-        images:[
-          "src/assets/Collar scrub suits/girl/Dark Grey 1.png",
-          "src/assets/Collar scrub suits/girl/Dark Grey 2.png",
-          "src/assets/Collar scrub suits/girl/Dark Grey 3.png",
+        images: [
+          collarGirlImg('Dark Grey 1.png'),
+          collarGirlImg('Dark Grey 2.png'),
+          collarGirlImg('Dark grey 3.png'),
         ]
       },
-      { 
+      {
         name: "Black", hex: "#000000",
-        images:[
-          "src/assets/Collar scrub suits/girl/Blue1.png",
-          "src/assets/Collar scrub suits/girl/blue2.png",
-          "src/assets/Collar scrub suits/girl/blue3.png",
+        images: [
+          collarGirlImg('Blue1.png'),
+          collarGirlImg('blue2.png'),
+          collarGirlImg('blue3.png'),
         ]
       },
-      { 
-       name: "Blue", hex: "#0000FF",
-        images:[
-          "src/assets/Collar scrub suits/girl/Blue1.png",
-          "src/assets/Collar scrub suits/girl/blue2.png",
-          "src/assets/Collar scrub suits/girl/blue3.png",
+      {
+        name: "Blue", hex: "#0000FF",
+        images: [
+          collarGirlImg('Blue1.png'),
+          collarGirlImg('blue2.png'),
+          collarGirlImg('blue3.png'),
         ]
       },
-      { 
+      {
         name: "Green", hex: "#006400",
-        images:[
-          "src/assets/Collar scrub suits/girl/Green1.png",
-          "src/assets/Collar scrub suits/girl/Green2.png",
-          "src/assets/Collar scrub suits/girl/Green3.png",
+        images: [
+          collarGirlImg('Green1.png'),
+          collarGirlImg('Green2.png'),
+          collarGirlImg('Green3.png'),
         ]
       },
-      { 
+      {
         name: "Brown", hex: "#964B00",
-        images:[
-          "src/assets/Collar scrub suits/girl/Brown1.png",
-          "src/assets/Collar scrub suits/girl/Brown2.png",
-          "src/assets/Collar scrub suits/girl/Brown3.png",
+        images: [
+          collarGirlImg('Brown1.png'),
+          collarGirlImg('Brown2.png'),
+          collarGirlImg('Brown3.png'),
         ]
       },
-      { 
-        name: "Dark Grey", hex: "#A9A9A9",
-        images:[
-          "src/assets/Collar scrub suits/girl/Dark Grey 1.png",
-          "src/assets/Collar scrub suits/girl/Dark Grey 2.png",
-          "src/assets/Collar scrub suits/girl/Dark Grey 3.png",
-        ]
-      },
-      { 
-        name: "Nave blue", hex: "#000080",
-        images:[
-          "src/assets/Collar scrub suits/girl/Navy blue 1.png",
-          "src/assets/Collar scrub suits/girl/Navy blue 2.png",
-          "src/assets/Collar scrub suits/girl/Navy blue 3.png",
+      {
+        name: "Navy Blue", hex: "#000080",
+        images: [
+          collarGirlImg('Navy blue 1.png'),
+          collarGirlImg('Navy blue 2.png'),
+          collarGirlImg('Navy blue 3.png'),
         ]
       },
     ],
-    description: "Lightweight chiffon top for casual wear."
+    description: "Ecoflex Lite V-neck scrub made for lightweight comfort, flexibility, and modern everyday medical wear.",
+    details: [
+      "Stylish V-neck professional design",
+      "Ultra-lightweight flexible fit",
+      "Breathable fabric for active movement",
+      "Functional side pockets",
+      "Ideal for long hospital shifts"
+    ],
+    fabricDescription: "Made from lightweight Ecoflex Lite fabric engineered for flexibility, breathability, and comfort.",
+    fabricCare: [
+      "80% Poly", "20% Spandex Blend",
+      "Stretchable lightweight material",
+      "Machine wash gentle",
+      "Do not iron high heat"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
   },
+
   {
     id: 7,
     title: "Ecoflex Women's Sleeves Scrub",
-    category: "Tops",
+    category: "Scrubs",
     fabric: "Ecoflex",
     color: "Blue",
     price: 899.99,
     rating: 4.5,
     type: "women",
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/V neck dark blue scrub suit women.png",
+    image: parallelImg('V neck dark blue scrub suit women.png'),
     images: [
-      "src/assets/scrub_suits_models/Parallel Scrub suits models/V neck dark blue scrub suit women.png",
-       "src/assets/models/Navy blue scrub.png",
+      parallelImg('V neck dark blue scrub suit women.png'),
+      modelImg('Navy blue scrub.png'),
     ],
     colors: [
-      { 
+      {
         name: "Blue", hex: "#00008B",
-        images:[
-          "src/assets/scrub_suits_models/Parallel Scrub suits models/V neck dark blue scrub suit women.png",
-          "src/assets/models/Navy blue scrub.png",
+        images: [
+          parallelImg('V neck dark blue scrub suit women.png'),
+          modelImg('Navy blue scrub.png'),
         ]
       },
     ],
-    description: "Lightweight chiffon top for casual wear."
+    description: "Premium Ecoflex scrub with sleeves designed for superior flexibility and all-day working comfort.",
+    details: [
+      "Sleeved design for enhanced coverage",
+      "Flexible 4-way stretch movement",
+      "Soft breathable texture",
+      "Deep utility pockets",
+      "Professional sleek fit"
+    ],
+    fabricDescription: "Crafted from premium Ecoflex stretch fabric for maximum flexibility and moisture control.",
+    fabricCare: [
+      "80% Poly", "20% Spandex Blend",
+      "Machine wash cold",
+      "Do not bleach",
+      "Hang dry recommended"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
   },
 
   {
     id: 8,
     title: "Classic Women's V-Neck Scrub",
-    category: "Tops",
+    category: "Scrubs",
     fabric: "Classic",
     color: "Dark Green",
     price: 899.00,
     rating: 4.5,
     type: "women",
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/V neck Dark green scrub suit women.png",
-    images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck dark green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/V neck dark green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/V neck Dark green scrub suit.png",
+    image: parallelImg('V neck Dark green scrub suit women.png'),
+    images: [
+      vNeckModelImg('V neck dark green scrub suit women.png'),
+      vNeckSideImg('V neck dark green scrub suit women.png'),
+      vNeckHangerImg('V neck Dark green scrub suit.png'),
     ],
     colors: [
-      { 
+      {
         name: "Dark Green", hex: "#013220",
-        images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck dark green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/V neck dark green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/V neck Dark green scrub suit.png",
+        images: [
+          vNeckModelImg('V neck dark green scrub suit women.png'),
+          vNeckSideImg('V neck dark green scrub suit women.png'),
+          vNeckHangerImg('V neck Dark green scrub suit.png'),
         ]
       },
-      { 
+      {
         name: "Blue", hex: "#00008B",
-        images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck dark blue scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/V neck dark blue scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/Dark blue scrub.png",
+        images: [
+          vNeckModelImg('V neck dark blue scrub suit women.png'),
+          vNeckSideImg('V neck dark blue scrub suit women.png'),
+          vNeckHangerImg('Dark blue scrub.png'),
         ]
       },
-      { 
+      {
         name: "Green", hex: "#006400",
-        images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/V neck green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/Green medical scrub suit set.png",
+        images: [
+          vNeckModelImg('V neck green scrub suit women.png'),
+          vNeckSideImg('V neck green scrub suit women.png'),
+          vNeckHangerImg('Green medical scrub suit set.png'),
         ]
       },
-      { 
+      {
         name: "Dust Pink", hex: "#D58A94",
-        images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck pink color scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/dust pink scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/Pink scrub set on white backdrop.png",
+        images: [
+          vNeckModelImg('V neck pink color scrub suit women.png'),
+          vNeckSideImg('dust pink scrub suit women.png'),
+          vNeckHangerImg('Pink scrub set on white backdrop.png'),
         ]
       },
-      { 
+      {
         name: "Mint Green", hex: "#98FB98",
-        images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck scrub suit mint green women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/V neck mint green scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/Mint green medical scrub set.png",
+        images: [
+          vNeckModelImg('V neck scrub suit mint green women.png'),
+          vNeckSideImg('V neck mint green scrub suit women.png'),
+          vNeckHangerImg('Mint green medical scrub set.png'),
         ]
       },
-      { 
+      {
         name: "Tan Color", hex: "#D2B48C",
-        images:[
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens model/V neck tan color scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/Womens side view/Tan scrub suit women.png",
-          "src/assets/V-neck scrubs suit/V-neck scrubs suit/hanger scrubs/V neck Tan color scrub suit.png",
+        images: [
+          vNeckModelImg('V neck tan color scrub suit women.png'),
+          vNeckSideImg('Tan scrub suit women.png'),
+          vNeckHangerImg('V neck Tan color scrub suit.png'),
         ]
       },
     ],
-    description: "Lightweight chiffon top for casual wear."
+    description: "Classic V-neck scrub with modern tailoring for elegant styling and everyday hospital comfort.",
+    details: [
+      "Professional V-neck styling",
+      "Relaxed comfortable fit",
+      "Spacious storage pockets",
+      "Soft breathable material",
+      "Elegant tailored feminine stitching"
+    ],
+    fabricDescription: "Premium Classic fabric offers durability, softness, and breathable performance all day long.",
+    fabricCare: [
+      "75% Poly", "25% Viscose",
+      "Machine wash cold",
+      "Do not bleach",
+      "Dry low heat"
+    ],
+    returnDescription: "We want you to love your scrubs. If something isn't right, you can request a return or exchange within 7 days of delivery for all non-customised orders.",
+    returnPoints: [
+      "Embroidery products are not eligible for return or exchange.",
+      "Items that have been used, washed, or had their tags removed cannot be returned.",
+      "Orders placed during sale events are final and not eligible for return but can be exchanged."
+    ],
   },
- 
 ]
