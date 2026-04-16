@@ -49,13 +49,14 @@
 }
 
 .wishlist-img {
-  width: 82px;
-  height: 82px;
-  object-fit: cover;
-  border-radius: 12px;
-  background: #f3f6f8;
-}
+  width: 90px;
+  height: 90px;
 
+  object-fit: contain;   // full image visible
+  background: transparent; 
+
+  display: block;
+}
 .wishlist-info {
   display: flex;
   flex-direction: column;

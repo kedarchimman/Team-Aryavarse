@@ -11,7 +11,8 @@ export const menProducts = [
   {
     id: 101,
     title: "Classic Men's Collar Scrub",
-    price: 1499.00,
+    price: 999.00,
+    oldPrice: 1200.00,
     rating: 4.8,
     fabric: "Classic",
     color: "brown",
@@ -60,20 +61,14 @@ export const menProducts = [
           modelImg('Dark_Green_full_sleeves.png'),
         ]
       },
-      {
-        name: "grey", hex: "#808080",
-        images: [
-          parallelImg('Grey full sleeves zip scrub suit men.png'),
-          
-        ]
-      }
     ]
   },
 
   {
     id: 102,
     title: "ecoflex™ Men's Longsleeves Scrub",
-    price: 1599.00,
+    price: 1050.00,
+    oldPrice: 1400.00,
     rating: 4.7,
     fabric: "Ecoflex",
     color: "Green",
@@ -115,12 +110,6 @@ export const menProducts = [
         ]
       },
       {
-        name: "Grey", hex: "#808080",
-        images: [
-          parallelImg('Grey full sleeves zip scrub suit men.png'),
-        ]
-      },
-      {
         name: "Navy Blue", hex: "#000080",
         images: [
           parallelImg('Navy blue full sleeves zip scrub suit men.png'),
@@ -133,7 +122,8 @@ export const menProducts = [
   {
     id: 103,
     title: "Classic Men Longsleeves Scrub Set",
-    price: 1699.00,
+    price: 1050.00,
+    oldPrice: 1400.00,
     rating: 4.6,
     fabric: "Classic",
     color: "Grey",
@@ -167,7 +157,9 @@ export const menProducts = [
     colors: [
       {
         name: "Grey", hex: "#808080",
-        images: [ parallelImg('Grey.png') ]
+        images: [ 
+          parallelImg('Grey.png') 
+      ]
       },
       {
         name: "Green", hex: "#006400",
@@ -210,7 +202,8 @@ export const menProducts = [
   {
     id: 104,
     title: "ecoflex™ Men's Round-Neck Scrub",
-    price: 1799.00,
+    price: 600.00,
+    oldPrice: 800.00,
     rating: 4.9,
     fabric: "Ecoflex",
     color: "Soft Blue+Grey",
@@ -270,7 +263,8 @@ export const menProducts = [
   {
     id: 105,
     title: "Classic Men's Collar Scrub",
-    price: 1899.00,
+    price: 999.00,
+    oldPrice: 1200.00,
     rating: 4.7,
     fabric: "Classic",
     color: "Maroon",
@@ -324,7 +318,8 @@ export const menProducts = [
   {
     id: 106,
     title: "ecoflex™ Men's Round-Neck Scrub",
-    price: 1999.00,
+    price: 800.00,
+    oldPrice: 1000.00,
     rating: 4.8,
     fabric: "Ecoflex",
     color: "Mint Green",
@@ -384,7 +379,8 @@ export const menProducts = [
   {
     id: 107,
     title: "ecoflex™ Men's V-Neck Scrub",
-    price: 899.00,
+    price: 850.00,
+    oldPrice: 1100.00,
     rating: 4.8,
     fabric: "Classic",
     color: "Navy Green",
@@ -437,7 +433,8 @@ export const menProducts = [
   {
     id: 108,
     title: "ecoflex™ Lite Men's Collar Scrub",
-    price: 899.00,
+    price: 999.00,
+    oldPrice: 1200.00,
     fabric: "Ecoflex Lite",
     color: "Black",
     rating: 4.7,

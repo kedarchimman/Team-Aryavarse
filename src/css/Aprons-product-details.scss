@@ -12,7 +12,7 @@ $text-muted:#6b7280;
 
 .aprons-product-page {
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: visible;
   background: $white;
   * {
     box-sizing: border-box;
@@ -28,16 +28,20 @@ $text-muted:#6b7280;
     margin: 0 auto;
     align-items: start;
     font-family: 'Segoe UI', sans-serif;
+    overflow: visible;
   }
 
   .left-wrap {
-    position: relative;
-    min-width: 0;
+    position: sticky;   // ✅ MAIN FIX
+    top: 80px;          // navbar height adjust
+    align-self: flex-start;
+    height: fit-content;
+
   }
 
   // IMAGE SECTION
   .left {
-    position: sticky;
+    position: static;
     top: 80px;
     display: flex;
     gap: 16px;
@@ -250,7 +254,12 @@ $text-muted:#6b7280;
   }
 
   .right h2   { margin: 0; font-size: 30px; color: $text-dark; font-weight: 800; }
-  .old-price  { font-size: 16px; color: #9ca3af; text-decoration: line-through; font-weight: 600; }
+  .old-price {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 14px;
+  margin-left: 8px;
+}
   .discount   { background: #e6f7f7; color: #007b7f; padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; }
 
   .variant-section {

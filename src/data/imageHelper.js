@@ -1,7 +1,10 @@
 const FOLDERS = {
 
   //banner
- // banner:'banner_img',
+  banner:'banner_img',
+
+  //about
+  about:'About',
 
   // men + women
   parallel: 'scrub_suits_models_parallel',
@@ -50,6 +53,9 @@ export const getImage = (folder, filename) => {
 
 //banner
 export const bannerImg = (f) => getImage('banner', f)
+
+//about
+export const aboutImg = (f) => getImage('about', f)
 
 export const parallelImg = (f) => getImage('parallel', f)
 export const modelImg    = (f) => getImage('models', f)

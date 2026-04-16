@@ -15,6 +15,7 @@
   color: #0f2f57;
   margin-bottom: 22px;
   letter-spacing: -0.5px;
+  text-align: center;
 }
 
 .cart-layout {
@@ -48,11 +49,12 @@
 .cart-img {
   width: 82px;
   height: 82px;
-  object-fit: cover;
-  border-radius: 12px;
-  background: #f3f6f8;
-}
 
+  object-fit: contain;  // full image visible
+  background: transparent;
+
+  display: block;
+}
 .product-title {
   font-size: 16px;
   font-weight: 700;
@@ -202,6 +204,18 @@
   padding: 44px 20px;
   text-align: center;
   border: 1px solid #ebedf0;
+  
+  max-width: 900px;
+  width: 100%;
+  margin: 10px auto;  
+}
+.cart-layout:has(.empty-cart) {
+  grid-template-columns: 1fr;   // 🔥 full width
+  justify-content: center;
+}
+.cart-layout:has(.empty-cart) .cart-left {
+  justify-content: center;
+  align-items: center;
 }
 
 .continue-btn {

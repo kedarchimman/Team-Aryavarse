@@ -26,14 +26,11 @@ export const addToCart = (product) => {
   )
 
   if (existing) {
-
-    existing.qty += product.qty
-
+    existing.qty += product.qty || 1
   } else {
-
     cart.value.push({
       ...product,
-      qty: product.qty
+      qty: product.qty || 1   
     })
   }
 }

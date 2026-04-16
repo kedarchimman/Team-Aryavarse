@@ -12,13 +12,12 @@ $text-muted:#6b7280;
 
 .men-product-page {
   width: 100%;
-  overflow-x: hidden;
-  background: $white;
+  overflow-x: visible;   // ✅ FIX (IMPORTANT)
+
   * { 
     box-sizing: border-box; 
   }
 
-  // PRODUCT PAGE GRID
   .product-page {
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(400px, 0.9fr);
@@ -28,6 +27,16 @@ $text-muted:#6b7280;
     margin: 0 auto;
     align-items: start;
     font-family: 'Segoe UI', sans-serif;
+    overflow: visible;
+  }
+
+  /* ================= LEFT SIDE FIX ================= */
+
+  .left-wrap {
+    position: sticky;   // ✅ MAIN FIX
+    top: 80px;          // navbar height adjust
+    align-self: flex-start;
+    height: fit-content;
   }
 
   .left {
@@ -35,6 +44,7 @@ $text-muted:#6b7280;
     gap: 16px;
     align-items: flex-start;
     flex-direction: row;
+    position: static;   // ❌ sticky removed from here
   }
 
   .thumbs {
@@ -78,16 +88,12 @@ $text-muted:#6b7280;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
   }
 
   .main-image {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    display: block;
     transition: transform 0.3s ease;
 
     &:hover {

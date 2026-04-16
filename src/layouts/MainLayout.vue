@@ -28,7 +28,7 @@
         <span @click="$router.push('/women')">Women</span>
         <!--<span @click="goToPage('/aprons')">Aprons</span>--->
         <span @click="$router.push('/bulk')">Bulk Orders</span>
-        <span @click="$router.push('/about')">About</span>
+        <span @click="$router.push('/about')">About Us</span>
         
       </div>
 
@@ -55,33 +55,63 @@
     </div>
 
     <!-- SEARCH OVERLAY -->
-<div v-if="searchOpen" class="search-overlay" @click="searchOpen = false"></div>
-
-<!-- SEARCH POPUP -->
 <div v-if="searchOpen" class="search-popup">
+
   <div class="search-header">
-    <input
-      v-model="searchQuery"
-      type="text"
-      placeholder="Search products..."
-      class="search-input"
-    />
+    <div class="search-input-wrapper">
+
+      <input
+        v-model="searchQuery"
+        @keyup.enter="handleSearchEnter"
+        type="text"
+        placeholder="Search scrubs, aprons..."
+        class="search-input"
+      />
+
+      <!-- DROPDOWN (ONLY HERE) -->
+      <div v-if="suggestions.length" class="dropdown">
+        <div
+          v-for="item in suggestions"
+          :key="item.route"
+          class="item"
+          @click="goToResult(item)"
+        >
+          {{ item.label }}
+        </div>
+      </div>
+
+      <!-- NO RESULT -->
+      <div v-if="searchQuery && !suggestions.length" class="no-result">
+        No product found
+      </div>
+
+    </div>
+
+    
+
     <span class="search-close" @click="searchOpen = false">✕</span>
   </div>
 
-  <div class="search-results">
-    <div
-      class="search-card"
-      v-for="product in filteredProducts"
-      :key="product.id"
-      @click="goToProduct(product)"
+  <!-- RECENT SEARCHES -->
+<div v-if="recentSearches.length" class="recent-box">
+
+  <div class="recent-title">Recent Searches</div>
+
+  <div class="recent-list">
+    <span
+      v-for="item in recentSearches"
+      :key="item"
+      class="recent-chip"
+      @click="searchQuery = item"
     >
-      <img :src="product.image" :alt="product.name" class="search-product-img" />
-      <h4>{{ product.name }}</h4>
-      <p>{{ product.category }}</p>
-    </div>
+      {{ item }}
+    </span>
+
   </div>
 </div>
+
+</div>
+
 
     <!-- MOBILE MENU OVERLAY -->
     <div v-if="menuOpen" class="mobile-menu-overlay" @click="menuOpen = false"></div>
@@ -99,7 +129,7 @@
         <span @click="goToPage('/women')">Women</span>
         <span @click="goToPage('/Aprons')">Aprons</span>
         <span @click="goToPage('/bulk')">Bulk Orders</span>
-        <span @click="goToPage('/about')">About</span>
+        <span @click="goToPage('/about')">About Us</span>
       </div>
     </div>
 
@@ -146,7 +176,7 @@
       <ul>
         <li @click="$router.push('/')">Home</li>
         <li @click="$router.push('/bulk')">Bulk Orders</li>
-        <li @click="$router.push('/about')">About</li>
+        <li @click="$router.push('/about')">About Us</li>
         <li @click="$router.push('/wishlist')">Wishlist</li>
         <li @click="$router.push('/cart')">Cart</li>
       </ul>
@@ -187,7 +217,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue' // ref mobile menu sathi
+import { computed, ref, watch } from 'vue' // ref mobile menu sathi
 import { useRouter } from 'vue-router' // route navigate sathi
 import { cart } from 'src/stores/shop'
 
@@ -213,36 +243,119 @@ const searchOpen = ref(false)
 const searchQuery = ref('')
 
 // sample searchable products
-const searchProducts = ref([
-  {
-    id: 1,
-    name: 'Men Scrub',
-    category: 'Classic Collection',
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/brown and light brown scrub suit men.png",
-    route: '/men'
-  },
-  {
-    id: 2,
-    name: 'Classic Scrub',
-    category: 'Premium Scrub',
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/Grey full sleeves zip scrub suit men.png",
-    route: '/men'
-  },
-  {
-    id: 3,
-    name: 'Women Scrub',
-    category: 'Elegant Fit',
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/V neck Dark green scrub suit women.png",
-    route: '/women'
-  },
-  {
-    id: 4,
-    name: 'Womens Longsleeves Scrub',
-    category: 'Classic Scrub',
-    image: "src/assets/scrub_suits_models/Parallel Scrub suits models/Light yellow full sleeves scrub suit women.png",
-    route: '/women'
+const searchProducts = ref([])
+
+//recent Searches
+const recentSearches = ref([])
+const addToRecent = (text) => {
+  const q = text.trim().toLowerCase()
+
+  if (!q) return
+
+  recentSearches.value = [
+    q,
+    ...recentSearches.value.filter(i => i !== q)
+  ].slice(0, 6)
+}
+
+const searchMap = [
+  { key: 'apron', route: '/aprons' },
+  { key: 'aprons', route: '/aprons' },
+  { key: 'women scrub', route: '/women' },
+  { key: 'men scrub', route: '/men' },
+  { key: 'scrub', route: '/women' },
+  { key: 'bulk', route: '/bulk' },
+]
+
+const goSearch = () => {
+  const q = searchQuery.value.toLowerCase().trim()
+
+  if (!q) return
+
+  const match = searchMap.find(item =>
+    q.includes(item.key)
+  )
+
+  if (match) {
+    router.push(match.route)
+    searchOpen.value = false
+    searchQuery.value = ''
   }
-])
+}
+watch(searchQuery, () => {
+  goSearch()
+})
+
+//suggestions search 
+const suggestions = computed(() => {
+  const q = searchQuery.value.toLowerCase().trim()
+
+  if (!q) return []
+
+  return searchIndex.filter(item =>
+    item.keywords.some(k =>
+      k.includes(q) || q.includes(k)
+    )
+  )
+})
+
+
+//search index 
+const searchIndex = [
+  {
+    keywords: ['men', 'men scrub', 'male scrub', 'mens scrubs'],
+    route: '/men',
+    label: 'Men Scrubs'
+  },
+  {
+    keywords: ['women', 'women scrub', 'female scrub', 'womens scrubs'],
+    route: '/women',
+    label: 'Women Scrubs'
+  },
+
+  // COLORS + STYLE SMART MATCH
+  {
+    keywords: ['blue scrub', 'blue v neck', 'v neck blue scrub', 'blue v neck scrub'],
+    route: '/men?color=blue&type=vneck',
+    label: 'Blue V Neck Scrub'
+  },
+
+  {
+    keywords: ['red scrub', 'red v neck'],
+    route: '/women?color=red&type=vneck',
+    label: 'Red Scrub'
+  }
+]
+
+// click behaviour 
+const goToResult = (item) => {
+  addToRecent(item.label)   // ✅ ADD THIS
+
+  router.push(item.route)
+  searchOpen.value = false
+  searchQuery.value = ''
+}
+
+//AUTO DIRECT (ENTER PRESS LOGIC)
+const handleSearchEnter = () => {
+  const q = searchQuery.value.toLowerCase().trim()
+
+  if (!q) return
+
+  addToRecent(q)
+
+  const match = searchIndex.find(item =>
+    item.keywords.some(k => k === q)
+  )
+
+  if (match) {
+    router.push(match.route)
+  } else {
+    router.push(`/search?q=${q}`) // fallback page
+  }
+
+  searchOpen.value = false
+}
 
 // search filter logic
 const filteredProducts = computed(() => {
@@ -259,6 +372,7 @@ const goToProduct = (product) => {
   router.push(product.route)
   searchOpen.value = false
 }
+
 
 </script>
 

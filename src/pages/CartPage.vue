@@ -6,7 +6,8 @@
       <div class="cart-layout">
         <!-- LEFT SIDE -->
         <div class="cart-left">
-          <div v-if="cart && cart.length > 0">
+          <div v-if="hasItems">
+          
             <div
               v-for="item in cart"
               :key="item.id"
@@ -57,7 +58,7 @@
         </div>
 
         <!-- RIGHT SIDE -->
-        <div class="cart-right">
+        <div v-if="hasItems" class="cart-right">
           <div class="summary-card">
             <h2>Order Summary</h2>
 
@@ -106,6 +107,8 @@
 <script setup>
 import { computed } from 'vue'
 import { cart, removeFromCart, updateQty } from 'src/stores/shop'
+
+const hasItems = computed(() => cart.value.length > 0)
 
 // subtotal (safe number conversion)
 const subtotal = computed(() => {

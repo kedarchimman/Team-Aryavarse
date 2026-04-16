@@ -30,20 +30,22 @@
 
         <div class="rating-row">
           <span class="stars">★★★★★</span>
-          <span class="rating">{{ product.rating }} Rating</span>
+          <span class="rating">{{ product.rating }}</span>
         </div>
 
-<div class="price-row">
-  <h2>
-    ₹ {{ Number(product.price).toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}
-  </h2>
+        <div class="price-row">
+          <h2>
+            ₹ {{ Number(product.price).toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}
+          </h2>
 
-  <span class="old-price">
-    ₹ {{ Number(oldPrice).toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}
-  </span>
+          <span v-if="product.oldPrice" class="old-price">
+            ₹ {{ Number(product.oldPrice).toLocaleString('en-IN') }}
+          </span>
 
-  <span class="discount">20% OFF</span>
-</div>
+          <span v-if="product.oldPrice" class="discount">
+            {{ discountPercent }}% OFF
+          </span>
+        </div>
 
         <!----<div class="info-box">
           <p><strong>Fabric:</strong> {{ product.fabric }}</p>
@@ -95,6 +97,12 @@
                       
                     
                   </div>
+
+                          <!-- ✅ CUSTOMIZATION -->
+      <ProductCustomization
+        :product-id="product?.id"
+        @customization-updated="onCustomizationUpdated"
+      />
 
         <!-- BUTTONS -->
         <div class="btns">
@@ -323,6 +331,15 @@ import { womenProducts } from 'src/data/womenProducts'
 import { addToCart } from 'src/stores/shop'
 import sizeChartImg from 'src/assets/size_chart/size-chart.png'
 import measureImg from 'src/assets/size_chart/measure.png'
+import ProductCustomization from 'components/ProductCustomization.vue'
+
+//customization
+const customizationData = ref(null)
+
+const onCustomizationUpdated = (payload) => {
+  customizationData.value = payload
+  console.log('Customization:', payload)
+}
 
 // description
 const activeAccordion = ref(null)
@@ -392,10 +409,13 @@ const changeColor = (colorName) => {
 
 
 // PRICE
-const oldPrice = computed(() =>
-  product.value ? Number(product.value.price) + 300 : 0
-)
+const oldPrice = computed(() => product.value?.oldPrice)
+const discountPercent = computed(() => {
+  const p = product.value
+  if (!p?.oldPrice || !p?.price) return 0
 
+  return Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100)
+})
 
 // SIZE
 const sizes = ['XS','S','M','L','XL','2XL','3XL']
@@ -557,7 +577,9 @@ const handleAddToCart = () => {
     size: selectedSize.value,
     color: selectedColor.value,
     image: selectedImage.value,
-    qty: quantity.value
+    qty: quantity.value,
+    // ✅ ADD THIS
+    customization: customizationData.value
   })
 }
 

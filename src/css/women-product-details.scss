@@ -12,7 +12,7 @@ $text-muted:#6b7280;
 
 .women-product-page {
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: visible;
   background: $white;
   * { 
     box-sizing: border-box;
@@ -28,23 +28,27 @@ $text-muted:#6b7280;
   margin: 0 auto;
   align-items: start;
   font-family: 'Segoe UI', sans-serif;
+   overflow: visible;
+
 }
 
+/*left side*/
 .left-wrap { 
-  position: relative;
-  min-width: 0; 
+  position: sticky;   // ✅ MAIN FIX
+  top: 80px;          // navbar height adjust
+  align-self: flex-start;
+  height: fit-content;
+
 }
 
 
 // FIXED IMAGE SECTION
 .left {
-  position: sticky;
-  top: 80px; // CHANGE: 80px -> 20px (less gap from top)
-
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  flex-direction: row;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    flex-direction: row;
+    position: static; 
 }
 
 
@@ -91,9 +95,7 @@ $text-muted:#6b7280;
     justify-content: center;
     overflow: hidden;
 
-    background: transparent !important; // Remove grey box if any
-    border: none !important;
-    box-shadow: none !important;
+    background: transparent;
   }
 
   .main-image {
@@ -109,9 +111,8 @@ $text-muted:#6b7280;
   }
 
 .main-image-box {
-  align-items: flex-start; // 🔥 THIS FIX
+  align-items: center;
 }
-
   /* ================= MOBILE STYLE ================= */
   @media (max-width: 768px) {
 
@@ -124,7 +125,6 @@ $text-muted:#6b7280;
     .left {
       position: relative !important;
       top: unset !important;
-      flex-direction: column !important; // stack thumbs below image
       align-items: center;
     }
 

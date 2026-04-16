@@ -4,7 +4,9 @@ export const apronsProducts = [
   {
     id: 201,
     title: "Doctor apron full length sleeves",
-    price: 799.00,
+    price: 879.00,
+    oldPrice: 1179.00,
+    
     rating: 4.8,
     color: "White",
     type: "aprons",
@@ -48,7 +50,9 @@ export const apronsProducts = [
   {
     id: 202,
     title: "Doctor apron full length sleeves",
-    price: 799.00,
+    price: 879.00,
+    oldPrice: 1179.00,
+    
     rating: 4.8,
     color: "White",
     type: "aprons",
@@ -92,7 +96,9 @@ export const apronsProducts = [
   {
     id: 203,
     title: "Doctor apron full length 3-4 sleeves",
-    price: 899.00,
+    price: 800.00,
+    oldPrice: 1000.00,
+    
     rating: 4.9,
     color: "White",
     type: "aprons",
@@ -136,7 +142,8 @@ export const apronsProducts = [
   {
     id: 204,
     title: "Doctor apron full length 3-4 sleeves",
-    price: 699.00,
+    price: 800.00,
+    oldPrice: 1000.00,
     rating: 4.7,
     color: "White",
     type: "aprons",
@@ -180,7 +187,8 @@ export const apronsProducts = [
   {
     id: 205,
     title: "Doctor apron half length and half sleeves",
-    price: 1199.00,
+    price: 700.00,
+    oldPrice: 999.00,
     rating: 4.8,
     color: "White",
     type: "aprons",
@@ -224,7 +232,8 @@ export const apronsProducts = [
   {
     id: 206,
     title: "Doctor apron half length and half sleeves",
-    price: 1199.00,
+    price: 700.00,
+    oldPrice: 999.00,
     rating: 4.8,
     color: "White",
     type: "aprons",

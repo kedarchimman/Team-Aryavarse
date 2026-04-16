@@ -1,0 +1,627 @@
+
+
+// ─── Variables ────────────────────────────────────────────────
+$teal:       #009688;
+$teal-light: #e0f2f1;
+$teal-mid:   #4db6ac;
+$text-dark:  #1a1a2e;
+$text-muted: #777;
+$border:     #e0e0e0;
+$radius-xl:  20px;
+$radius-lg:  16px;
+$radius-md:  10px;
+$radius-sm:  6px;
+$shadow-md:  0 8px 30px rgba(0,0,0,0.08);
+$shadow-lg:  0 16px 50px rgba(0,0,0,0.12);
+
+// ─── Page Wrapper ─────────────────────────────────────────────
+.bulk-page {
+  background: #f5f7f8;
+  min-height: 100vh;
+}
+
+// ─── Banner ───────────────────────────────────────────────────
+.bulk-banner {
+  position: relative;
+  width: 100%;
+  height: 55vh;
+  min-height: 300px;
+  overflow: hidden;
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0.25) 100%
+    );
+    display: flex;
+    align-items: center;
+    padding: 0 6vw;
+  }
+
+  &__content {
+    max-width: 600px;
+    color: white;
+  }
+
+  &__eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: $teal-mid;
+    margin: 0 0 10px;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0 0 12px;
+  }
+
+  &__sub {
+    font-size: 16px;
+    opacity: 0.9;
+    margin: 0 0 20px;
+    line-height: 1.6;
+  }
+
+  &__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .badge {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 30px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+}
+
+// ─── Main Container ───────────────────────────────────────────
+.bulk-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
+}
+
+// ─── Grid ─────────────────────────────────────────────────────
+.bulk-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 28px;
+  align-items: start;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Why Card ─────────────────────────────────────────────────
+.why-card {
+  background: white;
+  border-radius: $radius-xl;
+  padding: 28px;
+  box-shadow: $shadow-md;
+  position: sticky;
+  top: 80px;
+
+  @media (max-width: 960px) {
+    position: static;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 700;
+    color: $text-dark;
+    margin: 0 0 20px;
+  }
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  &__icon-wrap {
+    width: 38px;
+    height: 38px;
+    background: $teal-light;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-dark;
+    margin: 0 0 2px;
+  }
+
+  &__desc {
+    font-size: 12px;
+    color: $text-muted;
+    margin: 0;
+  }
+}
+
+.divider {
+  height: 1px;
+  background: $border;
+  margin: 18px 0;
+}
+
+.trust-badge {
+  text-align: center;
+
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 8px 0 4px;
+    color: $text-dark;
+  }
+
+  &__sub {
+    font-size: 12px;
+    color: $text-muted;
+    margin: 0;
+  }
+}
+
+.steps-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: $text-dark;
+  margin: 0 0 14px;
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+
+  &__num {
+    width: 26px;
+    height: 26px;
+    background: $teal;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-size: 13px;
+    font-weight: 600;
+    color: $text-dark;
+    margin: 0 0 2px;
+  }
+
+  &__desc {
+    font-size: 12px;
+    color: $text-muted;
+    margin: 0;
+  }
+}
+
+
+
+// ─── Form Card ────────────────────────────────────────────────
+.form-card {
+  background: white;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+
+  &__header {
+    background: $teal;
+    padding: 24px 28px;
+  }
+
+  &__title {
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 6px;
+  }
+
+  &__sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    margin: 0;
+  }
+}
+
+// ─── Form ─────────────────────────────────────────────────────
+.bulk-form {
+  padding: 28px;
+}
+
+.form-section {
+  margin-bottom: 30px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f0f0f0;
+
+  &:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.section-num {
+  background: $teal;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: $text-dark;
+  margin: 0;
+}
+
+.form-row {
+  margin-bottom: 14px;
+
+  &--2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.form-field { width: 100%; }
+
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text-dark;
+  margin: 0 0 8px;
+}
+
+.field-hint {
+  font-size: 12px;
+  color: $text-muted;
+  margin: 6px 0 0;
+}
+
+// ─── Size Split ───────────────────────────────────────────────
+.size-split-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.size-split-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.size-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: $text-dark;
+}
+
+.size-qty-input {
+  width: 100%;
+  :deep(.q-field__native) { 
+    text-align: center; 
+  }
+}
+
+// ─── Customization Toggle ─────────────────────────────────────
+.custom-toggle { margin-bottom: 14px; }
+
+.custom-block {
+  background: #fafafa;
+  border: 1.5px solid $border;
+  border-radius: $radius-md;
+  padding: 18px;
+}
+
+// ─── Custom Type Chips ────────────────────────────────────────
+.custom-type-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.type-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1.5px solid $border;
+  border-radius: 30px;
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+  color: $text-dark;
+  transition: all 0.18s;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: $teal-mid;
+    background: $teal-light;
+  }
+
+  &--active {
+    border-color: $teal;
+    background: $teal;
+    color: white;
+
+    .chip-price { color: rgba(255,255,255,0.8); }
+  }
+
+  .chip-price {
+    font-size: 11px;
+    color: $teal;
+    margin-left: 2px;
+  }
+}
+
+// ─── Position Chips ───────────────────────────────────────────
+.position-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pos-chip {
+  padding: 7px 13px;
+  border: 1.5px solid $border;
+  border-radius: $radius-sm;
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.18s;
+
+  &:hover { border-color: $teal-mid; }
+
+  &--active {
+    border-color: $teal;
+    background: $teal-light;
+    color: $teal;
+    font-weight: 600;
+  }
+}
+
+// ─── Upload ───────────────────────────────────────────────────
+.upload-zone {
+  border: 2px dashed $teal-mid;
+  border-radius: $radius-md;
+  padding: 20px;
+  text-align: center;
+  background: white;
+  cursor: pointer;
+  transition: background 0.18s;
+
+  &:hover { background: $teal-light; }
+
+  .upload-text {
+    font-size: 13px;
+    color: $text-muted;
+    margin: 8px 0 0;
+  }
+
+  .upload-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    .logo-thumb {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border: 1px solid $border;
+      border-radius: $radius-sm;
+    }
+
+    .logo-filename {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .remove-logo {
+      font-size: 13px;
+      color: #e53935;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+  }
+}
+
+// ─── Custom Warning Banner ────────────────────────────────────
+.custom-warning {
+  margin-top: 14px;
+  background: #fff3e0;
+  border-radius: $radius-sm;
+  font-size: 13px;
+  color: #6d4200;
+}
+
+// ─── Quote Summary ────────────────────────────────────────────
+.quote-summary {
+  background: $teal-light;
+  border-radius: $radius-md;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+
+  .quote-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    color: $teal;
+    margin-bottom: 14px;
+  }
+
+  .quote-rows { display: flex; flex-direction: column; gap: 8px; }
+
+  .quote-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: $text-dark;
+
+    &--total {
+      padding-top: 8px;
+      border-top: 1px solid $teal-mid;
+      font-weight: 700;
+      font-size: 16px;
+      color: $teal;
+    }
+  }
+
+  .quote-note {
+    font-size: 12px;
+    color: $text-muted;
+    margin: 10px 0 0;
+    line-height: 1.5;
+  }
+}
+
+// ─── Submit ───────────────────────────────────────────────────
+.form-submit {
+  text-align: center;
+
+  .submit-btn {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: $radius-md;
+    letter-spacing: 0.5px;
+  }
+
+  .submit-note {
+    font-size: 12px;
+    color: $text-muted;
+    margin: 10px 0 0;
+  }
+}
+
+// ─── Success Dialog ───────────────────────────────────────────
+.success-card {
+  background: white;
+  border-radius: $radius-lg;
+  padding: 36px 32px;
+  text-align: center;
+  max-width: 420px;
+  width: 90vw;
+
+  .success-icon { font-size: 52px; margin-bottom: 16px; }
+
+  h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: $text-dark;
+    margin: 0 0 12px;
+  }
+
+  p { font-size: 14px; color: $text-muted; margin: 0 0 10px; }
+
+  .success-sub { font-size: 13px; }
+
+  .done-btn {
+    margin-top: 20px;
+    padding: 10px 36px;
+    border-radius: $radius-md;
+    font-weight: 600;
+  }
+}
+
+// ─── Utilities ────────────────────────────────────────────────
+.mt-14 { margin-top: 14px; }
+
+// ─── Transition ───────────────────────────────────────────────
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.slide-down-enter-from,
+.slide-down-leave-to {
+  max-height: 0;
+  opacity: 0;
+}
+.slide-down-enter-to,
+.slide-down-leave-from {
+  max-height: 1200px;
+  opacity: 1;
+}
+
+// ─── Responsive ───────────────────────────────────────────────
+@media (max-width: 768px) {
+  .bulk-banner {
+    height: 45vh;
+
+    &__overlay { padding: 0 5vw; }
+    &__sub     { display: none; }
+  }
+
+  .bulk-container { padding: 20px 14px 40px; }
+  .bulk-form      { padding: 18px; }
+  .form-card__header { padding: 18px 18px; }
+
+  .size-split-grid { grid-template-columns: repeat(4, 1fr); }
+
+  .custom-type-grid .type-chip { font-size: 12px; padding: 7px 11px; }
+}
+
+@media (max-width: 480px) {
+  .bulk-banner { height: 38vh; min-height: 220px; }
+  .bulk-banner__title { font-size: 24px; }
+  .badge { font-size: 11px; padding: 5px 10px; }
+  .size-split-grid { grid-template-columns: repeat(3, 1fr); }
+}

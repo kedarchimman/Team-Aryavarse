@@ -1,21 +1,58 @@
 <template>
   <div class="home-page">
-
-    <!-- HERO -->
     <div class="hero">
-      <div class="hero-text">
-        <h1>So comfortable, I can go long shifts without breaking a sweat!</h1>
-        <div class="features">
-          <span>☁ Super-soft</span>
-          <span>💧 Breathable</span>
-          <span>🪶 Featherlite</span>
+
+  <div class="hero-slider">
+    <div class="hero-track"
+     :style="{
+       transform: `translateX(-${currentSlide * 100}%)`,
+       transition: isTransitioning ? 'transform 0.6s ease-in-out' : 'none'
+     }">
+
+    <!-- ORIGINAL SLIDES -->
+      <div class="hero-slide"
+       v-for="(slide, i) in banners"
+       :key="i"
+      >
+
+        <!-- TEXT -->
+        <div class="hero-text">
+          <h1>{{ slide.title }}</h1>
+
+          <div class="features">
+            <span v-for="f in slide.features" :key="f">{{ f }}</span>
+          </div>
+
+          <button class="shop-btn" @click="scrollToProducts">
+            Shop Now
+          </button>
         </div>
-        <button class="shop-btn" @click="scrollToProducts">Shop Now</button>
+
+        <!-- IMAGE -->
+        <div class="hero-image-wrapper">
+          <img :src="slide.image" class="hero-img" />
+        </div>
+
       </div>
-      <div class="hero-image-wrapper">
-        <img src="/images/doctor.png" class="hero-img" />
+
+  <!-- CLONE OF FIRST SLIDE — infinite loop-->
+  <div class="hero-slide">
+    <div class="hero-text">
+      <h1>{{ banners[0].title }}</h1>
+      <div class="features">
+        <span v-for="f in banners[0].features" :key="f">{{ f }}</span>
       </div>
+      <button class="shop-btn" @click="scrollToProducts">Shop Now</button>
     </div>
+    <div class="hero-image-wrapper">
+      <img :src="banners[0].image" class="hero-img" />
+    </div>
+  </div>
+
+    </div>
+  </div>
+
+</div>
 
      <!-- PROMO STRIP -->
     <div class="trusted-clients-section">
@@ -185,15 +222,66 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ref, computed, nextTick } from 'vue'
+import { bannerImg } from 'src/data/imageHelper'
 import { menProducts } from 'src/data/menProducts'
 import { womenProducts } from 'src/data/womenProducts'
 import { apronsProducts } from 'src/data/apronsProducts'
 import { addToCart, toggleWishlist, isInWishlist } from 'src/stores/shop'
 import SortDropdown from 'src/components/SortDropdown.vue'
+import { onMounted, onBeforeUnmount} from 'vue'
 
 //sort by code
 const selectedSort = ref('')
 
+//banner
+const banners = [
+  {
+    title: "So comfortable, I can go long shifts without breaking a sweat!",
+    features: ["☁ Super-soft", "💧 Breathable", "🪶 Featherlite"],
+    image: bannerImg('doctor.png')
+  },
+  {
+    title: "Premium scrubs built for long duty hours",
+    features: ["🧵 Durable", "🌬 Airflow fabric", "💪 Stretch fit"],
+    image: bannerImg('bg_img2.png')
+  },
+  {
+    title: "Feel confident & comfortable all day",
+    features: ["✨ Stylish", "🩺 Medical fit", "🪶 Lightweight"],
+    image: bannerImg('bg_img.png')
+  }
+]
+
+//FIXED: Infinite loop slider logic
+const currentSlide = ref(0)
+const isTransitioning = ref(true)
+
+const nextSlide = () => {
+  currentSlide.value += 1
+
+  // when clone (index 3 = banners.length) 
+  if (currentSlide.value === banners.length) {
+    setTimeout(() => {
+      isTransitioning.value = false        // transition stop — silent jump
+      currentSlide.value = 0              // go to on 1st slider jump
+      setTimeout(() => {
+        isTransitioning.value = true      // transition start (loop)
+      }, 50)
+    }, 600) 
+  }
+}
+
+let interval = null
+
+onMounted(() => {
+  interval = setInterval(nextSlide, 3000)
+})
+
+onBeforeUnmount(() => {
+  clearInterval(interval)
+})
+
+//router
 const router = useRouter()
 
 const hoveredProduct = ref(null)
