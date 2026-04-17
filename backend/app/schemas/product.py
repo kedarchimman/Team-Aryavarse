@@ -1,46 +1,148 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
+from decimal import Decimal
 
 
-# -------- PRODUCT --------
-class ProductCreate(BaseModel):
+# ─── Category ─────────────────────────────────────────────────────────────────
+class CategoryCreate(BaseModel):
     name: str
     description: Optional[str] = None
-    category_id: int
-    sku: Optional[str] = None
+    is_active: Optional[bool] = True
 
 
-class ProductUpdate(BaseModel):
+class CategoryUpdate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
-    category_id: Optional[int] = None
-    sku: Optional[str] = None
+    is_active: Optional[bool] = None
 
 
-class ProductResponse(BaseModel):
+class CategoryOut(BaseModel):
     id: int
     name: str
-    description: Optional[str]
-    category_id: int
-    sku: Optional[str]
+    description: Optional[str] = None
+    is_active: bool
+
+    class Config:
+        from_attributes = True
+
+
+# ─── Color ────────────────────────────────────────────────────────────────────
+class ColorCreate(BaseModel):
+    name: str
+    hex_code: Optional[str] = None
+    is_active: Optional[bool] = True
+
+
+class ColorOut(BaseModel):
+    id: int
+    name: str
+    hex_code: Optional[str] = None
+    is_active: bool
+
+    class Config:
+        from_attributes = True
+
+
+# ─── Product Image ────────────────────────────────────────────────────────────
+class ProductImageOut(BaseModel):
+    id: int
+    image_url: str
+    is_primary: bool
+    image_name: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
+class ProductImageCreate(BaseModel):
+    image_url: str
+    image_name: Optional[str] = None
+    is_primary: Optional[bool] = False
+
+
+# ─── Variant ──────────────────────────────────────────────────────────────────
+class VariantCreate(BaseModel):
+    variant_name: Optional[str] = None
+    price: Decimal
+    stock: Optional[int] = 0
+    sku: Optional[str] = None
+    color: Optional[str] = None
+    color_id: Optional[int] = None
+    size: Optional[str] = None
+    low_stock_threshold: Optional[int] = 5
+
+
+class VariantUpdate(BaseModel):
+    variant_name: Optional[str] = None
+    price: Optional[Decimal] = None
+    stock: Optional[int] = None
+    sku: Optional[str] = None
+    color: Optional[str] = None
+    color_id: Optional[int] = None
+    size: Optional[str] = None
+    low_stock_threshold: Optional[int] = None
+    is_deleted: Optional[bool] = None
+
+
+class VariantOut(BaseModel):
+    id: int
+    product_id: int
+    variant_name: Optional[str] = None
+    price: Decimal
+    stock: int
+    sku: Optional[str] = None
+    color: Optional[str] = None
+    color_id: Optional[int] = None
+    size: Optional[str] = None
+    reserved_stock: int
+    low_stock_threshold: int
     is_deleted: bool
 
     class Config:
         from_attributes = True
 
 
-# -------- VARIANT --------
-class VariantCreate(BaseModel):
-    variant_name: str
-    price: float
-    stock: int
-    color: str
-    sku: Optional[str] = None
+# ─── Product ──────────────────────────────────────────────────────────────────
+class ProductCreate(BaseModel):
+    name: str
+    description: Optional[str] = None
+    sku: str
+    category_id: int
+    is_active: Optional[bool] = True
+    details_and_fit: Optional[str] = None
+    fabric_and_care: Optional[str] = None
+    return_and_exchange: Optional[str] = None
+    tax_rate_id: Optional[int] = None
 
 
-class VariantUpdate(BaseModel):
-    variant_name: Optional[str] = None
-    price: Optional[float] = None
-    stock: Optional[int] = None
-    color: Optional[str] = None
+class ProductUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
     sku: Optional[str] = None
+    category_id: Optional[int] = None
+    is_active: Optional[bool] = None
+    details_and_fit: Optional[str] = None
+    fabric_and_care: Optional[str] = None
+    return_and_exchange: Optional[str] = None
+    tax_rate_id: Optional[int] = None
+
+
+class ProductOut(BaseModel):
+    id: int
+    name: str
+    description: Optional[str] = None
+    sku: str
+    category_id: Optional[int] = None
+    is_active: bool
+    is_deleted: bool
+    details_and_fit: Optional[str] = None
+    fabric_and_care: Optional[str] = None
+    return_and_exchange: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
+class ProductDetailOut(ProductOut):
+    variants: List[VariantOut] = []
+    images: List[ProductImageOut] = []

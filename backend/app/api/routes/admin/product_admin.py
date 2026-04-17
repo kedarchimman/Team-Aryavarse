@@ -1,103 +1,230 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
+from typing import Optional
+
 from app.db.session import get_db
+from app.core.dependencies import get_current_user, require_admin
 from app.schemas.product import (
-    ProductCreate,
-    ProductUpdate,
-    VariantCreate,
-    VariantUpdate
+    ProductCreate, ProductUpdate,
+    VariantCreate, VariantUpdate,
+    CategoryCreate, CategoryUpdate,
+    ColorCreate, ProductImageCreate,
+    ProductOut, ProductDetailOut, VariantOut,
+    CategoryOut, ColorOut, ProductImageOut
 )
 from app.services.product_service import ProductService
-from app.core.dependencies import get_current_user
 
-router = APIRouter(prefix="/admin/products", tags=["Admin Products"])
+router = APIRouter(prefix="/admin/products", tags=["Admin - Products"])
 
 
-# -------- CREATE PRODUCT --------
-@router.post("/")
+# ════════════════════════════════════════════════════════════
+# CATEGORIES
+# ════════════════════════════════════════════════════════════
+
+@router.get("/categories", response_model=list[CategoryOut])
+def get_categories(
+    db: Session = Depends(get_db),
+    admin=Depends(require_admin)
+):
+    return ProductService.get_all_categories(db)
+
+
+@router.post("/categories", response_model=CategoryOut)
+def create_category(
+    data: CategoryCreate,
+    db: Session = Depends(get_db),
+    admin=Depends(require_admin)
+):
+    return ProductService.create_category(db, data)
+
+
+@router.put("/categories/{category_id}", response_model=CategoryOut)
+def update_category(
+    category_id: int,
+    data: CategoryUpdate,
+    db: Session = Depends(get_db),
+    admin=Depends(require_admin)
+):
+    return ProductService.update_category(db, category_id, data)
+
+
+@router.delete("/categories/{category_id}")
+def delete_category(
+    category_id: int,
+    db: Session = Depends(get_db),
+    admin=Depends(require_admin)
+):
+    return ProductService.delete_category(db, category_id)
+
+
+# ════════════════════════════════════════════════════════════
+# COLORS
+# ════════════════════════════════════════════════════════════
+
+@router.get("/colors", response_model=list[ColorOut])
+def get_colors(db: Session = Depends(get_db)):
+    return ProductService.get_all_colors(db)
+
+
+@router.post("/colors", response_model=ColorOut)
+def create_color(
+    data: ColorCreate,
+    db: Session = Depends(get_db),
+    admin=Depends(require_admin)
+):
+    return ProductService.create_color(db, data)
+
+
+# ════════════════════════════════════════════════════════════
+# PRODUCTS
+# ════════════════════════════════════════════════════════════
+
+@router.post("/", response_model=ProductOut)
 def create_product(
     data: ProductCreate,
     db: Session = Depends(get_db),
     user=Depends(get_current_user)
 ):
-    return ProductService.create_product(db, data)
+    return ProductService.create_product(db, data, user.id)
 
 
-# -------- CREATE VARIANT --------
-@router.post("/{product_id}/variant")
+@router.get("/", response_model=list[ProductOut])
+def get_products(
+    category_id: Optional[int] = Query(None),
+    is_active: Optional[bool] = Query(None),
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user)
+):
+    return ProductService.get_products(db, category_id, is_active)
+
+
+@router.get("/low-stock")
+def get_low_stock(
+    db: Session = Depends(get_db),
+    admin=Depends(require_admin)
+):
+    return ProductService.get_low_stock(db)
+
+
+@router.get("/{product_id}")
+def get_product(
+    product_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user)
+):
+    product, variants, images = ProductService.get_product(db, product_id)
+    return {
+        "id": product.id,
+        "name": product.name,
+        "description": product.description,
+        "sku": product.sku,
+        "category_id": product.category_id,
+        "is_active": product.is_active,
+        "is_deleted": product.is_deleted,
+        "details_and_fit": product.details_and_fit,
+        "fabric_and_care": product.fabric_and_care,
+        "return_and_exchange": product.return_and_exchange,
+        "variants": [
+            {
+                "id": v.id,
+                "variant_name": v.variant_name,
+                "price": float(v.price),
+                "stock": v.stock,
+                "sku": v.sku,
+                "color": v.color,
+                "color_id": v.color_id,
+                "size": v.size,
+                "reserved_stock": v.reserved_stock,
+                "low_stock_threshold": v.low_stock_threshold,
+            }
+            for v in variants
+        ],
+        "images": [
+            {"id": img.id, "image_url": img.image_url, "is_primary": img.is_primary, "image_name": img.image_name}
+            for img in images
+        ]
+    }
+
+
+@router.put("/{product_id}", response_model=ProductOut)
+def update_product(
+    product_id: int,
+    data: ProductUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user)
+):
+    return ProductService.update_product(db, product_id, data, user.id)
+
+
+@router.delete("/{product_id}")
+def delete_product(
+    product_id: int,
+    db: Session = Depends(get_db),
+    admin=Depends(require_admin)
+):
+    return ProductService.delete_product(db, product_id)
+
+
+# ════════════════════════════════════════════════════════════
+# VARIANTS
+# ════════════════════════════════════════════════════════════
+
+@router.post("/{product_id}/variants", response_model=VariantOut)
 def create_variant(
     product_id: int,
     data: VariantCreate,
     db: Session = Depends(get_db),
     user=Depends(get_current_user)
 ):
-    return ProductService.create_variant(db, product_id, data)
+    return ProductService.create_variant(db, product_id, data, user.id)
 
 
-# -------- GET PRODUCTS --------
-@router.get("/")
-def get_products(
+@router.get("/{product_id}/variants", response_model=list[VariantOut])
+def get_variants(
+    product_id: int,
     db: Session = Depends(get_db),
     user=Depends(get_current_user)
 ):
-    return ProductService.get_products(db)
+    return ProductService.get_variants(db, product_id)
 
 
-# -------- UPDATE PRODUCT --------
-@router.put("/{product_id}")
-def update_product(
-    product_id: int,
-    data: ProductUpdate,
-    db: Session = Depends(get_db)
-):
-    product = ProductService.update_product(db, product_id, data)
-
-    if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
-
-    return product
-
-
-# -------- DELETE PRODUCT --------
-@router.delete("/{product_id}")
-def delete_product(
-    product_id: int,
-    db: Session = Depends(get_db)
-):
-    product = ProductService.delete_product(db, product_id)
-
-    if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
-
-    return {"message": "Product deleted successfully"}
-
-
-# -------- UPDATE VARIANT --------
-@router.put("/variant/{variant_id}")
+@router.put("/variants/{variant_id}", response_model=VariantOut)
 def update_variant(
     variant_id: int,
     data: VariantUpdate,
     db: Session = Depends(get_db),
     user=Depends(get_current_user)
 ):
-    variant = ProductService.update_variant(db, variant_id, data)
-
-    if not variant:
-        raise HTTPException(status_code=404, detail="Variant not found")
-
-    return variant
+    return ProductService.update_variant(db, variant_id, data, user.id)
 
 
-# -------- DELETE VARIANT --------
-@router.delete("/variant/{variant_id}")
+@router.delete("/variants/{variant_id}")
 def delete_variant(
     variant_id: int,
     db: Session = Depends(get_db),
+    admin=Depends(require_admin)
+):
+    return ProductService.delete_variant(db, variant_id)
+
+
+# ════════════════════════════════════════════════════════════
+# IMAGES
+# ════════════════════════════════════════════════════════════
+
+@router.post("/{product_id}/images")
+def add_image(
+    product_id: int,
+    data: ProductImageCreate,
+    db: Session = Depends(get_db),
     user=Depends(get_current_user)
 ):
-    variant = ProductService.delete_variant(db, variant_id)
+    return ProductService.add_image(db, product_id, data)
 
-    if not variant:
-        raise HTTPException(status_code=404, detail="Variant not found")
 
-    return {"message": "Variant deleted successfully"}
+@router.delete("/images/{image_id}")
+def delete_image(
+    image_id: int,
+    db: Session = Depends(get_db),
+    admin=Depends(require_admin)
+):
+    return ProductService.delete_image(db, image_id)
