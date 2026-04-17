@@ -1,0 +1,318 @@
+
+
+// ─── Variables ────────────────────────────────────────────────
+$teal:        #009688;
+$teal-light:  #e0f2f1;
+$teal-mid:    #4db6ac;
+$text-dark:   #1a1a2e;
+$text-muted:  #777;
+$border:      #e0e0e0;
+$bg-card:     #fafafa;
+$radius-lg:   16px;
+$radius-md:   10px;
+$radius-sm:   6px;
+
+// ─── Wrapper ──────────────────────────────────────────────────
+.customization-panel {
+  border: 1.5px solid $border;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  margin: 18px 0;
+  background: white;
+  box-shadow: 0 2px 12px rgba(0, 150, 136, 0.07);
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 4px 20px rgba(0, 150, 136, 0.12);
+  }
+}
+
+// ─── Toggle Header ────────────────────────────────────────────
+.custom-toggle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: $teal-light;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+
+  &:hover {
+    background: darken($teal-light, 4%);
+  }
+
+  .toggle-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .custom-icon {
+    font-size: 22px;
+  }
+
+  .toggle-title {
+    font-weight: 700;
+    color: $teal;
+    font-size: 15px;
+    margin: 0;
+  }
+
+  .toggle-sub {
+    font-size: 12px;
+    color: $text-muted;
+    margin: 0;
+  }
+}
+
+// ─── Body ─────────────────────────────────────────────────────
+.custom-body {
+  padding: 18px;
+  border-top: 1px solid $border;
+}
+
+// ─── Section ──────────────────────────────────────────────────
+.custom-section {
+  margin-bottom: 18px;
+}
+
+.custom-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text-dark;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  .required-star { color: #e53935; }
+  .optional      { color: $text-muted; font-weight: 400; }
+
+  .char-count {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 400;
+    color: $text-muted;
+  }
+}
+
+// ─── Type Chips ───────────────────────────────────────────────
+.custom-type-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.type-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1.5px solid $border;
+  border-radius: 30px;
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+  color: $text-dark;
+  transition: all 0.18s;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: $teal-mid;
+    background: $teal-light;
+  }
+
+  &--active {
+    border-color: $teal;
+    background: $teal;
+    color: white;
+
+    .chip-price { color: rgba(255,255,255,0.85); }
+  }
+
+  .chip-icon  { font-size: 15px; }
+  .chip-label { font-weight: 500; }
+  .chip-price { font-size: 11px; color: $teal; margin-left: 2px; }
+}
+
+// ─── Position Chips ───────────────────────────────────────────
+.position-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pos-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 13px;
+  border: 1.5px solid $border;
+  border-radius: $radius-sm;
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.18s;
+
+  &:hover {
+    border-color: $teal-mid;
+  }
+
+  &--active {
+    border-color: $teal;
+    background: $teal-light;
+    color: $teal;
+    font-weight: 600;
+  }
+
+  .pos-icon { font-size: 12px; }
+}
+
+/*input*/
+.custom-input {
+  width: 100%;
+}
+
+.input-hint {
+  font-size: 11px;
+  color: $text-muted;
+  margin-top: 4px;
+}
+
+/* ─── Upload Zone ──────────────────────────────────────────────*/
+.upload-zone {
+  border: 2px dashed $teal-mid;
+  border-radius: $radius-md;
+  padding: 20px;
+  background: $bg-card;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.18s;
+
+  &:hover {
+    background: $teal-light;
+  }
+
+  .upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .upload-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: $text-dark;
+    margin: 0;
+  }
+
+  .upload-hint {
+    font-size: 12px;
+    color: $text-muted;
+    margin: 0;
+  }
+
+  .upload-preview {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+
+    .logo-preview-img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      border-radius: $radius-sm;
+      border: 1px solid $border;
+    }
+
+    .logo-name {
+      font-size: 13px;
+      font-weight: 500;
+      margin: 0 0 6px;
+    }
+
+    .remove-logo {
+      font-size: 12px;
+      color: #e53935;
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+
+      &:hover { text-decoration: underline; }
+    }
+  }
+}
+
+// ─── Price Summary 
+.price-summary {
+  background: $teal-light;
+  border-radius: $radius-md;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+
+  .price-row-inner {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-dark;
+  }
+
+  .price-val { color: $teal; }
+
+  .price-note {
+    font-size: 11px;
+    color: $text-muted;
+    margin: 6px 0 0;
+  }
+}
+
+// ─── Approval Notice ──────────────────────────────────────────
+.approval-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: #fff8e1;
+  border-radius: $radius-sm;
+  padding: 10px 12px;
+
+  p {
+    font-size: 12px;
+    color: #6d4c00;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+//Transitions 
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.slide-down-enter-from,
+.slide-down-leave-to {
+  max-height: 0;
+  opacity: 0;
+}
+.slide-down-enter-to,
+.slide-down-leave-from {
+  max-height: 800px;
+  opacity: 1;
+}
+
+.fade-enter-active, .fade-leave-active { transition: opacity 0.2s; }
+.fade-enter-from, .fade-leave-to       { opacity: 0; }
+
+// ─── Responsive ───────────────────────────────────────────────
+@media (max-width: 600px) {
+  .custom-type-grid  { gap: 8px; }
+  .type-chip         { padding: 7px 11px; font-size: 12px; }
+  .position-grid     { gap: 6px; }
+  .pos-chip          { padding: 6px 10px; font-size: 12px; }
+  .custom-body       { padding: 14px; }
+}
