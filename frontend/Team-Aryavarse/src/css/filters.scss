@@ -1,0 +1,347 @@
+/* ===================================================
+   DESKTOP SIDEBAR — sticky
+=================================================== */
+
+.filter-wrapper {
+  height: fit-content;
+}
+
+.filters-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  top: 90px;
+
+  background: #f5f5f5;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px 16px;
+
+  box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #0f2f57;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+}
+
+.filter-group {
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eeeeee;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  p {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #14325b;
+  }
+}
+
+.filter-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 5px 2px;
+  margin-bottom: 2px;
+
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    color: #0f7b6c;
+    transform: translateX(3px);
+  }
+
+  input {
+    width: 14px;
+    height: 14px;
+    accent-color: #0f7b6c;
+    cursor: pointer;
+  }
+}
+/* ===================================================
+   MOBILE BOTTOM BAR — hidden on desktop
+=================================================== */
+.mobile-filter-bar {
+  display: none;
+}
+
+/* ===================================================
+   MOBILE OVERLAY
+=================================================== */
+.filter-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 900;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  &.open {
+    display: block;
+    opacity: 1;
+  }
+}
+
+/* ===================================================
+   MOBILE DRAWER (slides up from bottom)
+=================================================== */
+.filter-drawer {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  z-index: 950;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+  max-height: 80vh;
+  flex-direction: column;
+
+  &.open {
+    display: flex;
+    transform: translateY(0);
+  }
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #eee;
+  flex-shrink: 0;
+}
+
+.drawer-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f2f57;
+}
+
+.drawer-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+  line-height: 1;
+  padding: 4px;
+}
+
+.drawer-body {
+  padding: 16px 20px;
+  overflow-y: auto;
+  flex: 1;
+
+  .filter-group {
+    margin-bottom: 18px;
+
+    p {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #222;
+    }
+  }
+
+  .filter-label {
+    font-size: 14px;
+    margin-bottom: 10px;
+    gap: 10px;
+  }
+}
+
+.drawer-footer {
+  display: flex;
+  gap: 12px;
+  padding: 14px 20px 24px;
+  border-top: 1px solid #eee;
+  flex-shrink: 0;
+}
+
+.clear-btn {
+  flex: 1;
+  border: 2px solid #0f7b6c;
+  background: transparent;
+  color: #0f7b6c;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover { background: #f0faf9; }
+}
+
+.apply-btn {
+  flex: 2;
+  border: none;
+  background: #0f7b6c;
+  color: #fff;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover { background: #0a5c50; }
+}
+
+/* ===================================================
+   MOBILE FILTER BUTTON STYLES
+=================================================== */
+.mobile-action-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+  overflow: visible;
+
+  cursor: pointer;
+  position: relative;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.4);
+}
+
+.active-badge {
+  background: #e11d48;
+  color: #fff;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: -6px;
+  right: 8px;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.mobile-sort-slot {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  white-space: nowrap;
+}
+:deep(.sort-box) {
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  gap: 3px;
+
+  white-space: nowrap;
+}
+
+:deep(.arrow) {
+  color: white;
+  font-size: 10px;
+  margin-left: 1px;
+}
+
+  :deep(.sort-dropdown) {
+    bottom: 45px;
+    top: auto;
+    right: 10px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+
+  /* 🔥 IMPORTANT FIX */
+  :deep(.sort-dropdown div) {
+    color: #111 !important;
+    background: white !important;
+    padding: 12px 14px;
+  }
+
+  :deep(.sort-dropdown div:hover) {
+    background: #f3f4f6 !important;
+  }
+
+
+/* ===================================================
+   RESPONSIVE — switch sidebar → bottom bar
+=================================================== */
+@media (max-width: 1000px) {
+  .desktop-filters {
+    display: none !important;
+  }
+
+.mobile-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 800;
+
+  background: #14325b;
+  height: 54px;
+  padding: 0 8px;
+
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+}
+}
+
+@media (min-width: 1001px) {
+  .filter-overlay,
+  .filter-drawer {
+    display: none !important;
+  }
+}
