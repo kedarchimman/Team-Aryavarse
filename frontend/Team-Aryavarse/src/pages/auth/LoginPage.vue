@@ -59,13 +59,13 @@ import { useRouter } from 'vue-router'
 import { authAPI } from 'src/api/auth'
 import { useAuthStore } from 'src/stores/auth'
 
-const router     = useRouter()
-const authStore  = useAuthStore()
+const router = useRouter()
+const authStore = useAuthStore()
 
-const identifier    = ref('')
-const password      = ref('')
-const error         = ref('')
-const loading       = ref(false)
+const identifier = ref('')
+const password = ref('')
+const error = ref('')
+const loading = ref(false)
 const showVerifyMsg = ref(false)
 
 async function login() {
@@ -95,17 +95,16 @@ async function login() {
       return
     }
 
-    authStore.setAuth(res.access_token, {
-      email:       res.user.email,
-      keycloak_id: res.user.keycloak_id,
-      name:        res.user.name,
-      id_token:    res.id_token,
+    await authStore.setAuth(res.access_token, {
+      id: res?.user?.id,
+      email: res?.user?.email,
+      keycloak_id: res?.user?.keycloak_id,
+      name: res?.user?.name,
+      id_token: res?.id_token,
     })
 
     router.push('/profile')
-
   } catch (e) {
-    // Check if the HTTP error response has a detail field
     if (e?.response?.status === 403) {
       showVerifyMsg.value = true
     } else {

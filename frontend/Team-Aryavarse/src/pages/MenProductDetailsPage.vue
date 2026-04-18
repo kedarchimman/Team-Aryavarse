@@ -90,10 +90,10 @@
         </div>
 
         <!-- ✅ CUSTOMIZATION -->
-      <ProductCustomization
-        :product-id="product?.id"
-        @customization-updated="onCustomizationUpdated"
-      />
+        <ProductCustomization
+          :product-id="product?.id"
+          @customization-updated="onCustomizationUpdated"
+        />
 
         <!-- BUTTONS -->
         <div class="btns">
@@ -105,7 +105,6 @@
             <button class="detail-qty-btn" @click="increaseQty">+</button>
           </div>
 
-          <!-- ✅ ref added for flying animation origin -->
           <button class="cart-btn" ref="cartBtnRef" @click="handleAddToCart">
             Add to Cart
           </button>
@@ -125,7 +124,7 @@
           :style="flyingStyle"
           ref="flyingImgRef"
         />
-        
+
         <!-- Delivery features -->
         <div class="delivery-cols">
           <div class="delivery-col">
@@ -141,14 +140,13 @@
             <p class="delivery-title">Cash on Delivery<br />Available</p>
           </div>
         </div>
-        
+
         <!-- PIN CODE SECTION -->
         <div class="section delivery-details">
           <h3>Delivery Details</h3>
 
           <div class="pincode-checker">
             <div class="input-btn-group">
-              <!-- ✅ maxlength 6, @keyup.enter support -->
               <q-input
                 v-model="pincode"
                 type="text"
@@ -169,7 +167,6 @@
               />
             </div>
 
-            <!-- ✅ 6-digit validation message -->
             <div v-if="pincode.length > 0 && pincode.length < 6" class="error-msg">
               Pincode must be 6 digits
             </div>
@@ -268,7 +265,6 @@
   </div>
 </template>
 
-
 <script setup>
 import { computed, ref, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -278,7 +274,7 @@ import sizeChartImg from 'src/assets/size_chart/size-chart.png'
 import measureImg from 'src/assets/size_chart/measure.png'
 import ProductCustomization from 'components/ProductCustomization.vue'
 
-//customization
+// customization
 const customizationData = ref(null)
 const onCustomizationUpdated = (payload) => {
   customizationData.value = payload
@@ -288,15 +284,15 @@ const onCustomizationUpdated = (payload) => {
 // Accordion
 const activeAccordion = ref(null)
 
-const route  = useRoute()
+const route = useRoute()
 const router = useRouter()
 
 const product = computed(() => menProducts.find(p => p.id === Number(route.params.id)))
 
 // Images
 const selectedImage = ref('')
-const displayImages = ref([]) // visible images
-const imageDialog   = ref(false)
+const displayImages = ref([])
+const imageDialog = ref(false)
 
 const openImageDialog = () => {
   imageDialog.value = true
@@ -308,8 +304,8 @@ const selectedColor = ref('')
 
 watch(product, (val) => {
   if (val) {
-    displayImages.value = [...val.images]
-    selectedImage.value = val.images[0]
+    displayImages.value = [...(val.images || [])]
+    selectedImage.value = val.images?.[0] || ''
     selectedColor.value = val.colors?.[0]?.name || ''
   }
 }, { immediate: true })
@@ -317,7 +313,9 @@ watch(product, (val) => {
 const changeColor = (colorName) => {
   selectedColor.value = colorName
 
-  const colorObj = product.value?.colors?.find(c => c.name === colorName)
+  const colorObj = product.value?.colors?.find(
+    c => String(c.name || '').toLowerCase().trim() === String(colorName || '').toLowerCase().trim()
+  )
 
   if (colorObj?.images?.length) {
     displayImages.value = [...colorObj.images]
@@ -328,15 +326,12 @@ const changeColor = (colorName) => {
 const discountPercent = computed(() => {
   const p = product.value
   if (!p?.oldPrice || !p?.price) return 0
-
   return Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100)
 })
 
 // SIZE
 const sizes = ['XS','S','M','L','XL','2XL','3XL']
 const selectedSize = ref('')
-
-//size chya khali error 
 const sizeError = ref(false)
 
 // Qty
@@ -408,7 +403,6 @@ const checkPincode = () => {
 
 // FLYING CART ANIMATION
 const cartBtnRef = ref(null)
-
 const flyingImgRef = ref(null)
 const flyingVisible = ref(false)
 const flyingActive = ref(false)
@@ -460,33 +454,68 @@ const triggerFlyAnimation = async () => {
   }, 50)
 }
 
-// Cart
-const handleAddToCart = () => {
-  if (!selectedSize.value) {
-    sizeError.value = true
-    return
+// ✅ ONLY OLD BACKEND CONNECTION LOGIC ADDED HERE
+const handleAddToCart = async () => {
+  try {
+    if (!product.value) return
+
+    if (!selectedSize.value) {
+      sizeError.value = true
+      return
+    }
+
+    sizeError.value = false
+
+    const selectedColorObj = product.value.colors?.find(
+      c => String(c.name || '').toLowerCase().trim() === String(selectedColor.value || '').toLowerCase().trim()
+    )
+
+    let variantId = selectedColorObj?.variant_id
+
+    if (!variantId && product.value?.variants?.length) {
+      const matchedVariant = product.value.variants.find((variant) => {
+        const variantName = String(variant.variant_name || '').toLowerCase()
+        return (
+          variantName.includes(String(selectedSize.value).toLowerCase()) &&
+          variantName.includes(String(selectedColor.value).toLowerCase())
+        )
+      })
+
+      variantId = matchedVariant?.variant_id || matchedVariant?.id
+    }
+
+    if (!variantId && product.value?.variants?.length) {
+      const matchedBySize = product.value.variants.find((variant) => {
+        const variantName = String(variant.variant_name || '').toLowerCase()
+        return variantName.includes(String(selectedSize.value).toLowerCase())
+      })
+
+      variantId = matchedBySize?.variant_id || matchedBySize?.id
+    }
+
+    if (!variantId) {
+      console.error('variant_id missing for selected product', {
+        product: product.value,
+        selectedColor: selectedColor.value,
+        selectedSize: selectedSize.value
+      })
+      return
+    }
+
+    await addToCart(Number(variantId), quantity.value)
+    await triggerFlyAnimation()
+  } catch (error) {
+    console.error('HANDLE ADD TO CART ERROR:', error)
   }
-
-  triggerFlyAnimation()
-
-  addToCart({
-    ...product.value,
-    size: selectedSize.value,
-    color: selectedColor.value,
-    image: selectedImage.value,
-    qty: quantity.value,
-    // ✅ ADD THIS
-    customization: customizationData.value
-  })
 }
 
-const handleBuyNow = () => {
+const handleBuyNow = async () => {
   if (!selectedSize.value) {
     sizeError.value = true
     return
   }
 
-  handleAddToCart()
+  await handleAddToCart()
   router.push('/cart')
 }
 </script>

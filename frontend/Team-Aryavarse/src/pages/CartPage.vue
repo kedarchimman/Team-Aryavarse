@@ -7,41 +7,54 @@
         <!-- LEFT SIDE -->
         <div class="cart-left">
           <div v-if="hasItems">
-          
             <div
               v-for="item in cart"
               :key="item.id"
               class="cart-card"
             >
               <!-- image -->
-              <img :src="item.image" :alt="item.title" class="cart-img" />
+              <img
+                :src="item.image || item.image_url"
+                :alt="item.title || item.product_name"
+                class="cart-img"
+              />
 
               <!-- details -->
               <div class="cart-info">
                 <h3 class="product-title">
-                ₹ {{ Number(item.price).toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}
+                  {{ item.title || item.product_name }}
                 </h3>
+
                 <p class="product-meta">
-                  Size: {{ item.size || 'M' }}
-                  <span class="dot">•</span>
-                  Color: {{ item.color || 'Default' }}
+                  <template v-if="item.variant_name">
+                    Variant: {{ item.variant_name }}
+                  </template>
+                  <template v-else>
+                    Size: {{ item.size || 'M' }}
+                    <span class="dot">•</span>
+                    Color: {{ item.color || 'Default' }}
+                  </template>
+                </p>
+
+                <p v-if="item.price" class="product-price">
+                  ₹ {{ Number(item.price).toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}
                 </p>
 
                 <!-- qty -->
                 <div class="qty-box">
-                  <button class="qty-btn" @click="updateQty(item, 'dec')">−</button>
+                  <button class="qty-btn" @click="updateQty(item.id, 'dec')">−</button>
                   <span class="qty-value">{{ item.qty }}</span>
-                  <button class="qty-btn" @click="updateQty(item, 'inc')">+</button>
+                  <button class="qty-btn" @click="updateQty(item.id, 'inc')">+</button>
                 </div>
               </div>
 
               <!-- price -->
               <div class="price-box">
-              ₹ {{ (Number(item.price) * item.qty).toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}
+                ₹ {{ (Number(item.price) * Number(item.qty)).toLocaleString('en-IN', { minimumFractionDigits: 2 }) }}
               </div>
 
               <!-- delete -->
-              <button class="delete-btn" @click="removeFromCart(item)">
+              <button class="delete-btn" @click="removeFromCart(item.id)">
                 <q-icon name="delete_outline" size="22px" />
               </button>
             </div>
@@ -70,10 +83,10 @@
             <div class="summary-row">
               <span>Shipping</span>
               <span>
-              {{ shipping === 0 
-                ? 'FREE' 
-                : '₹ ' + Number(shipping).toLocaleString('en-IN', { minimumFractionDigits: 2 }) 
-              }}
+                {{ shipping === 0
+                  ? 'FREE'
+                  : '₹ ' + Number(shipping).toLocaleString('en-IN', { minimumFractionDigits: 2 })
+                }}
               </span>
             </div>
 
@@ -103,17 +116,20 @@
   </q-page>
 </template>
 
-
 <script setup>
-import { computed } from 'vue'
-import { cart, removeFromCart, updateQty } from 'src/stores/shop'
+import { computed, onMounted } from 'vue'
+import { cart, removeFromCart, updateQty, loadCart } from 'src/stores/shop'
+
+onMounted(() => {
+  loadCart()
+})
 
 const hasItems = computed(() => cart.value.length > 0)
 
-// subtotal (safe number conversion)
+// subtotal
 const subtotal = computed(() => {
   return cart.value.reduce((sum, item) => {
-    return sum + Number(item.price) * item.qty
+    return sum + Number(item.price || 0) * Number(item.qty || 0)
   }, 0)
 })
 
@@ -122,17 +138,17 @@ const shipping = computed(() => {
   return subtotal.value > 0 ? 0 : 0
 })
 
-// tax (no round)
+// tax
 const tax = computed(() => {
   return subtotal.value * 0.18
 })
 
-// total (safe)
+// total
 const total = computed(() => {
   return subtotal.value + shipping.value + tax.value
 })
 </script>
- 
+
 <style lang="scss">
 @import 'src/css/cart.scss';
 </style>

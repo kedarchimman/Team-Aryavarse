@@ -1,3 +1,9 @@
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def hash_password(password: str):
+    return pwd_context.hash(password)
 from jose import jwt
 from fastapi import HTTPException
 import requests
@@ -16,7 +22,7 @@ def get_public_key():
     return f"-----BEGIN PUBLIC KEY-----\n{public_key}\n-----END PUBLIC KEY-----"
 
 
-PUBLIC_KEY = get_public_key()
+PUBLIC_KEY = None
 
 
 def verify_token(token: str) -> dict:
